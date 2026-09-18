@@ -1,0 +1,8 @@
+# 本地真实部署配置（含 CloudBase 环境 ID）— 绝不推公开仓库
+tips-backend/cloudbaserc.json
+
+# 本地环境与依赖
+.workbuddy/
+node_modules/
+.DS_Store
+*.log

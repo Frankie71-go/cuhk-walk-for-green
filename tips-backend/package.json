@@ -1,0 +1,12 @@
+{
+  "name": "wfg-tips-backend",
+  "version": "1.0.0",
+  "description": "Public read/write backend for Walk for Green senior shortcut tips (CloudBase cloud function + local test server)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@cloudbase/node-sdk": "^2.7.0"
+  }
+}

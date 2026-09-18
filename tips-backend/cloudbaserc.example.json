@@ -1,0 +1,30 @@
+{
+  "envId": "<你的 CloudBase 环境 ID>",
+  "functionRoot": "./",
+  "functions": [
+    {
+      "name": "wfg-tips",
+      "runtime": "Nodejs20.19",
+      "handler": "index.main",
+      "memorySize": 256,
+      "timeout": 10,
+      "installDependency": true
+    }
+  ],
+  "gateway": {
+    "domains": [
+      {
+        "domain": "<你的环境 ID>.service.tcloudbase.com",
+        "routes": [
+          {
+            "path": "/",
+            "upstreamResourceType": "SCF",
+            "upstreamResourceName": "wfg-tips",
+            "enable": true,
+            "enablePathTransmission": true
+          }
+        ]
+      }
+    ]
+  }
+}
