@@ -1,64 +1,62 @@
 <!DOCTYPE html>
-<html lang="zh-Hans" data-page-node-id="ZPF5cyvALae5ZplT1ZDpSZ">
-<head data-page-node-id="INoSwOdS6lNkQyVrbGVu0X">
-<meta charset="UTF-8" data-page-node-id="UjbeCKHiQwfO9UcYINT24G">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" data-page-node-id="2Cjm3G8Paspiwn8y2u5o7Y">
+<html lang="zh-Hans" data-page-node-id="hDUIEJMYDyDC1vGGJFWoSQ">
+<head data-page-node-id="uYZTDw9DsyZJkRTCeZ23xu">
+<meta charset="UTF-8" data-page-node-id="HG0tq40b9W0097HsbABnGC">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" data-page-node-id="A6xBLCvfzKbRo72k7CkqFC">
 <title data-i18n="title">大·部·行 Walk for Green 攻略卡</title>
 <style>
   :root{
-    --bg:#f6f8fc; --card:#ffffff; --ink:#1f2a44; --sub:#67708a;
-    --line:#e6ebf4; --accent:#3a7bd5; --accent2:#7b5cff;
-    --ok:#1aa97b; --warn:#e8833a; --star:#ffce4d;
-    --chip:#eef3ff;
+    --bg:#f5f7fb; --card:#ffffff; --ink:#1f2a44;
+    --sub:#6b748c; --line:#e7ecf5; --accent:#3a7bd5; --accent2:#7b5cff;
+    --ok:#1aa97b; --warn:#e8833a; --star:#ffce4d; --chip:#eef3ff;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Helvetica,Arial,sans-serif;
-    background:var(--bg);color:var(--ink);line-height:1.55;padding:14px 12px 40px;max-width:560px;margin:0 auto}
-  .hero{background:linear-gradient(135deg,#3a7bd5,#7b5cff);color:#fff;border-radius:18px;padding:18px 18px 16px;
-    box-shadow:0 8px 24px rgba(58,123,213,.25);position:relative;overflow:hidden}
-  .hero h1{margin:0;font-size:20px;letter-spacing:1px}
-  .hero .en{font-size:12px;opacity:.85;margin-top:2px}
-  .hero .goal{margin-top:12px;background:rgba(255,255,255,.16);border-radius:12px;padding:10px 12px;font-size:13px}
-  .hero .goal b{font-size:16px}
-  .star{position:absolute;top:10px;right:14px;font-size:22px;opacity:.9}
-  /* 语言切换悬浮窗：固定右下角，脱离文档流，不挤标题 */
-  .langfab{position:fixed;right:14px;bottom:16px;z-index:999;display:flex;flex-direction:column;align-items:flex-end;gap:8px;font-size:13px}
-  .langfab-main{background:rgba(31,42,68,.92);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:22px;
-    padding:9px 14px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
-  .langfab-main:hover{filter:brightness(1.1)}
-  .langfab-menu{display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid var(--line);border-radius:14px;
-    padding:8px;box-shadow:0 6px 20px rgba(31,42,68,.18);min-width:120px}
-  .langfab-item{background:var(--chip);color:var(--ink);border:none;border-radius:10px;padding:9px 16px;font-weight:600;
-    text-align:left;font-size:13px;cursor:pointer}
-  .langfab-item.on{background:var(--accent);color:#fff}
-  .langfab-item:hover{filter:brightness(.97)}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 14px 16px;margin-top:14px;
+    background:var(--bg);color:var(--ink);line-height:1.55;padding:14px 12px 90px;max-width:560px;margin:0 auto}
+  .hero{background:linear-gradient(135deg,#3a7bd5,#7b5cff);color:#fff;border-radius:20px;padding:20px 18px 16px;
+    box-shadow:0 10px 26px rgba(58,123,213,.25);position:relative;overflow:hidden}
+  .hero h1{margin:0;font-size:21px;letter-spacing:1px}
+  .hero .en{font-size:12px;opacity:.85;margin-top:3px}
+  .hero .goal{margin-top:12px;background:rgba(255,255,255,.16);border-radius:12px;padding:8px 12px;font-size:12.5px;line-height:1.5}
+  .hero .goal b{font-size:14px}
+  .star{position:absolute;top:12px;right:16px;font-size:22px;opacity:.9}
+  .hero-prog{margin-top:13px;background:rgba(255,255,255,.16);border-radius:12px;padding:10px 12px}
+  .hbar{height:12px;background:rgba(255,255,255,.25);border-radius:8px;overflow:hidden}
+  .hbar > i{display:block;height:100%;width:0;background:#fff;transition:width .4s}
+  .hrow{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px;color:#fff}
+  .hnum{font-size:24px;font-weight:800}
+  .hmuted{font-size:12px;opacity:.9}
+  .hbtns{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+  .hb{background:#fff;color:var(--accent);border:none;border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer}
+  .hb.sub{color:var(--warn)} .hb.res{color:var(--sub)}
+  .tiny{font-size:11px;color:var(--sub);line-height:1.5}
+  .hero .tiny{color:rgba(255,255,255,.85);margin-top:8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px 14px 16px;margin-top:14px;
     box-shadow:0 2px 10px rgba(31,42,68,.04)}
-  .card h2{margin:0 0 10px;font-size:15px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-  .card h2 .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:0 0 auto}
-  .muted{color:var(--sub);font-size:12.5px}
-  .grp{font-size:12px;color:var(--sub);margin:10px 0 5px;font-weight:600}
+  .card h2{margin:0 0 4px;font-size:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .card h2 .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);flex:0 0 auto}
+  .card .muted{color:var(--sub);font-size:12.5px;line-height:1.55}
+  .badge{font-size:11px;font-weight:700;color:#fff;background:var(--accent2);border-radius:10px;padding:2px 9px;margin-left:auto}
+  .card.hi{border:2px solid var(--accent);background:linear-gradient(180deg,#f2f8ff,#ffffff);
+    box-shadow:0 8px 22px rgba(58,123,213,.16)}
+  .grp{font-size:12px;color:var(--sub);margin:12px 0 5px;font-weight:700}
   .reader{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border:1px solid var(--line);
-    border-radius:10px;margin-bottom:6px;background:#fbfcff}
-  .reader .nm{font-size:13.5px;font-weight:600}
+    border-radius:12px;margin-bottom:7px;background:#fbfcff}
+  .reader .nm{font-size:13.5px;font-weight:700}
   .reader .fl{font-size:11.5px;color:var(--sub);background:var(--chip);padding:2px 8px;border-radius:20px;white-space:nowrap}
   .reader.hot{border-color:var(--accent);background:#f3f8ff}
   .reader .how{font-size:11.5px;color:var(--sub);margin-top:2px;line-height:1.4}
+  .reader .go{display:inline-block;margin-top:5px;font-size:12.5px;font-weight:700;color:#fff;background:var(--accent);text-decoration:none;border-radius:9px;padding:4px 11px;-webkit-tap-highlight-color:transparent}
+  .reader .go:active{filter:brightness(.95)}
   .tag{font-size:10px;color:#fff;background:var(--ok);padding:1px 6px;border-radius:10px;margin-left:6px;vertical-align:middle}
-  .progwrap{margin:6px 0 2px}
-  .bar{height:14px;background:#eef1f7;border-radius:10px;overflow:hidden}
-  .bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3a7bd5,#7b5cff);transition:width .4s}
-  .ptrow{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
-  .ptnum{font-size:26px;font-weight:800;color:var(--accent)}
-  .btns{display:flex;gap:8px;flex-wrap:wrap}
+  .nav-in{display:flex;gap:8px;margin:10px 0 4px;flex-wrap:wrap}
+  .nav-in select{flex:1;min-width:120px;padding:11px 10px;border:1px solid var(--line);border-radius:11px;font-size:14px;background:#fff;color:var(--ink)}
+  .ck{font-size:12.5px;color:var(--sub);display:flex;align-items:center;gap:6px;margin:4px 0 0}
   button{font-family:inherit;border:none;border-radius:10px;padding:9px 13px;font-size:13px;font-weight:600;cursor:pointer}
-  .b-add{background:var(--accent);color:#fff}
-  .b-sub{background:#ffe9e0;color:var(--warn)}
-  .b-res{background:#eef1f7;color:var(--sub)}
-  .b-go{background:linear-gradient(135deg,#3a7bd5,#7b5cff);color:#fff;width:100%;padding:12px;font-size:14px;margin-top:4px}
-  .nav-in{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap}
-  .nav-in select{flex:1;min-width:120px;padding:11px 10px;border:1px solid var(--line);border-radius:10px;font-size:14px;background:#fff;color:var(--ink)}
-  .out{background:#f3f8ff;border:1px solid #d7e6ff;border-radius:12px;padding:12px;font-size:13.5px;margin-top:8px;display:none}
+  .b-go{background:linear-gradient(135deg,#3a7bd5,#7b5cff);color:#fff;width:100%;padding:12px;font-size:14px;margin-top:6px}
+  .b-go-sm{background:var(--accent);color:#fff;border:none;border-radius:9px;padding:6px 12px;font-size:12.5px;font-weight:600;cursor:pointer}
+  .mini{background:var(--chip);color:var(--accent);border:none;border-radius:8px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;margin-left:4px}
+  .out{background:#f3f8ff;border:1px solid #d7e6ff;border-radius:12px;padding:12px;font-size:13.5px;margin-top:10px;display:none}
   .out.show{display:block}
   .out .big{font-size:15px;font-weight:700;color:var(--accent);margin-bottom:6px}
   .step{display:flex;gap:8px;align-items:flex-start;margin:5px 0}
@@ -73,69 +71,27 @@
   .spot .nm{font-size:13.5px;font-weight:700}
   .spot .fl{font-size:11px;color:var(--sub);background:var(--chip);padding:1px 8px;border-radius:20px;margin-left:4px;white-space:nowrap}
   .spot .how{font-size:11.5px;color:var(--sub);margin-top:3px;line-height:1.45}
-  .map{width:100%;height:330px;border:0;border-radius:12px;margin-top:8px;background:#eef1f7}
-  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px}
-  th,td{border:1px solid var(--line);padding:6px 7px;text-align:left}
-  th{background:#f3f6fc;font-weight:600}
-  td.p{text-align:center;font-weight:700;color:var(--accent)}
-  .note{background:#fffaf0;border:1px solid #ffe6b0;border-radius:10px;padding:9px 11px;font-size:12.5px;margin-top:8px;color:#8a6a1e}
-  .foot{text-align:center;color:var(--sub);font-size:11px;margin-top:22px}
-  /* hero 内进度（通勤秒看） */
-  .hero-prog{margin-top:12px;background:rgba(255,255,255,.16);border-radius:12px;padding:10px 12px}
-  .hbar{height:12px;background:rgba(255,255,255,.25);border-radius:8px;overflow:hidden}
-  .hbar > i{display:block;height:100%;width:0;background:#fff;transition:width .4s}
-  .hrow{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px;color:#fff}
-  .hnum{font-size:24px;font-weight:800}
-  .hmuted{font-size:12px;opacity:.9}
-  .hbtns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-  .hb{background:#fff;color:var(--accent);border:none;border-radius:9px;padding:7px 11px;font-size:12.5px;font-weight:700;cursor:pointer}
-  .hb.sub{color:var(--warn)} .hb.res{color:var(--sub)}
-  /* 今天推荐 */
-  .today{margin:4px 0 8px;background:linear-gradient(135deg,#eef6ff,#f3f0ff);border:1px solid #d7e6ff;border-radius:12px;padding:10px 12px}
-  .today-h{font-size:13.5px;font-weight:800;color:var(--accent);margin-bottom:6px}
-  .today-row{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:5px 0;border-top:1px dashed #cfe0ff}
-  .today-row:first-of-type{border-top:none}
-  .today-route{font-weight:700;font-size:13px}
-  .today-score{font-weight:800;color:var(--ok);font-size:13px}
-  .today-note{width:100%;font-size:11.5px;color:var(--sub)}
-  .today-empty{font-size:12.5px;color:var(--sub)}
-  .b-go-sm{background:var(--accent);color:#fff;border:none;border-radius:9px;padding:5px 11px;font-size:12px;font-weight:600;cursor:pointer}
-  .sched-row{display:flex;gap:6px;align-items:center;margin:5px 0;flex-wrap:wrap}
-  .sched-row select,.sched-row span{flex:0 0 auto}
-  .sched-row .sd{flex:0 0 64px}
-  .sched-row .sa,.sched-row .sb{flex:1;min-width:110px}
-  .snote{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:8px;font-size:12px;font-family:inherit;margin-top:2px}
-  /* 示例行程悬浮窗（左下角） */
-  .exfab{position:fixed;left:14px;bottom:16px;z-index:998;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
-  .exfab-main{background:rgba(31,42,68,.92);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:22px;
-    padding:9px 14px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);font-size:13px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
-  .exfab-main:hover{filter:brightness(1.1)}
-  .exfab-pop{display:none;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;box-shadow:0 6px 20px rgba(31,42,68,.18);max-width:330px;font-size:12.5px}
-  .exfab-pop.show{display:block}
-  .exfab-pop h3{margin:0 0 8px;font-size:14px}
-  .exfab-pop .step{display:flex;gap:8px;align-items:flex-start;margin:5px 0}
-  .exfab-pop .n{flex:0 0 20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;font-weight:700}
-  .exfab-pop .warnbox{margin-top:8px}
-  .hl{color:var(--accent);font-weight:700}
-  ul.tight{margin:6px 0;padding-left:18px}
-  ul.tight li{margin:4px 0;font-size:13px}
-  .upload{margin:8px 0 2px}
-  .upload input[type=file]{font-size:12px;color:var(--sub);max-width:100%}
-  .schedimg{width:100%;border-radius:12px;margin-top:8px;border:1px solid var(--line);display:block}
-  .daytip{display:flex;gap:8px;align-items:center;margin:7px 0}
-  .daytip .dd{flex:0 0 40px;font-weight:700;font-size:13px;color:var(--accent)}
-  .daytip .dt{flex:1;padding:8px 10px;border:1px solid var(--line);border-radius:9px;font-size:12.5px;background:#fffef5;color:var(--ink)}
-  .daytip .dt:focus{outline:1px solid var(--accent)}
-  .personal{background:#fff4f7;border:1px solid #ffc9da;border-radius:12px;padding:11px 12px;font-size:12.5px;color:#9c2c4e;margin-top:10px}
-  .personal b{color:#c01e4e}
-  .hint{font-size:11.5px;color:var(--sub);background:#f3f6fc;border-radius:8px;padding:6px 9px;margin-top:8px;line-height:1.5}
-  /* senior tips */
-  .sen-form{display:flex;flex-direction:column;gap:8px;margin:8px 0}
-  .sen-form input,.sen-form textarea{padding:9px 10px;border:1px solid var(--line);border-radius:9px;font-size:13px;font-family:inherit;background:#fff;color:var(--ink)}
-  .sen-form textarea{min-height:54px;resize:vertical}
-  .sen-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  .b-sen{background:var(--ok);color:#fff}
-  .b-ghost{background:#eef1f7;color:var(--sub)}
+  .spot .go{font-size:11.5px;color:var(--accent);text-decoration:none;white-space:nowrap}
+  /* 今日推荐 */
+  .today-day{font-size:14px;font-weight:800;color:var(--accent);margin-bottom:6px}
+  .today-route2{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+  .today-route2 .from{font-size:13px;font-weight:600;color:var(--sub)}
+  .today-route2 .arr{color:var(--sub);font-size:16px}
+  .today-route2 .dest{font-size:22px;font-weight:800;color:var(--accent);line-height:1.15}
+  .tp{display:flex;gap:8px;align-items:flex-start;background:#f3f8ff;border:1px solid #d7e6ff;border-radius:10px;padding:7px 9px;margin:6px 0;font-size:12.5px}
+  .tp-ic{flex:0 0 auto}
+  .near-t{font-size:12px;font-weight:800;color:var(--sub);margin:11px 0 5px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{border:1px solid var(--line);background:#fff;border-radius:18px;padding:5px 10px;font-size:12px;
+    display:inline-flex;gap:6px;align-items:center;line-height:1.3}
+  .chip b{color:var(--accent)}
+  .chip .mn{color:var(--sub);font-size:11px}
+  .chip.zero{opacity:.55}
+  .chip.hot{border-color:var(--ok);background:#f1fbf3}
+  /* 学长姐投稿（揉进推荐 + 底部 tips） */
+  .tips-block{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
+  .tips-head{font-size:13.5px;font-weight:800;color:var(--accent);margin-bottom:8px}
+  .sen-inline-head{font-size:12.5px;font-weight:800;color:var(--sub);margin:12px 0 6px}
   .tip{border:1px solid var(--line);border-radius:10px;padding:9px 10px;margin:7px 0;background:#fbfcff;font-size:12.5px}
   .tip .who{font-weight:700;color:var(--accent);font-size:12px}
   .tip .txt{margin-top:3px;line-height:1.5}
@@ -144,195 +100,175 @@
   .tip .vbtn{font-size:12px;border:1px solid var(--line);background:#fff;border-radius:18px;padding:3px 11px;cursor:pointer;color:var(--ink)}
   .tip.hot{border-color:var(--ok);background:#f1fbf3}
   .tip .hot-tag{margin-left:6px;font-size:11px;color:var(--ok);font-weight:700}
-  .sen-settings{margin:10px 0;padding:11px 12px;border:1px dashed var(--line);border-radius:10px;background:#fafbfe}
-  .sen-settings .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .sen-settings label.lbl{font-size:12.5px;color:var(--sub);font-weight:700}
-  .sen-settings input[type=text]{flex:1;min-width:150px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;font-family:inherit}
-  .sen-settings .hint{font-size:11px;color:var(--sub);margin-top:7px;line-height:1.55}
-  .cloudswitch{position:relative;width:42px;height:24px;flex:0 0 auto}
-  .cloudswitch input{opacity:0;width:0;height:0}
-  .cloudswitch .slider{position:absolute;inset:0;background:#cfd6e4;border-radius:20px;cursor:pointer;transition:.2s}
-  .cloudswitch .slider:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
-  .cloudswitch input:checked + .slider{background:var(--ok)}
-  .cloudswitch input:checked + .slider:before{transform:translateX(18px)}
-  .mode-badge{font-size:11px;padding:2px 9px;border-radius:10px;font-weight:700}
-  .mode-badge.cloud{background:#e8f1ff;color:#2563eb}
-  .mode-badge.local{background:#f1f1f4;color:#666}
-  .tip .votes{margin-top:6px;display:flex;gap:10px;align-items:center}
-  .tip .vbtn{border:1px solid var(--line);background:#fff;border-radius:16px;padding:2px 10px;font-size:12px;cursor:pointer;color:var(--sub)}
-  .tip .vbtn b{color:var(--ink)}
-  .tip.hot{border-color:var(--ok)}
-  .tip .hot-tag{color:var(--ok);font-size:11px;font-weight:700;margin-left:6px}
-  /* 折叠块：把次要信息收起来，页面不再冗长 */
-  details.fold{border:1px solid var(--line);border-radius:14px;margin-top:12px;background:var(--card);overflow:hidden;
-    box-shadow:0 2px 10px rgba(31,42,68,.04)}
-  details.fold > summary{list-style:none;padding:12px 13px;font-size:14px;font-weight:700;cursor:pointer;
-    display:flex;align-items:center;gap:7px;color:var(--ink)}
-  details.fold > summary::-webkit-details-marker{display:none}
-  details.fold > summary::after{content:"▾";margin-left:auto;color:var(--sub);font-size:12px;transition:.2s}
-  details.fold[open] > summary::after{transform:rotate(180deg)}
-  details.fold .foldbody{padding:0 13px 13px}
-  /* 课表卡高亮（朋友一眼能看到） */
-  .card.hi{border:2px solid var(--accent);background:linear-gradient(180deg,#f2f8ff,#ffffff);
-    box-shadow:0 8px 22px rgba(58,123,213,.16)}
-  .card.hi > h2 .dot{background:var(--accent2)}
-  .hi-badge{font-size:11px;font-weight:800;color:#fff;background:var(--accent2);border-radius:10px;padding:2px 9px;margin-left:auto}
-  /* 星期切换 */
+  .sen-form{display:flex;flex-direction:column;gap:8px;margin:8px 0}
+  .sen-form input,.sen-form textarea{padding:9px 10px;border:1px solid var(--line);border-radius:9px;font-size:13px;font-family:inherit;background:#fff;color:var(--ink)}
+  .sen-form textarea{min-height:54px;resize:vertical}
+  .b-sen{background:var(--ok);color:#fff}
+  .sen-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .sen-filter{display:flex;gap:8px;align-items:center;margin:10px 0 2px}
+  .sen-filter select{flex:1;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;font-family:inherit;background:#fff;color:var(--ink)}
+  .muted{color:var(--sub);font-size:12.5px}
+  /* 课表编辑（折叠在今日推荐里） */
   .dtabs{display:flex;gap:6px;margin:10px 0 2px}
   .dtab{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 0;font-size:13px;
     font-weight:700;color:var(--sub);cursor:pointer;font-family:inherit}
   .dtab.on{background:var(--accent);color:#fff;border-color:var(--accent)}
   .dtab.today{box-shadow:0 0 0 2px rgba(26,169,123,.35)}
-  /* 附近打卡点 chips */
-  .near-t{font-size:12px;font-weight:800;color:var(--sub);margin:9px 0 5px}
-  .chips{display:flex;flex-wrap:wrap;gap:6px}
-  .chip{border:1px solid var(--line);background:#fff;border-radius:18px;padding:5px 10px;font-size:12px;
-    display:inline-flex;gap:6px;align-items:center;line-height:1.3}
-  .chip b{color:var(--accent)}
-  .chip .mn{color:var(--sub);font-size:11px}
-  .chip.zero{opacity:.55}
-  .chip.hot{border-color:var(--ok);background:#f1fbf3}
-  .navbtns{display:flex;gap:8px;margin-top:10px}
-  .navbtn{flex:1;text-align:center;text-decoration:none;background:#eef3ff;color:var(--accent);
-    border:1px solid #d7e6ff;border-radius:10px;padding:10px 0;font-size:13px;font-weight:700}
-  .navbtn:active{filter:brightness(.95)}
-  .reader .go{font-size:11.5px;color:var(--accent);text-decoration:none;white-space:nowrap}
-  .tiny{font-size:11px;color:var(--sub);line-height:1.45}
+  .upload{margin:8px 0 2px}
+  .upload input[type=file]{font-size:12px;color:var(--sub);max-width:100%}
+  .schedimg{width:100%;border-radius:12px;margin-top:8px;border:1px solid var(--line);display:block}
+  .sched-hint{font-size:11.5px;color:var(--sub);background:#f3f6fc;border-radius:8px;padding:6px 9px;margin-top:8px;line-height:1.5}
+  /* 规则浮窗按钮 + 弹窗 */
+  .rulesfab{position:fixed;left:14px;bottom:16px;z-index:999;background:rgba(31,42,68,.92);color:#fff;border:1px solid rgba(255,255,255,.25);
+    border-radius:22px;padding:9px 14px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);font-size:13px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .rulesfab:hover{filter:brightness(1.1)}
+  .modal{position:fixed;inset:0;background:rgba(20,28,48,.55);display:none;z-index:1000;align-items:flex-end;justify-content:center}
+  .modal.show{display:flex}
+  .modalcard{background:#fff;width:100%;max-width:560px;max-height:86vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px 16px 30px}
+  @media(min-width:600px){.modal{align-items:center}.modalcard{border-radius:20px;max-height:84vh}}
+  .modalhead{display:flex;align-items:center;justify-content:space-between;font-size:16px;font-weight:800;margin-bottom:10px;position:sticky;top:0;background:#fff;padding-bottom:8px}
+  .modalhead button{background:none;border:none;font-size:22px;cursor:pointer;color:var(--sub);line-height:1}
+  .modalbody h3{margin:14px 0 6px;font-size:14px;display:flex;align-items:center;gap:6px}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px}
+  th,td{border:1px solid var(--line);padding:6px 7px;text-align:left}
+  th{background:#f3f6fc;font-weight:600}
+  td.p{text-align:center;font-weight:700;color:var(--accent)}
+  .note{background:#fffaf0;border:1px solid #ffe6b0;border-radius:10px;padding:9px 11px;font-size:12.5px;margin-top:8px;color:#8a6a1e}
+  .foot{text-align:center;color:var(--sub);font-size:11px;margin-top:22px}
+  ul.tight{margin:6px 0;padding-left:18px}
+  ul.tight li{margin:4px 0;font-size:13px}
+  .hl{color:var(--accent);font-weight:700}
+  /* 语言切换悬浮窗：固定右下角，脱离文档流，不挤标题 */
+  .langfab{position:fixed;right:14px;bottom:16px;z-index:999;display:flex;flex-direction:column;align-items:flex-end;gap:8px;font-size:13px}
+  .langfab-main{background:rgba(31,42,68,.92);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:22px;
+    padding:9px 14px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .langfab-main:hover{filter:brightness(1.1)}
+  .langfab-menu{display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:8px;box-shadow:0 6px 20px rgba(31,42,68,.18);min-width:120px}
+  .langfab-item{background:var(--chip);color:var(--ink);border:none;border-radius:10px;padding:9px 16px;font-weight:600;
+    text-align:left;font-size:13px;cursor:pointer}
+  .langfab-item.on{background:var(--accent);color:#fff}
+  .langfab-item:hover{filter:brightness(.97)}
+  .today-empty{font-size:12.5px;color:var(--sub);background:#f3f6fc;border-radius:10px;padding:10px 12px}
 </style>
 </head>
-<body data-page-node-id="bqFQvVe72ePK07zSIfjt3U">
+<body data-page-node-id="If4Fz3Phr3kADRnbbDnowy">
 
-<div class="hero" data-page-node-id="hJgbc9bRNaRVZTPFQ4vWhz">
-  <div class="star" data-page-node-id="604CV9Y4P5NWKWfd8dBQjR">✦</div>
-  <h1 data-page-node-id="2YWfGYDoh5TkW6GD1TqF3R">大·部·行 Walk for Green</h1>
-  <div class="en" data-i18n="heroEn">CUHK 刷中大通打卡校园路线 · 换 PE 分</div>
-  <div class="goal" data-i18n-html="heroGoal">目标：<b>一学期满 40 分 → 5 个 PE 参与分</b><br>规则：同一趟行程 <b>1 小时内</b>，在起点 + 终点读卡机各拍一次中大通即计分。<br>每天封顶 <b>6 分</b>。可通过搭电梯等走捷径（系统只看你拍了哪两个点）。</div>
-  <div class="hero-prog" data-page-node-id="heroProg">
-    <div class="hbar"><i id="h-bar" data-page-node-id="SJJnugJJEeUKS35LW9fR4h"></i></div>
-    <div class="hrow"><span><span class="hnum" id="h-pt" data-page-node-id="ijgfkua8w8Vp7i2f7P6Grb">0</span> <span class="hmuted" data-i18n="progUnit">/ 40 分</span></span><span class="hmuted" id="h-left" data-page-node-id="ScK1GHv6hXZB7IwLwVgaVx">还差 40 分</span></div>
-    <div class="hbtns">
-      <button class="hb" onclick="add(2)" data-i18n="btn2">+2（一趟单程）</button>
-      <button class="hb" onclick="add(4)" data-i18n="btn4">+4（通勤来回）</button>
-      <button class="hb" onclick="add(6)" data-i18n="btn6">+6（周末满额）</button>
-      <button class="hb sub" onclick="sub(2)" data-i18n="btnSub">−2</button>
-      <button class="hb res" onclick="reset()" data-i18n="btnReset">重置</button>
+<div class="hero" data-page-node-id="vBrNGPF0YN3EJEBzW4cBrY">
+  <div class="star" data-page-node-id="KRfyb8P0MF2884BOkNfISv">✦</div>
+  <h1 data-page-node-id="RTGjonTL0c3jxcJEH0WSyf">大·部·行 Walk for Green</h1>
+  <div class="en" data-i18n="heroEn" data-page-node-id="xLeanjcuSuMUWiB2JM2c7Q">CUHK 刷中大通打卡校园路线 · 换 PE 分</div>
+  <div class="goal" data-i18n-html="heroGoal" data-page-node-id="ooIygAXfyJgThqmHHBz7LE">目标：<b data-page-node-id="BpdGrQx5IJ9XCOH9I8zrUc">一学期满 40 分 → 5 个 PE 参与分</b></div>
+  <div style="font-size:12.5px;color:var(--sub);margin-top:5px;line-height:1.5">⏱️ 相邻两个点开卡时间不能超过一个小时，否则该次数据取消、不计分。</div>
+  <div class="hero-prog" data-page-node-id="lWLdK4r1Ze9K4U1Zlyv2jv">
+    <div class="hbar" data-page-node-id="hV1CTeq1TFmcC16RQO6Qmc"><i id="h-bar" data-page-node-id="3TYtwPj3lG7hMjkJSDpyNw"></i></div>
+    <div class="hrow" data-page-node-id="HbvjfKFf7NceaYEWEQu1lb"><span data-page-node-id="aH8fTA8HfemaOsV56y5pZ0"><span class="hnum" id="h-pt" data-page-node-id="4rrlsmkrRRWzHfUgPZPcN0">0</span> <span class="hmuted" data-i18n="progUnit" data-page-node-id="b7ONZcjLBFPoE43C2A9kNA">/ 40 分</span></span><span class="hmuted" id="h-left" data-page-node-id="fqZEQSX7ZKNLKtSGfMydpC">还差 40 分</span></div>
+    <div class="hbtns" data-page-node-id="qdM2uwRRFRz7WReSC6XNaV">
+      <button class="hb" onclick="add(2)" data-i18n="btn2" data-page-node-id="1Uck6ofJUIn0ZWnpXLjvpl">+2（一趟单程）</button>
+      <button class="hb" onclick="add(4)" data-i18n="btn4" data-page-node-id="nF3urkK7Ep1mZLBPpAs7SL">+4（通勤来回）</button>
+      <button class="hb" onclick="add(6)" data-i18n="btn6" data-page-node-id="KI4UMV6dFQ0GOe5RuByIz2">+6（周末满额）</button>
+      <button class="hb sub" onclick="sub(2)" data-i18n="btnSub" data-page-node-id="apiiAjjY88sHw5dSTrPPK4">−2</button>
+      <button class="hb res" onclick="reset()" data-i18n="btnReset" data-page-node-id="BN1ORq0Wrj7KeEzzVCvqz2">重置</button>
     </div>
-    <div class="tiny" style="color:rgba(255,255,255,.85);margin-top:7px" data-i18n="progNote">进度自动存在你手机里（localStorage），关掉再开还在。</div>
+    <div class="tiny" data-i18n="progNote" data-page-node-id="OvQNaq22CxEq4TTb9WGr6W">进度自动存在你手机里（localStorage），关掉再开还在。</div>
   </div>
 </div>
 
-<!-- 课表 · 附近有什么打卡点（高亮：朋友一眼能找到） -->
-<div class="card hi" id="schedCard">
-  <h2><span class="dot"></span><span data-i18n="schH2">📅 我的课表 · 附近有什么打卡点</span><span class="hi-badge" data-i18n="schBadge">① 先填这里</span></h2>
-  <div class="muted" data-i18n-html="schDesc">选星期 → 填「上课地点」和「下课后去哪」→ 自动列出<b>附近步行 5–15 分钟能顺手拍的读卡机</b>和回程路上能补的点。</div>
-  <div class="dtabs" id="dayTabs"></div>
-  <div class="nav-in">
-    <select id="schA"></select>
-    <select id="schB"></select>
+<!-- 板块1：顺路打卡规划器（A→B 算分）—— 原样保留 -->
+<div class="card" id="plannerCard" data-page-node-id="Uq8dBklurttDzB7LO6b3FL">
+  <h2 data-page-node-id="cDjtJhxHPWuH4bhn0ay42s"><span class="dot" data-page-node-id="pZgY1ZtUSYCjJCakqYoR7B"></span><span data-i18n="navH2" data-page-node-id="reXYT6ZtXBoQxfxrYlUMYU">🧭 顺路打卡规划器</span><span class="badge" data-i18n="navBadge" data-page-node-id="npmF4x0lUjv5qYrYPqMbsv">随时查</span></h2>
+  <div class="muted" data-i18n-html="navDesc" data-page-node-id="deTyth3TpfVhloVwa0Xh9T">从 A 点到 B 点，能拿几分？选起点 / 终点（教学楼、书院、车站都行，不限于读卡机），自动列出沿途要拍的打卡点、精确楼层、实拍图，并算好分。</div>
+  <div class="warnbox" style="margin-top:9px">📌 一学期满 <b>40 分 = 5 个 PE 参与分（P1）</b>；相邻两次拍卡须 <b>间隔 &lt; 1 小时</b>，否则该次数据取消、不计分。</div>
+  <div class="nav-in" data-page-node-id="o7TLW8SUkwSixVnmJsQb0C">
+    <select id="from" data-page-node-id="1GYdWZWCTL9pgJW3GXLNmD"></select>
+    <select id="to" data-page-node-id="mNlqWMlq8hbpZtg2kAruLQ"></select>
   </div>
-  <div class="upload">
-    <input type="file" id="schedImg" accept="image/*" data-i18n-ph="schUpload">
-    <div id="schedImgWrap"></div>
-  </div>
-  <div class="today" id="todayBox">
-    <div class="today-h" data-i18n="todayH">📌 今天推荐顺路打卡</div>
-    <div id="todayBody"></div>
-  </div>
+  <label class="ck" data-page-node-id="P5qCSpDxWIIgdZ4dOv9ED9"><input type="checkbox" id="back" checked data-page-node-id="6MndbgcPt8GgBAq3r8Cl4G"> <span data-i18n="navBack" data-page-node-id="kEXMmAxQMoGbQonud9MCgy">含回程（终点→起点再算一次）</span></label>
+  <button class="b-go" onclick="plan()" data-i18n="navBtn" data-page-node-id="ymKVVZsEBO85u49xfjYtLx">查顺路打卡点 + 算分</button>
+  <div class="out" id="out" data-page-node-id="a7oBHHZlqRqAHbOrYPrw2x"></div>
 </div>
 
-<!-- 顺路打卡规划器 -->
-<div class="card" id="plannerCard">
-  <h2><span class="dot"></span><span data-i18n="navH2">🧭 顺路打卡规划器</span></h2>
-  <div class="nav-in">
-    <select id="from"></select>
-    <select id="to"></select>
-  </div>
-  <label style="font-size:12.5px;color:var(--sub);display:flex;align-items:center;gap:6px;margin:2px 0 0">
-    <input type="checkbox" id="back" checked> <span data-i18n="navBack">含回程（终点→起点再算一次）</span>
-  </label>
-  <button class="b-go" onclick="plan()" data-i18n="navBtn">查顺路打卡点 + 算分</button>
-  <div class="out" id="out"></div>
-  <details class="fold">
-    <summary>📋 <span data-i18n="exH2">示例行程</span></summary>
-    <div class="foldbody">
-      <div class="step"><div class="n">1</div><div data-i18n-html="exS1"></div></div>
-      <div class="step"><div class="n">2</div><div data-i18n-html="exS2"></div></div>
-      <div class="step"><div class="n">3</div><div data-i18n-html="exS3"></div></div>
-      <div class="step"><div class="n">★</div><div data-i18n-html="exS4"></div></div>
-      <div class="warnbox" data-i18n-html="exW1"></div>
-      <div class="warnbox" data-i18n-html="exW2"></div>
+<!-- 板块2：今日顺路打卡推荐（第 2 位，学长姐投稿揉进路线） -->
+<div class="card hi" id="todayCard" data-page-node-id="B2PVmoxOSM47ZOdGIKOIkL">
+  <h2 data-page-node-id="bwEUtqAYzKoIyJSgfh49dH"><span class="dot" data-page-node-id="ZSxo4vKyXRQWT8qAGWdry9"></span><span data-i18n="todayH" data-page-node-id="JFcPYzcrXJLBvNTOaDeVWo">📌 今日顺路打卡推荐</span></h2>
+  <div class="muted" data-page-node-id="vGGpwxoeN4BeJ9Kl4h947z"><span data-i18n-html="todayDesc" data-page-node-id="e9uIkUJfCFBAj3T2HuWVk1">按你今天（周几）的课表，只推今天的顺路路线 + 大概时间点。</span><button class="mini" onclick="toggleSchedEdit()" data-i18n="schEditBtn" data-page-node-id="w1AFJNrGaAbLtMVSzmCwCR">✎ 修改课表</button></div>
+  <div id="todayBody" data-page-node-id="7QX3tS44G68959lTUKSbMH"></div>
+
+  <!-- 课表编辑（默认收起） -->
+  <div id="schedEdit" style="display:none" data-page-node-id="CledWn1YjAjTOY4BHIEkzA">
+    <div class="dtabs" id="dayTabs" data-page-node-id="k0E4CkCDr4QxSqb4STgU0U"></div>
+    <div class="nav-in" data-page-node-id="RjJoWujIzyyWiZMQquDn3h">
+      <select id="schA" data-page-node-id="OeCzgXqdUaPHGHaNao8dkw"></select>
+      <select id="schB" data-page-node-id="y2xVLnTNgV618zpzdlwPOQ"></select>
     </div>
-  </details>
-</div>
-
-<!-- 读卡机位置 -->
-<div class="card">
-  <h2><span class="dot"></span><span data-i18n="rdH2">📍 10 个读卡机 · 楼层 + 位置</span></h2>
-  <div class="muted" data-i18n-html="rdDesc">读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。点右侧 🗺️ 可直接导航过去。</div>
-  <div id="readerBox"></div>
-  <details class="fold">
-    <summary>🗺️ <span data-i18n="rdMapGrp">全部 10 点总地图（含 LWS / UMSO）</span></summary>
-    <div class="foldbody">
-      <iframe id="campusmap" class="map" src="https://www.google.com/maps/d/embed?mid=16iVDuV7jAX00r1XB_y8WY7c6OiiPoy-1" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div class="upload" data-page-node-id="GxbuXEVCyhMDbTtmXInHn9">
+      <input type="file" id="schedImg" accept="image/*" data-i18n-ph="schUpload" data-page-node-id="OpTyF8l9NYy70wHgik0epQ">
+      <div id="schedImgWrap" data-page-node-id="GAABH2GSXo3K9dyTco6jZa"></div>
     </div>
-  </details>
+    <div class="sched-hint" data-i18n-html="schHint" data-page-node-id="RPs0eCbXc1DGHfVJV75HcB"></div>
+  </div>
+
+  <!-- 学长姐投稿：已融入今日路线推荐里 + 底部投稿入口 -->
+  <div class="tips-block" data-page-node-id="rUMA305xPcwJQcB8w4eHQQ">
+    <details class="fold" style="border:1px solid var(--line);border-radius:14px;margin-top:10px;background:var(--card);overflow:hidden;box-shadow:0 2px 10px rgba(31,42,68,.04)" data-page-node-id="HcVwsc6IEDR5stSTIHQ79M">
+      <summary style="list-style:none;padding:12px 13px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px" data-i18n="senAllToggle" data-page-node-id="xu06OggMe47sZVMVO3n1MY">🧑‍🏫 投稿你的捷径（会显示在对应路线推荐里）</summary>
+      <div style="padding:0 13px 13px" data-page-node-id="YKshDEi7YPBlVac1cfRUhZ">
+        <div class="sen-form" data-page-node-id="10EE7HVeh2jzdCgLVAxdsw">
+          <input id="senName" data-i18n-ph="senNamePh" placeholder="昵称（如：2023 届 经济 阿欣）" data-page-node-id="WHKJHp35rWY1x8sq70UmHJ">
+          <textarea id="senText" data-i18n-ph="senTextPh" placeholder="捷径内容（例如：联合去崇基最快搭 SL4 到大学站再走 2 分钟；LSK 读卡机在 3 楼电梯口右转）"></textarea>
+          <select id="senRoute" style="padding:9px 10px;border:1px solid var(--line);border-radius:9px;font-size:13px;font-family:inherit;background:#fff;color:var(--ink)" data-page-node-id="OrXCnYS7h3rnZvAqxPbIH0"></select>
+          <div class="sen-row" data-page-node-id="9Mg1imr1mOQRWM5V1dmLbg">
+            <button class="b-sen" onclick="addTip()" data-i18n="senSubmit" data-page-node-id="z3d879rkjmoksqmPb7GEYB">提交投稿</button>
+          </div>
+        </div>
+        <div class="sched-hint" style="margin-top:8px">💡 投稿会按路线分类，自动出现在对应日期的「今日顺路打卡推荐」里。</div>
+      </div>
+    </details>
+  </div>
 </div>
 
-<!-- 计分速查（折叠，需要才点开） -->
-<details class="fold">
-  <summary>📊 <span data-i18n="scoreH2">分数速查表（每段）</span></summary>
-  <div class="foldbody">
-    <div id="scoreBox"></div>
-    <div class="note" data-i18n-html="scoreNote"></div>
-  </div>
-</details>
+<!-- 板块3：打卡点地图（放最下面，原形式：点 🗺️ 在 Google Maps 导航） -->
+<div class="card" id="mapCard" data-page-node-id="0gJDbEtgYhsg4hg2hVM6xY">
+  <h2 data-page-node-id="nZAkKVu0he9C0TyADKAgiR"><span class="dot" data-page-node-id="6v223ZY9GHXtL0HmZWcamG"></span><span data-i18n="rdH2" data-page-node-id="oSPOGhdFvjjmQBDw2hItYF">📍 打卡点地图 · Google Maps 导航</span></h2>
+  <div class="muted" data-i18n-html="rdDesc" data-page-node-id="EA1cAZgCBaDrDAD6hs3NEE">读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。点右侧 🗺️ 可直接导航过去。</div>
+  <div id="readerBox" data-page-node-id="P3FhTM9BDIN7PkS0kIIWWr"></div>
+</div>
 
-<!-- 40分计划（折叠） -->
-<details class="fold">
-  <summary>⏱️ <span data-i18n="planH2">凑满 40 分的最省事节奏</span></summary>
-  <div class="foldbody">
-    <ul class="tight">
-      <li data-i18n-html="planLi1"><b>周末党</b>：挑 <span class="hl">7 个周末日</span>，每次走一个「来回」(单程 3 + 回程 3 = 6 分) → 满 40。</li>
-      <li data-i18n-html="planLi2"><b>通勤党（推荐你）</b>：每次上下课/去图书馆，出发拍起点、到达拍终点，来回 4 分 → <span class="hl">10 次</span>就满。</li>
-      <li data-i18n-html="planLi3"><b>最低门槛</b>：每周顺路刷一次来回（6 分），7 周达标，几乎不费劲。</li>
-    </ul>
-    <div class="warnbox" data-i18n-html="planWarn">⚠️ 记录可能按<b>学期窗口</b>结算，稳妥起见在<b>同一学期内</b>刷满 40，别跨学期赌。</div>
-    <div class="muted" data-i18n-html="planMuted"></div>
-  </div>
-</details>
+<div class="foot" data-page-node-id="FYwE0BCHN3EhXrWYkIfY0D">
+  <span data-i18n="foot1" data-page-node-id="SHaczEIRPWZ8aQZjEaeJY9">✦ 我们都能拥有美好的grade ✦</span><br data-page-node-id="dZ7Zr5yM1Abr7SFS8V2IIf">
+  <span data-i18n="foot2" data-page-node-id="giDpYxRctuQQQNET8yOfVl">本卡为个人攻略，规则以 CUHK SRSDO 官网为准</span>
+</div>
 
-<!-- 学长姐捷径投稿 -->
-<div class="card">
-  <h2><span class="dot"></span><span data-i18n="senH2">🧑‍🏫 学长姐捷径投稿</span></h2>
-  <div class="muted" data-i18n-html="senDesc">诚邀各位学长姐分享速通捷径（最快路线、读卡机藏在哪、哪个电梯近）</div>
-  <div class="sen-form">
-    <input id="senName" data-i18n-ph="senNamePh" placeholder="昵称（如：2023 届 经济 阿欣）">
-    <textarea id="senText" data-i18n-ph="senTextPh" placeholder="捷径内容（例如：联合去崇基最快搭 SL4 到大学站再走 2 分钟；LSK 读卡机在 3 楼电梯口右转）"></textarea>
-    <select id="senRoute" style="padding:9px 10px;border:1px solid var(--line);border-radius:9px;font-size:13px;font-family:inherit;background:#fff;color:var(--ink)"></select>
-    <div class="sen-row">
-      <button class="b-sen" onclick="addTip()" data-i18n="senSubmit">提交投稿</button>
+<!-- 规则浮窗按钮（左下角） -->
+<div class="rulesfab" onclick="openRules()" data-i18n="rulesFab" data-page-node-id="sW9TxL5ETbvb7CYcYBPWvO">📖 规则</div>
+
+<!-- 规则弹窗（把分数表 / 40分计划 / 坑点 / 示例 / 官方 全部收进来） -->
+<div class="modal" id="rulesModal" onclick="if(event.target===this)closeRules()" data-page-node-id="BXJMgAJ1XAGjtNXDXuLTeC">
+  <div class="modalcard" data-page-node-id="uVQrTEUKawBE9y1ahzHDYl">
+    <div class="modalhead" data-page-node-id="lezkBWy9U4xxFPTPvE8Lh5"><span data-i18n="rulesTitle" data-page-node-id="eaJa8MbIxnF0RspM9Y7TK3">📖 规则速查</span><button onclick="closeRules()" data-page-node-id="frEPIw28LjS09MXRw2AXhB">✕</button></div>
+    <div class="modalbody" data-page-node-id="fGzXpAb2FHWhE2gIcMZbfL">
+      <div class="muted" data-i18n-html="heroGoal2" data-page-node-id="rdD3uOYnxLZMUSyiL7ZV5j">同一趟行程 <b data-page-node-id="nmti4xcBny1WqkVDWIo4aV">1 小时内</b>，起点 + 终点各拍一次中大通即计分。每天封顶 <b data-page-node-id="A3aT31H3nqaQMQPW7SyfHD">6 分</b>。可通过搭电梯等走捷径（系统只看你拍了哪两个点）。</div>
+      <h3 data-i18n="scoreH2" data-page-node-id="XWmWruklAuWRLUVESdtoSA">📊 分数速查表（每段）</h3>
+      <div id="scoreBox" data-page-node-id="lucIqwo76jkmPzSPW1RuiF"></div>
+      <div class="note" data-i18n-html="scoreNote" data-page-node-id="YEwepF5qZ5vvSypNIBdu1m"></div>
+      <h3 data-i18n="planH2" data-page-node-id="bNj3yP5ZigTJIVgK3YzDyG">⏱️ 凑满 40 分的最省事节奏</h3>
+      <ul class="tight" data-page-node-id="3U1ECzHZx3vPXcVVyQFIyg">
+        <li data-i18n-html="planLi1" data-page-node-id="mab3OgBJTv4BBfVO2q8G8w"></li>
+        <li data-i18n-html="planLi2" data-page-node-id="RGLzTZp7B0HcjvsF4Yzv96"></li>
+        <li data-i18n-html="planLi3" data-page-node-id="ZmD9GFNJwpaoBph5Oqi081"></li>
+      </ul>
     </div>
   </div>
-  <div class="sen-filter" style="display:flex;gap:8px;align-items:center;margin:12px 0 2px">
-    <span class="muted" data-i18n="senFilterLabel" style="font-weight:700">🔍 按路线筛选</span>
-    <select id="senFilter" style="flex:1;padding:7px 9px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;font-family:inherit;background:#fff;color:var(--ink)"></select>
-  </div>
-  <div id="senList"></div>
 </div>
 
-<div class="foot" data-page-node-id="T5hj2Ob9H20meAZq0Z5yxq">
-  <span data-i18n="foot1">✦ 我们都能拥有美好的grade ✦</span><br data-page-node-id="R9Av4b5DAFYPRKL3lXxl8f">
-  <span data-i18n="foot2">本卡为个人攻略，规则以 CUHK SRSDO 官网为准</span>
-</div>
-
-<!-- 语言切换悬浮窗（固定右下角，不挤标题） -->
-<div class="langfab" id="langFab" data-page-node-id="langFab">
-  <div class="langfab-menu" id="langMenu" style="display:none">
-    <button class="langfab-item" data-lang="zh">普通话</button>
-    <button class="langfab-item" data-lang="yue">粤语</button>
-    <button class="langfab-item" data-lang="en">English</button>
+<!-- 语言切换悬浮窗（固定右下角） -->
+<div class="langfab" id="langFab" data-page-node-id="dvgpVtPgPNGURR5BLIFEMW">
+  <div class="langfab-menu" id="langMenu" style="display:none" data-page-node-id="L05Jl97Hz9KMvGCaeu1rdC">
+    <button class="langfab-item" data-lang="zh" data-page-node-id="DMjmqFeqCEL36CyplCyekD">普通话</button>
+    <button class="langfab-item" data-lang="yue" data-page-node-id="aVrT2vFbEFEneEJjes6PRn">粤语</button>
+    <button class="langfab-item" data-lang="en" data-page-node-id="IMYatf76OdsCWB93FgOq4B">English</button>
   </div>
-  <button class="langfab-main" id="langFabMain" onclick="toggleLangMenu()">🌐 <span id="langCur">普通话</span></button>
+  <button class="langfab-main" id="langFabMain" onclick="toggleLangMenu()" data-page-node-id="VyvHbvgv3dvSl34ULaUXpb">🌐 <span id="langCur" data-page-node-id="jyKOtkXfEpdy8vAyapV1jN">普通话</span></button>
 </div>
 
 <script>
@@ -341,41 +277,30 @@ const I18N = {
   zh:{
     title:"大·部·行 Walk for Green 攻略卡",
     heroEn:"CUHK 刷中大通打卡校园路线 · 换 PE 分",
-    heroGoal:'<b>满 40 分 → 5 个 PE 分</b>｜同一趟行程 <b>1 小时内</b>，起点+终点各拍一次｜<b>每天上限 6 分</b>',
-    exH2:"示例行程：去 YIA 康本学习（零额外走路）",
-    exS1:'<b>出门前</b>先在旁边的 <span class="pill">LSK 3/F</span> 读卡机拍一下（你从联合走到 LSK 很近）。',
-    exS2:'坐校车到康本，<b>进楼时于地面层 <span class="pill">YIA G/F</span></b> 拍一下 → LSK→YIA = <b>2 分</b>（1 小时内 ✓）。',
-    exS3:'学完走时，<b>出楼再拍 YIA G/F</b>，回程到 LSK 拍 LSK → YIA→LSK = <b>又 2 分</b>。',
-    exS4:'今天合计 <b>4 分</b>，零额外走路，全靠通勤顺手拍。',
-    exW1:'⚠️ YIA 读卡机在 <b>地面层 G/F</b>，不在 6F！进/出楼时拍即可，不用专门跑楼层。',
-    exW2:'⚠️ 两拍之间必须 <b>1 小时内</b>。"出发拍 LSK、到校拍 YIA" 和 "离校拍 YIA、回校拍 LSK" 是<b>两次独立行程</b>，各算各的。',
+    heroGoal:'<b>满 40 分 → 5 个 PE 分</b>',
+    heroGoal2:'同一趟行程 <b>1 小时内</b>，起点 + 终点各拍一次中大通即计分。每天封顶 <b>6 分</b>。可通过搭电梯等走捷径（系统只看你拍了哪两个点）。',
     progH2:"我的 40 分进度", progUnit:"/ 40 分",
-    tagOften:"常去", tagHome:"你家附近", navHere:"导航",
-    todayH:"📌 顺路打卡推荐",
+    navHere:"导航",
+    todayH:"📌 今日顺路打卡推荐",
     progNote:"进度自动存在你手机里（localStorage），关掉再开还在。",
+    tpBefore:"课前", tpAt:"到课 / 到目的地",
     btn2:"+2（一趟单程）", btn4:"+4（通勤来回）", btn6:"+6（周末满额）", btnSub:"−2", btnReset:"重置",
-    navH2:"🧭 顺路打卡规划器",
-    navDesc:'告诉它「我现在在 X、要去 Y」（教学楼 / 书院 / 车站都行，不限于读卡机），自动列出<b>沿途要拍的打卡点</b>、精确楼层、实拍图，并算好分。拿不准校园地图就点文末 🗺️。',
+    navH2:"🧭 顺路打卡规划器", navBadge:"随时查",
+    navDesc:'从 A 点到 B 点，能拿几分？选起点 / 终点（教学楼、书院、车站都行，不限于读卡机），自动列出<b>沿途要拍的打卡点</b>、精确楼层、实拍图，并算好分。',
     navBack:"含回程（终点→起点再算一次）", navBtn:"查顺路打卡点 + 算分",
-    schH2:"📅 我的课表 · 附近有什么打卡点",
-    schDesc:'选星期 → 填「上课地点」和「下课后去哪」→ 自动列出<b>附近步行 5–15 分钟能顺手拍的读卡机</b>，以及回程路上还能补的点。',
-    schUpload:"（可选）上传课表截图，对照着填更快",
-    schBadge:"① 先填这里",
-    schHint:'💡 绝大多数课在「联合（→LSK）」或「崇基/ECON（→YIA）」，所以 <b>LSK↔YIA 是你最稳的 2 分线</b>。把两头的课配成一天，来回就 4 分。',
-    rdH2:"📍 10 个读卡机 · 实拍 + 精确楼层",
-    rdDesc:'读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。LWS / UMSO 官网图缺失，见文末地图定位。',
-    rdMapGrp:"🗺️ 全部 10 点总地图（含 LWS / UMSO）",
-    rdGrpA:"🟦 崇基 / 中央核心区", rdGrpB:"🟩 中央 · 工程大楼 / 文物馆", rdGrpE:"🟪 和声 / 伍宜孙书院（最北）",
+    todayDesc:'按你今天（周几）的课表，只推今天的顺路路线 + 大概时间点。',
+    schEditBtn:"✎ 修改课表",
+    rdH2:"📍 打卡点地图 · Google Maps 导航",
+    rdDesc:'读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。点右侧 🗺️ 可直接导航过去。',
+    rdGrpA:"🟦 崇基 / 中央核心区", rdGrpB:"🟩 中央 · 工程大楼 / 文物馆", rdGrpC:"🟨 中央 · 李兆基 / 蒙民伟", rdGrpE:"🟪 和声 / 伍宜孙书院（最北）", rdGrpD:"🟧 大学保健医疗中心",
     scoreH2:"分数速查表（每段）", scoreTh1:"走的路段（相邻读卡机）", scoreTh2:"分",
     scoreNote:'⚠️ <b># 陷阱（只限这一条长线！）</b>：从崇基直奔和声/伍宜孙（只拍 YIA/FYB/PSC 和 LWS/WYS 两头）= <b>0 分</b>，必须经过一个中间读卡机（HSHEB/MMW/LSK/LKSP/UMSO）。<br><b>其他路段不用中转</b>：例如 LSK↔YIA（2 分）、MMW↔LWS（1 分）、HSHEB↔LWS（2 分）直接拍两头就计分。同区内两个读卡机互拍（如 LSK↔MMW）= 0。',
     planH2:"凑满 40 分的最省事节奏",
     planLi1:'<b>周末党</b>：挑 <span class="hl">7 个周末日</span>，每次走一个「来回」(单程 3 + 回程 3 = 6 分) → 满 40。',
-    planLi2:'<b>通勤党（推荐你）</b>：每次上下课/去图书馆，出发拍起点、到达拍终点，来回 4 分 → <span class="hl">10 次</span>就满。',
+    planLi2:'<b>通勤党（推荐）</b>：每次上下课/去图书馆，出发拍起点、到达拍终点，来回 4 分 → <span class="hl">10 次</span>就满。',
     planLi3:'<b>最低门槛</b>：每周顺路刷一次来回（6 分），7 周达标，几乎不费劲。',
-    planWarn:'⚠️ 记录可能按<b>学期窗口</b>结算，稳妥起见在<b>同一学期内</b>刷满 40，别跨学期赌。',
-    planMuted:'确认今年是否开：登 SRSDO「My Walking Record」(CUHK 邮箱+OnePass) 看 9 月后有无累计；或第二天去「Google 大步行」这个网页 https://srsdo.cuhk.edu.hk/zh-hk/walk-for-green/my-walking-record/ 找自己的打卡记录，然后更新到 40 分进度里。疑问可问 EMO（Doris Chan，3943 4444 / doris@emo.cuhk.edu.hk）。',
     foot1:"✦ 我们都能拥有美好的grade ✦", foot2:"本卡为个人攻略，规则以 CUHK SRSDO 官网为准",
-    // 规划器动态文案
+    rulesTitle:"📖 规则速查", rulesFab:"📖 规则",
     pOneway:"单程", pTotal:"本趟共计", pIncl:"（含回程）", pTapDep:"出发时拍", pTapArr:"到达拍（与上一拍须在 1 小时内）",
     pTapRet:"回程再拍", pViewMap:"🗺️ 看校园地图",
     pTrap:"⚠️ 崇基 ↔ 和声/伍宜孙 直接拍两头 = 0 分！必须<b>在途中经过一个中间读卡机</b>才计分（下面第 2 步）。",
@@ -383,38 +308,33 @@ const I18N = {
     pNoScore:"这条路线系统不计分（可能不在活动覆盖的读卡机组合内）。试试拆成两段相邻读卡机。",
     pSameReader:"起点和终点都对应 <b>__R__</b> 这一个读卡机，单靠这趟不够——试着把「去另一个读卡机」的行程也排进同一天（例如联合→崇基 = LSK↔YIA = 2 分）。",
     pMidStep:"途中拍（中间点，崇基与和声之间）",
-    // 读卡机 how
     how:{
       YIA:{zh:"崇基校园，近崇基门 / 大学巴士站，楼内有 Cafe 330、书店"},
       FYB:{zh:"崇基校园，近庞万伦学生中心"},
       PSC:{zh:"崇基中央，近崇基饭堂"},
       HSHEB:{zh:"中央校园，近李兆基楼"},
       MMW:{zh:"中央校园，近李兆基楼"},
-      LSK:{zh:"联合书院旁，你常走那栋，近邵逸夫堂"},
+      LSK:{zh:"联合书院旁，近邵逸夫堂"},
       LKSP:{zh:"大学图书馆旁，文物馆内"},
       UMSO:{zh:"近大学站 / 保健中心（官网图缺失，见地图）"},
       LWS:{zh:"最北，和声书院 North Block 大堂（官网图缺失，见地图）"},
       WYS:{zh:"最北，伍宜孙书院大堂"}
     },
-    // 地点标签
     lbl:{
       YIA:{zh:"YIA 康本国际学术园"}, FYB:{zh:"FYB 王福元楼"}, PSC:{zh:"PSC 庞万伦学生中心"},
       HSHEB:{zh:"HSHEB 何善衡工程大楼"}, MMW:{zh:"MMW 蒙民伟楼"}, LSK:{zh:"LSK 李兆基楼（联合旁）"},
       LKSP:{zh:"LKSP 文物馆罗桂祥阁"}, UMSO:{zh:"UMSO 大学保健医疗中心"}, LWS:{zh:"LWS 和声书院"}, WYS:{zh:"WYS 伍宜孙书院"},
-      UC:{zh:"联合书院（我家）"}, UCA:{zh:"曾肇添楼（ELTU·联合）"}, UCC:{zh:"郑栋材楼（GPAD·联合）"},
-      WMY:{zh:"伍何曼原楼（ECON）"}, ELB:{zh:"利黄瑶璧楼（ELTU·崇基）"}, LSB:{zh:"邵逸夫夫人楼（GPAD）"},
-      TEN:{zh:"网球场（PHED）"}, STN:{zh:"大学站"}, MIL:{zh:"百万大道"}
+      UC:{zh:"联合书院"}, UCA:{zh:"曾肇添楼"}, UCC:{zh:"郑栋材楼"},
+      WMY:{zh:"伍何曼原楼"}, ELB:{zh:"利黄瑶璧楼"}, LSB:{zh:"邵逸夫夫人楼"},
+      TEN:{zh:"网球场"}, STN:{zh:"大学站"}, MIL:{zh:"百万大道"}
     },
-    // 计分表路段
     route:{
       r1:{zh:"崇基(YIA/FYB/PSC) ↔ HSHEB / LKSP"}, r2:{zh:"崇基 ↔ MMW / LSK"}, r3:{zh:"崇基 ↔ UMSO"},
       r4:{zh:"崇基 ↔ LWS / WYS"}, r5:{zh:"HSHEB / LKSP ↔ MMW / LSK"}, r6:{zh:"HSHEB / LKSP ↔ LWS / WYS"},
       r7:{zh:"MMW / LSK ↔ LWS / WYS"}, r8:{zh:"MMW / LSK ↔ UMSO"}, r9:{zh:"LWS / WYS ↔ UMSO"}
     },
-    // 星期 / 课表
     day:{mon:{zh:"周一"},tue:{zh:"周二"},wed:{zh:"周三"},thu:{zh:"周四"},fri:{zh:"周五"}},
     dayEmpty:"（还没有顺路打卡提示 —— 直接在下方格子填写你每周的课 + 要拍的读卡机）",
-    // 学长姐
     senH2:"🧑‍🏫 学长姐捷径投稿",
     senDesc:'诚邀各位学长姐分享速通捷径（最快路线、读卡机藏在哪、哪个电梯近）',
     senNamePh:"昵称（如：2023 届 经济 阿欣）",
@@ -438,48 +358,41 @@ const I18N = {
     minUnit:"分钟", walkZero:"就在楼下", detour:"绕 __D__ 分钟",
     schedTap:"这趟本身：__A__ → __B__ = <b>__P__ 分</b>",
     schedFill:"一键填进规划器",
-    navG:"🗺️ Google 导航", navA:"🍎 Apple 导航",
-    rdGrpC:"🟨 中央 · 李兆基 / 蒙民伟", rdGrpD:"🟧 大学保健医疗中心",
     estNote:"步行时间是校园估算值（±3 分钟），赶时间请以地图为准。",
-    noSchedDay:"这天还没填，选上面的两栋楼就行"
+    noSchedDay:"这天还没填，选上面的两栋楼就行",
+    tipsHead:"💡 学长姐走过的捷径 · 也欢迎你投稿",
+    senAllToggle:"🧑‍🏫 投稿你的捷径（会显示在对应路线推荐里）",
+    schUpload:"（可选）上传课表截图，对照着填更快",
+    schHint:'💡 绝大多数课在「联合（→LSK）」或「崇基/ECON（→YIA）」，所以 <b>LSK↔YIA 是最稳的 2 分线</b>。把两头的课配成一天，来回就 4 分。',
+    schHintSample:"⚠️ 当前是示例课表，点「✎ 修改课表」填入你真实的每周课表，推荐才会准。"
   },
   yue:{
     title:"大·部·行 Walk for Green 攻略卡",
     heroEn:"CUHK 拍中大通打卡校園路線 · 換 PE 分",
-    heroGoal:'<b>滿 40 分 → 5 個 PE 分</b>｜同一趟行程 <b>1 個鐘內</b>，起點+終點各拍一次｜<b>每日上限 6 分</b>',
-    exH2:"示範行程：去 YIA 康本溫書（零額外行路）",
-    exS1:'<b>出門前</b>先喺隔離嘅 <span class="pill">LSK 3/F</span> 讀卡機拍一下（你由聯合行去 LSK 好近）。',
-    exS2:'搭校車去康本，<b>入樓嗰陣喺地面層 <span class="pill">YIA G/F</span></b> 拍一下 → LSK→YIA = <b>2 分</b>（1 個鐘內 ✓）。',
-    exS3:'溫完書走嗰陣，<b>出樓再拍 YIA G/F</b>，返程到 LSK 拍 LSK → YIA→LSK = <b>又 2 分</b>。',
-    exS4:'今日總共 <b>4 分</b>，零額外行路，全部靠返學順手拍。',
-    exW1:'⚠️ YIA 讀卡機喺 <b>地面層 G/F</b>，唔係 6F！入/出樓嗰陣拍就得，唔使特登行上層。',
-    exW2:'⚠️ 兩拍之間一定要 <b>1 個鐘內</b>。「出發拍 LSK、到學校拍 YIA」同「放學拍 YIA、返聯合拍 LSK」係<b>兩次獨立行程</b>，各自計分。',
+    heroGoal:'<b>滿 40 分 → 5 個 PE 分</b>',
+    heroGoal2:'同一趟行程 <b>1 個鐘內</b>，起點+終點各拍一次中大通即計分。每日上限 <b>6 分</b>。可透過搭電梯等走捷徑（系統只看你拍咗邊兩個點）。',
     progH2:"我嘅 40 分進度", progUnit:"/ 40 分",
-    tagOften:"常去", tagHome:"你屋企附近", navHere:"導航",
-    todayH:"📌 順路打卡推薦",
+    navHere:"導航",
+    todayH:"📌 今日順路打卡推薦",
     progNote:"進度自動存在你部電話（localStorage），關咗再開仲喺。",
+    tpBefore:"課前", tpAt:"到課 / 到目的地",
     btn2:"+2（單程一趟）", btn4:"+4（返學來回）", btn6:"+6（週末滿額）", btnSub:"−2", btnReset:"重置",
-    navH2:"🧭 順路打卡規劃器",
-    navDesc:'同佢講「我而家喺 X、要去 Y」（教學樓 / 書院 / 車站都得，唔限讀卡機），自動列出<b>沿路要拍嘅打卡點</b>、精確樓層、實拍圖，同埋計好分。唔肯定校園地圖就撳最底 🗺️。',
+    navH2:"🧭 順路打卡規劃器", navBadge:"隨時查",
+    navDesc:'同佢講「我而家喺 X、要去 Y」（教學樓 / 書院 / 車站都得，唔限讀卡機），自動列出<b>沿路要拍嘅打卡點</b>、精確樓層、實拍圖，同埋計好分。',
     navBack:"含返程（終點→起點再計一次）", navBtn:"查順路打卡點 + 計分",
-    schH2:"📅 我嘅課表 · 附近邊度有打卡點",
-    schDesc:'揀星期 → 填「上課地點」同「落堂去邊」→ 自動列出<b>附近行 5–15 分鐘順手拍到嘅讀卡機</b>，同埋返程路上仲可以補嘅點。',
-    schUpload:"（可揀）上傳課表截圖，對住填更快",
-    schBadge:"① 先填呢度",
-    schHint:'💡 絕大多數課喺「聯合（→LSK）」或「崇基/ECON（→YIA）」，所以 <b>LSK↔YIA 係你最穩嘅 2 分線</b>。將兩頭嘅課配埋一日，來回就 4 分。',
-    rdH2:"📍 10 個讀卡機 · 實拍 + 精確樓層",
-    rdDesc:'讀卡機貼喺相應樓層嘅電梯口/主通道，留意「大·部·行 Walk for Green」綠色標識。LWS / UMSO 官方圖缺失，見最底地圖定位。',
-    rdMapGrp:"🗺️ 全部 10 點總地圖（含 LWS / UMSO）",
-    rdGrpA:"🟦 崇基 / 中央核心區", rdGrpB:"🟩 中央 · 工程大樓 / 文物館", rdGrpE:"🟪 和聲 / 伍宜孫書院（最北）",
+    todayDesc:'按你今日（星期幾）嘅課表，只推今日嘅順路路線 + 大概時間點。',
+    schEditBtn:"✎ 修改課表",
+    rdH2:"📍 打卡點地圖 · Google Maps 導航",
+    rdDesc:'讀卡機貼喺相應樓層嘅電梯口/主通道，留意「大·部·行 Walk for Green」綠色標識。點右側 🗺️ 可直接導航過去。',
+    rdGrpA:"🟦 崇基 / 中央核心區", rdGrpB:"🟩 中央 · 工程大樓 / 文物館", rdGrpC:"🟨 中央 · 李兆基 / 蒙民偉", rdGrpE:"🟪 和聲 / 伍宜孫書院（最北）", rdGrpD:"🟧 大學保健醫療中心",
     scoreH2:"分數速查表（每段）", scoreTh1:"行嘅路段（相鄰讀卡機）", scoreTh2:"分",
     scoreNote:'⚠️ <b># 陷阱（只限呢條長線！）</b>：由崇基直去和聲/伍宜孫（淨係拍 YIA/FYB/PSC 同 LWS/WYS 兩頭）= <b>0 分</b>，必須經過一個中間讀卡機（HSHEB/MMW/LSK/LKSP/UMSO）。<br><b>其他路段唔使中轉</b>：例如 LSK↔YIA（2 分）、MMW↔LWS（1 分）、HSHEB↔LWS（2 分）直接拍兩頭就計分。同一區兩個讀卡機互拍（例如 LSK↔MMW）= 0。',
     planH2:"湊滿 40 分最慳力節奏",
     planLi1:'<b>週末黨</b>：揀 <span class="hl">7 個週末日</span>，每次行一個「來回」(單程 3 + 返程 3 = 6 分) → 滿 40。',
-    planLi2:'<b>返學黨（推薦你）</b>：每次上落課/去圖書館，出發拍起點、到達拍終點，來回 4 分 → <span class="hl">10 次</span>就滿。',
+    planLi2:'<b>返學黨（推薦）</b>：每次上落課/去圖書館，出發拍起點、到達拍終點，來回 4 分 → <span class="hl">10 次</span>就滿。',
     planLi3:'<b>最低門檻</b>：每週順路刷一次來回（6 分），7 週達標，幾乎唔費力。',
-    planWarn:'⚠️ 記錄可能按<b>學期窗口</b>結算，穩陣起見喺<b>同一學期內</b>刷滿 40，唔好跨學期賭。',
-    planMuted:'確認今年有無開：登 SRSDO「My Walking Record」(CUHK 電郵+OnePass) 睇 9 月後有無累積；或者第二日去「Google 大步行」呢個網頁 https://srsdo.cuhk.edu.hk/zh-hk/walk-for-green/my-walking-record/ 搵自己嘅打卡記錄，再更新到 40 分進度入面。有疑問問 EMO（Doris Chan，3943 4444 / doris@emo.cuhk.edu.hk）。',
     foot1:"✦ 我哋都能夠擁有美好嘅 grade ✦", foot2:"本卡為個人攻略，規則以 CUHK SRSDO 官網為準",
+    rulesTitle:"📖 規則速查", rulesFab:"📖 規則",
     pOneway:"單程", pTotal:"呢趟總共", pIncl:"（含返程）", pTapDep:"出發嗰陣拍", pTapArr:"到達拍（同上一拍要喺 1 個鐘內）",
     pTapRet:"返程再拍", pViewMap:"🗺️ 睇校園地圖",
     pTrap:"⚠️ 崇基 ↔ 和聲/伍宜孫 直接拍兩頭 = 0 分！必須<b>途中經過一個中間讀卡機</b>先計分（下面第 2 步）。",
@@ -493,7 +406,7 @@ const I18N = {
       PSC:{yue:"崇基中央，近崇基飯堂"},
       HSHEB:{yue:"中央校園，近李兆基樓"},
       MMW:{yue:"中央校園，近李兆基樓"},
-      LSK:{yue:"聯合書院旁，你常行嗰棟，近邵逸夫堂"},
+      LSK:{yue:"聯合書院旁，近邵逸夫堂"},
       LKSP:{yue:"大學圖書館旁，文物館內"},
       UMSO:{yue:"近大學站 / 保健中心（官方圖缺失，見地圖）"},
       LWS:{yue:"最北，和聲書院 North Block 大堂（官方圖缺失，見地圖）"},
@@ -503,9 +416,9 @@ const I18N = {
       YIA:{yue:"YIA 康本國際學術園"}, FYB:{yue:"FYB 王福元樓"}, PSC:{yue:"PSC 龐萬倫學生中心"},
       HSHEB:{yue:"HSHEB 何善衡工程大樓"}, MMW:{yue:"MMW 蒙民偉樓"}, LSK:{yue:"LSK 李兆基樓（聯合旁）"},
       LKSP:{yue:"LKSP 文物館羅桂祥閣"}, UMSO:{yue:"UMSO 大學保健醫療中心"}, LWS:{yue:"LWS 和聲書院"}, WYS:{yue:"WYS 伍宜孫書院"},
-      UC:{yue:"聯合書院（我屋企）"}, UCA:{yue:"曾肇添樓（ELTU·聯合）"}, UCC:{yue:"鄭棟材樓（GPAD·聯合）"},
-      WMY:{yue:"伍何曼原樓（ECON）"}, ELB:{yue:"利黃瑤璧樓（ELTU·崇基）"}, LSB:{yue:"邵逸夫夫人樓（GPAD）"},
-      TEN:{yue:"網球場（PHED）"}, STN:{yue:"大學站"}, MIL:{yue:"百萬大道"}
+      UC:{yue:"聯合書院"}, UCA:{yue:"曾肇添樓"}, UCC:{yue:"鄭棟材樓"},
+      WMY:{yue:"伍何曼原樓"}, ELB:{yue:"利黃瑤璧樓"}, LSB:{yue:"邵逸夫夫人樓"},
+      TEN:{yue:"網球場"}, STN:{yue:"大學站"}, MIL:{yue:"百萬大道"}
     },
     route:{
       r1:{yue:"崇基(YIA/FYB/PSC) ↔ HSHEB / LKSP"}, r2:{yue:"崇基 ↔ MMW / LSK"}, r3:{yue:"崇基 ↔ UMSO"},
@@ -537,48 +450,41 @@ const I18N = {
     minUnit:"分鐘", walkZero:"就喺樓下", detour:"繞 __D__ 分鐘",
     schedTap:"呢趟本身：__A__ → __B__ = <b>__P__ 分</b>",
     schedFill:"一掣填入規劃器",
-    navG:"🗺️ Google 導航", navA:"🍎 Apple 導航",
-    rdGrpC:"🟨 中央 · 李兆基 / 蒙民偉", rdGrpD:"🟧 大學保健醫療中心",
     estNote:"步行時間係校園估算（±3 分鐘），趕時間請以地圖為準。",
-    noSchedDay:"呢日仲未填，揀上面兩棟樓就得"
+    noSchedDay:"呢日仲未填，揀上面兩棟樓就得",
+    tipsHead:"💡 師兄師姐行過嘅捷徑 · 亦歡迎你投稿",
+    senAllToggle:"🧑‍🏫 投稿你嘅捷徑（會顯示喺對應路線推薦入面）",
+    schUpload:"（可揀）上傳課表截圖，對住填更快",
+    schHint:'💡 絕大多數課喺「聯合（→LSK）」或「崇基/ECON（→YIA）」，所以 <b>LSK↔YIA 係最穩嘅 2 分線</b>。將兩頭嘅課配埋一日，來回就 4 分。',
+    schHintSample:"⚠️ 而家係示範課表，點「✎ 修改課表」填入你真實嘅每週課表，推薦先會準。"
   },
   en:{
     title:"Walk for Green Guide ",
     heroEn:"CUHK — tap your card along campus routes · earn PE credits",
-    heroGoal:'<b>40 pts → 5 PE credits</b>｜within <b>1 hour</b>, tap at start + end｜<b>cap 6 pts/day</b>',
-    exH2:"Example trip: study at YIA (zero extra walking)",
-    exS1:'<b>Before leaving</b>, tap the <span class="pill">LSK 3/F</span> reader nearby (United → LSK is a short walk).',
-    exS2:'Take the shuttle to Yasumoto; <b>tap <span class="pill">YIA G/F</span> at ground floor on entry</b> → LSK→YIA = <b>2 pts</b> (within 1 hr ✓).',
-    exS3:'When leaving, <b>tap YIA G/F again on exit</b>, then tap LSK on return → YIA→LSK = <b>another 2 pts</b>.',
-    exS4:'Today total <b>4 points</b>, zero extra walking — just tap along your commute.',
-    exW1:'⚠️ The YIA reader is at <b>ground floor G/F</b>, not 6F! Just tap on entry/exit — no need to go upstairs.',
-    exW2:'⚠️ The two taps must be <b>within 1 hour</b>. "Tap LSK on departure, YIA on arrival" and "tap YIA on leaving, LSK on return" are <b>two separate trips</b>, scored separately.',
+    heroGoal:'<b>40 pts → 5 PE credits</b>',
+    heroGoal2:'Within <b>1 hour</b>, tap at start + end — the system scores it. Cap <b>6 pts/day</b>. Shortcuts (lift etc.) are fine — only the two tap points matter.',
     progH2:"My 40-point progress", progUnit:"/ 40 pts",
-    tagOften:"often", tagHome:"near yours", navHere:"Navigate",
-    todayH:"📌 Suggested taps",
+    navHere:"Navigate",
+    todayH:"📌 Today's en-route taps",
     progNote:"Progress auto-saves on your phone (localStorage); reopening keeps it.",
+    tpBefore:"Before class", tpAt:"At class / destination",
     btn2:"+2 (one-way)", btn4:"+4 (round commute)", btn6:"+6 (weekend cap)", btnSub:"−2", btnReset:"Reset",
-    navH2:"🧭 Route planner",
-    navDesc:'Tell it "I\'m at X, going to Y" (lecture hall / college / station — anything, not just readers). It lists the <b>readers to tap en route</b>, exact floors, photos, and scores them. Tap 🗺️ at the bottom if unsure of the map.',
+    navH2:"🧭 Route planner", navBadge:"anytime",
+    navDesc:'From point A to B, how many points? Pick start / end (lecture hall / college / station — anything, not just readers). It lists the readers to tap, exact floors, photos, and scores them.',
     navBack:"Include return trip (end→start counted again)", navBtn:"Find route + score",
-    schH2:"📅 My timetable · readers nearby",
-    schDesc:'Pick a weekday → fill "where class is" and "where you go after" → it lists the <b>readers within a 5–15 min walk</b> you can tap on the way, plus bonus stops on the way back.',
-    schUpload:"(optional) upload a timetable screenshot to copy from",
-    schBadge:"① Start here",
-    schHint:'💡 Most classes are at United (→LSK) or Chung Chi/ECON (→YIA), so <b>LSK↔YIA is your safest 2-pt line</b>. Pair classes at both ends in one day for 4 pts round trip.',
-    rdH2:"📍 10 card readers · photos + exact floors",
-    rdDesc:'Readers are by the lift lobbies / main corridors on their floors; look for the green "大·部·行 Walk for Green" sign. LWS / UMSO photos missing from the official site — see the map below.',
-    rdMapGrp:"🗺️ All 10 points map (incl. LWS / UMSO)",
-    rdGrpA:"🟦 Chung Chi / core campus", rdGrpB:"🟩 Central · Engineering / Art Museum", rdGrpE:"🟪 Lee Woo Sing / Wu Yee Sun (north)",
+    todayDesc:"Based on your timetable for today (whichever weekday it is), it shows only today's en-route route + rough timing.",
+    schEditBtn:"✎ Edit timetable",
+    rdH2:"📍 Reader map · Google Maps",
+    rdDesc:'Readers are by the lift lobbies / main corridors on their floors; look for the green "大·部·行 Walk for Green" sign. Tap 🗺️ to navigate.',
+    rdGrpA:"🟦 Chung Chi / core campus", rdGrpB:"🟩 Central · Engineering / Art Museum", rdGrpC:"🟨 Central · LEK / Mong Man Wai", rdGrpE:"🟪 Lee Woo Sing / Wu Yee Sun (north)", rdGrpD:"🟧 University Health Service",
     scoreH2:"Points cheat-sheet (per segment)", scoreTh1:"Route (adjacent readers)", scoreTh2:"Pts",
     scoreNote:'⚠️ <b># Trap (only this long line!)</b>: Chung Chi straight to Lee Woo Sing/Wu Yee Sun (tapping only YIA/FYB/PSC and LWS/WYS ends) = <b>0 pts</b> — you must pass through an intermediate reader (HSHEB/MMW/LSK/LKSP/UMSO).<br><b>Other routes need no transfer</b>: e.g. LSK↔YIA (2 pts), MMW↔LWS (1 pt), HSHEB↔LWS (2 pts) score by tapping just the two ends. Two readers in the same zone (e.g. LSK↔MMW) = 0.',
     planH2:"Easiest ways to reach 40 points",
     planLi1:'<b>Weekend warrior</b>: pick <span class="hl">7 weekend days</span>, one "round trip" each (3 out + 3 back = 6 pts) → 40.',
-    planLi2:'<b>Commuter (recommended for you)</b>: each time you go to class / library, tap start on departure, end on arrival, 4 pts round trip → <span class="hl">10 times</span> done.',
+    planLi2:'<b>Commuter (recommended)</b>: each time you go to class / library, tap start on departure, end on arrival, 4 pts round trip → <span class="hl">10 times</span> done.',
     planLi3:'<b>Lowest bar</b>: one round-trip swipe per week (6 pts), hit 40 in 7 weeks, almost effortless.',
-    planWarn:'⚠️ Records may settle by <b>semester window</b>; to be safe, fill 40 <b>within one semester</b> — don\'t bet across semesters.',
-    planMuted:'Confirm it\'s open this year: log into SRSDO "My Walking Record" (CUHK email + OnePass) to see if September taps accumulate; or the next day, go to the "Google Walk for Green" page https://srsdo.cuhk.edu.hk/zh-hk/walk-for-green/my-walking-record/ to find your check-in records, then update them into the 40-point progress. Questions: EMO (Doris Chan, 3943 4444 / doris@emo.cuhk.edu.hk).',
     foot1:"✦ We can all get good grades ✦", foot2:"Personal guide; rules per CUHK SRSDO official site",
+    rulesTitle:"📖 Rules cheat-sheet", rulesFab:"📖 Rules",
     pOneway:"one-way", pTotal:"This trip total", pIncl:"(incl. return)", pTapDep:"Tap on departure", pTapArr:"Tap on arrival (within 1 hr of previous tap)",
     pTapRet:"Tap again on return", pViewMap:"🗺️ View campus map",
     pTrap:"⚠️ Chung Chi ↔ Lee Woo Sing/Wu Yee Sun tapping only the two ends = 0 pts! You must <b>pass through an intermediate reader en route</b> to score (step 2 below).",
@@ -592,7 +498,7 @@ const I18N = {
       PSC:{en:"Chung Chi centre, near Chung Chi canteen"},
       HSHEB:{en:"Central campus, near Lee Shau Kee Bldg"},
       MMW:{en:"Central campus, near Lee Shau Kee Bldg"},
-      LSK:{en:"By United College, the building you walk past, near Shaw College"},
+      LSK:{en:"By United College, near Shaw College"},
       LKSP:{en:"Next to Univ. Library, inside the Art Museum"},
       UMSO:{en:"Near University Station / Health Centre (official photo missing, see map)"},
       LWS:{en:"North end, Lee Woo Sing College North Block lobby (official photo missing, see map)"},
@@ -602,9 +508,9 @@ const I18N = {
       YIA:{en:"YIA Yasumoto Int'l Academic Park"}, FYB:{en:"FYB Fung Yuen-yap Bldg"}, PSC:{en:"PSC Patrick Shaw Student Centre"},
       HSHEB:{en:"HSHEB Ho Sin Hang Eng. Bldg"}, MMW:{en:"MMW Mong Man Wai Bldg"}, LSK:{en:"LSK Lee Shau Kee Bldg (by United)"},
       LKSP:{en:"LKSP Art Museum (Lowcock)"}, UMSO:{en:"UMSO University Health Service"}, LWS:{en:"LWS Lee Woo Sing College"}, WYS:{en:"WYS Wu Yee Sun College"},
-      UC:{en:"United College (home)"}, UCA:{en:"T.C. Cheng Bldg (ELTU·United)"}, UCC:{en:"T.C. Cheng Bldg (GPAD·United)"},
-      WMY:{en:"Wu Ho Man Yuen Bldg (ECON)"}, ELB:{en:"Esther Lee Bldg (ELTU·Chung Chi)"}, LSB:{en:"Lady Shaw Bldg (GPAD)"},
-      TEN:{en:"Tennis Courts (PHED)"}, STN:{en:"University Station"}, MIL:{en:"Million Avenue"}
+      UC:{en:"United College"}, UCA:{en:"T.C. Cheng Building"}, UCC:{en:"T.C. Cheng Building"},
+      WMY:{en:"Wu Ho Man Yuen Building"}, ELB:{en:"Esther Lee Building"}, LSB:{en:"Lady Shaw Building"},
+      TEN:{en:"Tennis Courts"}, STN:{en:"University Station"}, MIL:{en:"Million Avenue"}
     },
     route:{
       r1:{en:"Chung Chi (YIA/FYB/PSC) ↔ HSHEB / LKSP"}, r2:{en:"Chung Chi ↔ MMW / LSK"}, r3:{en:"Chung Chi ↔ UMSO"},
@@ -636,10 +542,13 @@ const I18N = {
     minUnit:"min", walkZero:"same building", detour:"+__D__ min detour",
     schedTap:"This trip itself: __A__ → __B__ = <b>__P__ pts</b>",
     schedFill:"Load into planner",
-    navG:"🗺️ Google Maps", navA:"🍎 Apple Maps",
-    rdGrpC:"🟨 Central · Lee Shau Kee / Mong Man Wai", rdGrpD:"🟧 University Health Service",
     estNote:"Walking times are campus estimates (±3 min) — trust the map if you're in a hurry.",
-    noSchedDay:"Not filled for this day — just pick two buildings above"
+    noSchedDay:"Not filled for this day — just pick two buildings above",
+    tipsHead:"💡 Shortcuts seniors took · share yours too",
+    senAllToggle:"🧑‍🏫 Submit your shortcut (shows on the matching route)",
+    schUpload:"(optional) upload a timetable screenshot to copy from",
+    schHint:'💡 Most classes are at United (→LSK) or Chung Chi/ECON (→YIA), so <b>LSK↔YIA is the safest 2-pt line</b>. Pair classes at both ends in one day for 4 pts round trip.',
+    schHintSample:"⚠️ This is a sample timetable — tap \"✎ Edit timetable\" and enter your real weekly schedule so the recommendation is accurate."
   }
 };
 
@@ -658,7 +567,6 @@ const RINFO = {
 };
 const GRP = {YIA:"A",FYB:"A",PSC:"A",HSHEB:"B",LKSP:"B",MMW:"C",LSK:"C",UMSO:"D",LWS:"E",WYS:"E"};
 const ALLR = ["YIA","FYB","PSC","HSHEB","MMW","LSK","LKSP","UMSO","LWS","WYS"];
-const RD_GRP_ORDER = [["A","YIA","FYB","PSC"],["B","LKSP","UMSO"],["E","LWS","WYS"]]; // 不严格分组，按区展示
 
 /* ---------- 读卡机之间步行时间（分钟，校园实测估算，±3 分钟） ---------- */
 const WALK = {
@@ -698,8 +606,6 @@ const MAPQ = {
   MIL:{zh:"香港中文大學 百萬大道",en:"Million Avenue, The Chinese University of Hong Kong"}
 };
 function mapName(id){ const m=MAPQ[id]; if(!m) return id; return (curLang==="en") ? m.en : m.zh; }
-function gmap(a,b){ return "https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(mapName(a))+"&destination="+encodeURIComponent(mapName(b))+"&travelmode=walking"; }
-function amap(a,b){ return "https://maps.apple.com/?saddr="+encodeURIComponent(mapName(a))+"&daddr="+encodeURIComponent(mapName(b))+"&dirflg=w"; }
 function gmapHere(id){ return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(mapName(id)); }
 
 /* ---------- 计分 ---------- */
@@ -764,34 +670,27 @@ function tRoute(k){ const r=I18N[curLang].route[k]; return r?r[curLang]:I18N.zh.
 function applyLang(){
   document.documentElement.lang = (curLang==="zh")?"zh-Hans":(curLang==="yue"?"zh-Hant":"en");
   document.title = t("title");
-  // 普通文本
   document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent = t(el.dataset.i18n); });
-  // 含 HTML 的
   document.querySelectorAll('[data-i18n-html]').forEach(el=>{ el.innerHTML = t(el.dataset.i18nHtml); });
-  // placeholder
   document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ el.placeholder = t(el.dataset.i18nPh); });
-  // 语言悬浮窗高亮 + 当前语言名
   updateLangUI();
-  // 重新渲染动态区块（先重建下拉，选项文字才能跟上语言）
   buildPlaceOptions();
-  renderReaders(); renderScore(); renderSched(); renderTips(); renderLeft();
+  renderReaders(); renderScore(); renderToday(); renderTips(); renderLeft();
   buildRouteOptions();
   const outEl=document.getElementById('out');
   if(outEl && outEl.classList.contains('show') && lastPlan) plan();
 }
 
-/* ---------- 读卡机渲染 ---------- */
+/* ---------- 读卡机渲染（板块3：地图 + 实拍图 + 楼层） ---------- */
 function rcard(id){
   const i=RINFO[id];
   const ph = i.photo ? `<img src="${i.photo}" alt="${id}" loading="lazy">` : `<div class="ph">📍<br>${tLbl(id)}</div>`;
   const nm = tLbl(id);
   return `<div class="spot" style="margin:6px 0">${ph}<div class="info"><div class="nm">${nm}</div><span class="fl">${i.floor}</span><div class="how">${tHow(id)}</div><a class="go" href="${gmapHere(id)}" target="_blank" rel="noopener">🗺️ ${t("navHere")}</a></div></div>`;
 }
-/* 紧凑列表：10 个读卡机全部列出（楼层 + 位置 + 一键导航），三语一致 */
 function rrow(id){
   const i=RINFO[id];
-  const tg = '';
-  return `<div class="reader"><div style="min-width:0"><div class="nm">${tLbl(id)}${tg}</div><div class="how">${tHow(id)}</div></div>`
+  return `<div class="reader"><div style="min-width:0"><div class="nm">${tLbl(id)}</div><div class="how">${tHow(id)}</div></div>`
     + `<div style="text-align:right;white-space:nowrap"><span class="fl">${i.floor}</span><br>`
     + `<a class="go" href="${gmapHere(id)}" target="_blank" rel="noopener">🗺️ ${t("navHere")}</a></div></div>`;
 }
@@ -807,7 +706,7 @@ function renderReaders(){
   if(box) box.innerHTML = html;
 }
 
-/* ---------- 计分表渲染 ---------- */
+/* ---------- 计分表渲染（在规则弹窗里） ---------- */
 function renderScore(){
   const rows=[
     {k:"r1",p:1},{k:"r2",p:2},{k:"r3",p:1},{k:"r4",p:0},{k:"r5",p:1},
@@ -819,22 +718,20 @@ function renderScore(){
     html+=`<tr><td>${tRoute(r.k)}</td><td class="p">${r.p}${zero}</td></tr>`;
   });
   html+=`</table>`;
-  document.getElementById('scoreBox').innerHTML = html;
+  const b=document.getElementById('scoreBox'); if(b) b.innerHTML = html;
 }
 
-/* ---------- 顺路规划器 ---------- */
+/* ---------- 顺路规划器（板块1） ---------- */
 const fromSel=document.getElementById('from'), toSel=document.getElementById('to');
 const schA=document.getElementById('schA'), schB=document.getElementById('schB');
 const grps={};
 Object.keys(PLACES).forEach(k=>{ (grps[PLACES[k].grp]=grps[PLACES[k].grp]||[]).push(k); });
-/* 下拉分组名的三语标签 */
 const GRPNAME={
   "读卡机":{zh:"读卡机",yue:"讀卡機",en:"Card readers"},
   "教学楼·书院":{zh:"教学楼 / 书院",yue:"教學樓 / 書院",en:"Buildings / Colleges"},
   "车站·地标":{zh:"车站 / 地标",yue:"車站 / 地標",en:"Stations / Landmarks"}
 };
 function grpName(g){ const o=GRPNAME[g]; return o ? o[curLang] : g; }
-/* 注意：optgroup 没有 .add() 方法（会抛错并中断整段初始化）——必须用 appendChild */
 function fillSelect(sel){
   sel.innerHTML="";
   Object.keys(grps).forEach(g=>{
@@ -861,7 +758,7 @@ function plan(){
   if(a===b){
     out.innerHTML=`<div class="big">${fromLabel} → ${toLabel}</div>
       <div class="warnbox">${t("pSameReader").replace("__R__",a)}</div>
-      ${rcard(a)}<a class="maplink" href="#campusmap">${t("pViewMap")}</a>`;
+      ${rcard(a)}<a class="maplink" href="#mapCard">${t("pViewMap")}</a>`;
     return;
   }
   const r=pts(a,b);
@@ -873,7 +770,7 @@ function plan(){
     if(back) html+=`<div class="step"><div class="n">3</div><div>${t("pTapRet")} <span class="pill">${b}</span> → <span class="pill">${a}</span></div></div>`;
     html+=`<div style="margin-top:8px">${t("pTotal")} <b>${total}</b> ${back?t("pIncl"):''}</div>`;
     html+=`<div style="margin-top:8px">${rcard(a)}${rcard(b)}</div>`;
-    html+=`<a class="maplink" href="#campusmap">${t("pViewMap")}</a>`;
+    html+=`<a class="maplink" href="#mapCard">${t("pViewMap")}</a>`;
     out.innerHTML=html;
     return;
   }
@@ -893,7 +790,7 @@ function plan(){
     if(back) html+=`<div class="step"><div class="n">4</div><div>${t("pTapRet")} <span class="pill">${b}</span> → <span class="pill">${mid.m}</span> → <span class="pill">${a}</span></div></div>`;
     html+=`<div style="margin-top:8px">${t("pTotal")} <b>${total}</b> ${back?t("pIncl"):''}</div>`;
     html+=`<div style="margin-top:8px">${rcard(a)}${rcard(mid.m)}${rcard(b)}</div>`;
-    html+=`<a class="maplink" href="#campusmap">${t("pViewMap")}</a>`;
+    html+=`<a class="maplink" href="#mapCard">${t("pViewMap")}</a>`;
     out.innerHTML=html;
   } else {
     out.innerHTML=`<div class="big">${fromLabel} → ${toLabel}</div><div class="warnbox">${t("pNoScore")}</div>`;
@@ -914,8 +811,6 @@ function renderHero(){
 }
 function render(){
   p=Math.max(0,Math.min(40,p));
-  const pt=document.getElementById('pt'); if(pt) pt.textContent=p;
-  const bar=document.getElementById('bar'); if(bar) bar.style.width=(p/40*100)+"%";
   try{ localStorage.setItem(KEY,p); }catch(e){}
   renderHero();
   renderLeft();
@@ -930,7 +825,7 @@ function sub(n){p-=n;render();}
 function reset(){p=0;render();}
 
 /* ---------- 课表：填上课地点 → 列出附近 / 回程路上的打卡点 ---------- */
-const SCHED_KEY="wfg_sched_v3";
+const SCHED_KEY="wfg_sched_v4";
 const IMG_KEY="wfg_sched_img";
 const DAYS=["mon","tue","wed","thu","fri"];
 const WD2KEY={1:"mon",2:"tue",3:"wed",4:"thu",5:"fri"};
@@ -944,7 +839,7 @@ let SCHED=[
 let selDay = WD2KEY[new Date().getDay()] || "mon";
 function saveSched(){ try{ localStorage.setItem(SCHED_KEY, JSON.stringify(SCHED)); }catch(e){} }
 function schedRow(){ return SCHED.find(r=>r.d===selDay); }
-function setDay(d){ selDay=d; renderSched(); }
+function setDay(d){ selDay=d; renderSchedTabs(); syncSchSelects(); }
 function syncSchSelects(){
   const row=schedRow(); if(!row) return;
   if(schA) schA.value=row.a;
@@ -955,16 +850,14 @@ function onSchChange(){
   if(schA) row.a=schA.value;
   if(schB) row.b=schB.value;
   saveSched();
-  renderSchedResult();
+  renderToday();
 }
-function renderSched(){
+function renderSchedTabs(){
   const tabs=document.getElementById('dayTabs'); if(!tabs) return;
   const today=WD2KEY[new Date().getDay()];
   tabs.innerHTML = DAYS.map(d=>
     `<button class="dtab${d===selDay?' on':''}${d===today?' today':''}" onclick="setDay('${d}')">${t("day")[d][curLang]}</button>`
   ).join('');
-  syncSchSelects();
-  renderSchedResult();
 }
 /* 附近（步行 ≤15 分钟）还能顺手拍的读卡机 */
 function chipsNear(base){
@@ -993,27 +886,53 @@ function chipsOnWay(from,to){
     `<span class="chip hot"><b>${x.c}</b> ${RINFO[x.c].floor}<span class="mn">+${x.s}</span><span class="mn">${t("detour").replace("__D__",x.det)}</span></span>`
   ).join('')+`</div>`;
 }
-function renderSchedResult(){
+/* 今日推荐（只推今天，含相对时间点 + 学长姐捷径揉进来） */
+function todayRouteCat(a,b){
+  const set=new Set([a,b]);
+  if(set.has("YIA")||set.has("FYB")||set.has("PSC")||set.has("LSK")||set.has("MMW")) return "united_chi";
+  if(set.has("LWS")||set.has("WYS")) return "north";
+  if(set.has("HSHEB")||set.has("LKSP")) return "cc_central";
+  return "other";
+}
+async function renderToday(){
   const box=document.getElementById('todayBody'); if(!box) return;
-  const row=schedRow();
-  if(!row){ box.innerHTML=`<div class="today-empty">${t("noSchedDay")}</div>`; return; }
+  const today=WD2KEY[new Date().getDay()];
+  if(!today){
+    box.innerHTML=`<div class="today-empty">${t("todayWeekend")}</div>`; return;
+  }
+  const row=SCHED.find(r=>r.d===today);
+  if(!row){
+    box.innerHTML=`<div class="today-empty">${t("noSchedDay")}</div>`; return;
+  }
+  const dn=t("day")[today][curLang];
   const ra=PLACES[row.a].r, rb=PLACES[row.b].r;
   const sc=pts(ra,rb).p;
-  const back=document.getElementById('back') ? document.getElementById('back').checked : false;
-  let html=`<div class="today-row"><span class="today-route">${tLbl(row.a)} → ${tLbl(row.b)}</span>`;
-  html+= sc>0
-    ? `<span class="today-score">+${sc} ${t("scoreTh2")}${back?" ×2":""}</span>`
-    : `<span class="today-score" style="color:var(--warn)">0 ${t("scoreTh2")}</span>`;
-  html+=`</div>`;
+  const isSample = !localStorage.getItem(SCHED_KEY);
+  let html=`<div class="today-day">📅 今天（${dn}）</div>`;
+  html+=`<div class="today-route2"><span class="from">${tLbl(row.a)}</span><span class="arr">→</span><span class="dest">${tLbl(row.b)}</span></div>`;
+  html+=`<div class="tp"><span class="tp-ic">🕐</span><div><b>${t("tpBefore")}</b>：${t("pTapDep")} <span class="pill">${ra}</span>（出门顺路就拍）</div></div>`;
+  html+=`<div class="tp"><span class="tp-ic">🕐</span><div><b>${t("tpAt")}</b>：${t("pTapArr")} <span class="pill">${rb}</span> → <b>${sc>0?('+'+sc+' '+t("scoreTh2")):'0 '+t("scoreTh2")+'（需换路线）'}</b></div></div>`;
   html+=`<div class="near-t">${t("nearA").replace("__R__",rb)}</div>`;
   html+=chipsNear(rb);
-  html+=`<div class="near-t">${t("nearB")}</div>`;
-  html+=chipsOnWay(rb,ra);
-  html+=`<div class="navbtns"><a class="navbtn" href="${gmap(row.a,row.b)}" target="_blank" rel="noopener">${t("navG")}</a>`
-      +`<a class="navbtn" href="${amap(row.a,row.b)}" target="_blank" rel="noopener">${t("navA")}</a></div>`;
   html+=`<div style="margin-top:9px"><button class="b-go-sm" onclick="planToday('${row.a}','${row.b}')">${t("schedFill")}</button></div>`;
   html+=`<div class="tiny" style="margin-top:7px">${t("estNote")}</div>`;
+  if(isSample) html+=`<div class="sched-hint">${t("schHintSample")}</div>`;
   box.innerHTML=html;
+  // 学长姐捷径：融入今日路线，只显示一次（按路线匹配）
+  const list=await getTips();
+  const cat=todayRouteCat(ra,rb);
+  const rel=list.filter(tp=>(tp.route||"other")===cat||(tp.route||"other")==="other")
+    .sort((x,y)=>tipScore(y)-tipScore(x)||(y.ts||0)-(x.ts||0)).slice(0,2);
+  if(rel.length){
+    let sh=`<div class="sen-inline-head">💡 学长姐捷径 · ${tRoute2(cat)}</div>`+rel.map(tipCard).join('');
+    box.insertAdjacentHTML('beforeend', sh);
+  }
+}
+function tipCard(tp){
+  const hot=tipScore(tp)>0?' hot':'';
+  const hotTag=tipScore(tp)>0?`<span class="hot-tag">🔥</span>`:'';
+  const rTag = tp.route ? `<span class="hot-tag" style="color:var(--sub);margin-left:6px">🏷️ ${tRoute2(tp.route)}</span>` : '';
+  return `<div class="tip${hot}"><div class="who">${tp.name||"匿名"}${hotTag}${rTag}</div><div class="txt">${tp.text}</div></div>`;
 }
 const imgInput=document.getElementById('schedImg'), imgWrap=document.getElementById('schedImgWrap');
 if(imgWrap){ try{ const s=localStorage.getItem(IMG_KEY); if(s) imgWrap.innerHTML=`<img src="${s}" class="schedimg" alt="我的课表">`; }catch(e){} }
@@ -1029,6 +948,13 @@ try{ const saved=JSON.parse(localStorage.getItem(SCHED_KEY));
 }catch(e){}
 if(schA) schA.addEventListener('change', onSchChange);
 if(schB) schB.addEventListener('change', onSchChange);
+function toggleSchedEdit(){
+  const el=document.getElementById('schedEdit');
+  if(!el) return;
+  const show = el.style.display==="none";
+  el.style.display = show ? "block" : "none";
+  if(show) renderSchedTabs();
+}
 
 /* ---------- 学长姐捷径投稿（含赞/踩排序） ---------- */
 const TIPS_KEY="wfg_tips_v1";
@@ -1037,17 +963,11 @@ function normTip(tp){ if(tp && typeof tp==='object'){ if(tp.id==null) tp.id='t'+
 try{ const s=JSON.parse(localStorage.getItem(TIPS_KEY)); if(Array.isArray(s)) TIPS=s.map(normTip); }catch(e){}
 function saveTips(){ try{ localStorage.setItem(TIPS_KEY, JSON.stringify(TIPS)); }catch(e){} }
 function tipScore(tp){ return (tp.up||0)-(tp.down||0); }
-function byId(id){ return TIPS.find(t=>t.id===id); }
 
 /* 云端配置 */
 let CLOUD=false, CLOUD_API="";
 const CLOUD_KEY="wfg_tips_cloud", API_KEY="wfg_tips_api";
-/* 后端地址：写死在代码里，页面上不再出现「云端共享 / 后端地址」设置（同学不需要也不该看到）。
-   投稿会直接进到这个后端，大家打开同一页面就能看到彼此的捷径。 */
-const DEFAULT_CLOUD_API=""; // 公开仓库不写后端地址：想共享投稿，在分享链接后加 ?api=<你的云函数 URL>;
-/* 从分享链接里读后端地址（?api=... 或 #api=...）。
-   用途：公开仓库里的代码不含任何后端地址，只有你主动发出去的分享链接才带上，
-   这样陌生人翻仓库看不到 env ID，朋友点开链接照样能共享投稿。 */
+const DEFAULT_CLOUD_API="";
 function apiFromUrl(){
   try{
     const u=new URL(location.href);
@@ -1066,26 +986,6 @@ function loadCloudCfg(){
     try{ localStorage.setItem(API_KEY, api); localStorage.setItem(CLOUD_KEY,"1"); }catch(e){}
   }
   CLOUD_API = api;
-  updateModeBadge();
-}
-function updateModeBadge(){
-  const b=document.getElementById('modeBadge'); if(!b) return;
-  if(CLOUD && CLOUD_API){ b.textContent="云端"; b.className="mode-badge cloud"; }
-  else { b.textContent="本机"; b.className="mode-badge local"; }
-}
-function toggleCloud(){
-  const cb=document.getElementById('cloudOn'); if(!cb) return;
-  CLOUD = cb.checked;
-  try{ localStorage.setItem(CLOUD_KEY, CLOUD?"1":"0"); }catch(e){}
-  const row=document.getElementById('cloudUrlRow'); if(row) row.style.display = CLOUD?"flex":"none";
-  updateModeBadge();
-}
-function saveCloud(){
-  const el=document.getElementById('cloudApi'); if(!el) return;
-  CLOUD_API = el.value.trim();
-  try{ localStorage.setItem(API_KEY, CLOUD_API); }catch(e){}
-  updateModeBadge();
-  renderTips();
 }
 async function apiGet(){ const r=await fetch(CLOUD_API+'/tips'); if(!r.ok) throw new Error('get'); return r.json(); }
 async function apiPostTip(name,text,route){ const r=await fetch(CLOUD_API+'/tips',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,text,route})}); if(!r.ok) throw new Error('post'); return r.json(); }
@@ -1098,7 +998,6 @@ async function getTips(){
 const senRouteSel=document.getElementById('senRoute');
 const senFilterSel=document.getElementById('senFilter');
 function buildRouteOptions(){
-  // 投稿表单里是「选填分类」，下面是「按路线筛选」，两者文案不同，避免看起来重复
   if(senRouteSel) senRouteSel.innerHTML=`<option value="">${t("senRoutePh")}</option>`+Object.keys(SEN_ROUTES).map(k=>`<option value="${k}">${tRoute2(k)}</option>`).join('');
   if(senFilterSel) senFilterSel.innerHTML=`<option value="">${t("senRouteAll")}</option>`+Object.keys(SEN_ROUTES).map(k=>`<option value="${k}">${tRoute2(k)}</option>`).join('');
 }
@@ -1106,6 +1005,7 @@ async function renderTips(){
   const filter = senFilterSel ? senFilterSel.value : "";
   const list = await getTips();
   const box=document.getElementById('senList');
+  if(!box) return;
   const shown = filter ? list.filter(tp=>(tp.route||"")===filter) : list;
   if(!shown.length){ box.innerHTML=`<div class="muted" style="padding:4px 0">${t("senEmpty")}</div>`; return; }
   const sorted=[...shown].sort((a,b)=> tipScore(b)-tipScore(a) || (b.ts||0)-(a.ts||0));
@@ -1133,19 +1033,7 @@ async function delTip(id){
 }
 async function voteTip(id,dir){
   if(CLOUD && CLOUD_API){ try{ await apiVote(id,dir); renderTips(); return; }catch(e){} }
-  const tp=byId(id); if(!tp) return; if(dir==='up') tp.up=(tp.up||0)+1; else tp.down=(tp.down||0)+1; saveTips(); renderTips();
-}
-function exportTips(){
-  const blob=new Blob([JSON.stringify(TIPS,null,2)],{type:"application/json"});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download="walk-for-green-tips.json"; a.click(); URL.revokeObjectURL(a.href);
-}
-function importTips(input){
-  const f=input.files&&input.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=()=>{ try{ const arr=JSON.parse(r.result); if(Array.isArray(arr)){ arr.forEach(x=>{ if(x&&x.text) TIPS.push(normTip(x)); }); saveTips(); renderTips(); } }
-    catch(e){ alert(curLang==="zh"?"导入失败，文件格式不对":(curLang==="yue"?"導入失敗，檔案格式唔啱":"Import failed: bad format")); } };
-  r.readAsText(f); input.value="";
+  const tp=TIPS.find(t=>t.id===id); if(!tp) return; if(dir==='up') tp.up=(tp.up||0)+1; else tp.down=(tp.down||0)+1; saveTips(); renderTips();
 }
 
 function planToday(a,b){
@@ -1154,6 +1042,10 @@ function planToday(a,b){
   plan();
   const nav=document.getElementById('plannerCard'); if(nav) nav.scrollIntoView({behavior:'smooth',block:'start'});
 }
+
+/* ---------- 规则弹窗 ---------- */
+function openRules(){ const m=document.getElementById('rulesModal'); if(m) m.classList.add('show'); }
+function closeRules(){ const m=document.getElementById('rulesModal'); if(m) m.classList.remove('show'); }
 
 /* ---------- 语言切换（悬浮窗） ---------- */
 function updateLangUI(){
@@ -1174,14 +1066,14 @@ document.addEventListener('click',e=>{
   if(fab && !fab.contains(e.target)) hideLangMenu();
 });
 
-/* ---------- 初始化（任何一处出错都不该让整页变空） ---------- */
+/* ---------- 初始化 ---------- */
 function safe(fn,label){ try{ fn(); }catch(err){ console.error("[WFG] "+label+" 失败:", err); } }
 safe(buildPlaceOptions,"buildPlaceOptions");
 safe(loadCloudCfg,"loadCloudCfg");
 safe(applyLang,"applyLang");
 safe(render,"render");
 const backBox=document.getElementById('back');
-if(backBox) backBox.addEventListener('change', renderSchedResult);
+if(backBox) backBox.addEventListener('change', ()=>{ renderToday(); const outEl=document.getElementById('out'); if(outEl && outEl.classList.contains('show') && lastPlan) plan(); });
 if(senFilterSel) senFilterSel.addEventListener('change', renderTips);
 </script>
 </body>
