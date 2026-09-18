@@ -1044,10 +1044,28 @@ let CLOUD=false, CLOUD_API="";
 const CLOUD_KEY="wfg_tips_cloud", API_KEY="wfg_tips_api";
 /* 后端地址：写死在代码里，页面上不再出现「云端共享 / 后端地址」设置（同学不需要也不该看到）。
    投稿会直接进到这个后端，大家打开同一页面就能看到彼此的捷径。 */
-const DEFAULT_CLOUD_API=""; // 公开仓库不放后端地址：部署时替换成你自己的云函数 URL，或在本机 localStorage.setItem("wfg_tips_api","https://你的后端")
+const DEFAULT_CLOUD_API=""; // 公开仓库不写后端地址：想共享投稿，在分享链接后加 ?api=<你的云函数 URL>;
+/* 从分享链接里读后端地址（?api=... 或 #api=...）。
+   用途：公开仓库里的代码不含任何后端地址，只有你主动发出去的分享链接才带上，
+   这样陌生人翻仓库看不到 env ID，朋友点开链接照样能共享投稿。 */
+function apiFromUrl(){
+  try{
+    const u=new URL(location.href);
+    let v=u.searchParams.get("api")||"";
+    if(!v && location.hash.indexOf("api=")>-1) v=location.hash.split("api=")[1].split("&")[0];
+    v=decodeURIComponent(v||"").trim();
+    return /^https:\/\/[^\s"']+$/.test(v) ? v.replace(/\/+$/,"") : "";
+  }catch(e){ return ""; }
+}
 function loadCloudCfg(){
   CLOUD = localStorage.getItem(CLOUD_KEY) ? localStorage.getItem(CLOUD_KEY)==="1" : true;
-  CLOUD_API = (localStorage.getItem(API_KEY) || DEFAULT_CLOUD_API).trim();
+  let api = (localStorage.getItem(API_KEY) || DEFAULT_CLOUD_API).trim();
+  const q = apiFromUrl();
+  if(q){
+    api = q; CLOUD = true;
+    try{ localStorage.setItem(API_KEY, api); localStorage.setItem(CLOUD_KEY,"1"); }catch(e){}
+  }
+  CLOUD_API = api;
   updateModeBadge();
 }
 function updateModeBadge(){
