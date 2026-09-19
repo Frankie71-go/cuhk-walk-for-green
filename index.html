@@ -141,6 +141,12 @@
   .sched-row select{flex:1;min-width:0}
   .sched-row .arr{color:var(--sub);font-size:15px;font-weight:700}
   .up-btn{display:inline-block;font-size:12px;color:var(--accent);background:#fff;border:1px dashed #cfc0e6;border-radius:8px;padding:6px 10px;cursor:pointer;font-weight:600}
+  .ocr-btn{display:inline-block;margin-left:6px;font-size:12px;color:#fff;background:var(--accent);border:none;border-radius:8px;padding:6px 11px;cursor:pointer;font-weight:700}
+  .ocr-btn:active{filter:brightness(.94)}
+  .ocr-note{font-size:10.5px;color:var(--sub);margin-top:5px;line-height:1.45}
+  .ocr-msg{font-size:11.5px;color:var(--ink);background:#f3f6fc;border-radius:8px;padding:7px 9px;margin-top:7px;line-height:1.5}
+  .ocr-row{font-size:12px;color:var(--ink);padding:3px 0;border-bottom:1px dashed #e6e0f2}
+  .ocr-apply{margin-top:8px;font-size:12.5px;font-weight:700;color:#fff;background:var(--ok);border:none;border-radius:9px;padding:7px 13px;cursor:pointer}
   .up-btn:hover{background:#f6f1ff}
   /* 规则浮窗按钮 + 弹窗 */
   .rulesfab{position:fixed;left:14px;bottom:16px;z-index:999;background:rgba(31,42,68,.92);color:#fff;border:1px solid rgba(255,255,255,.25);
@@ -540,7 +546,10 @@ body{
       <select id="schA" data-page-node-id="schA"></select><span class="arr">→</span><select id="schB" data-page-node-id="schB"></select>
     </div>
     <div class="upload"><label class="up-btn">📷 <span data-i18n="schUpload">（可选）上传课表截图，对照着填更快</span>
-      <input type="file" id="schedImg" accept="image/*" hidden data-page-node-id="schedImg"></label></div>
+      <input type="file" id="schedImg" accept="image/*" hidden data-page-node-id="schedImg"></label>
+      <button class="ocr-btn" id="ocrBtn" onclick="parseSchedImg()">🔍 <span data-i18n="ocrBtn">本地识别截图</span></button></div>
+    <div class="ocr-note" data-i18n="ocrNote">识别在你手机/电脑本地完成，图片不会上传；只取「上课时间 + 哪一栋楼」，课程名和教室号一律不记录。</div>
+    <div id="ocrBox"></div>
     <div id="schedImgWrap" data-page-node-id="schedImgWrap"></div>
     <div class="sched-hint" id="schHintBox"></div>
   </div>
@@ -697,7 +706,15 @@ const I18N = {
     schHintDyn:'根据你填的课表：最多课落在 <b>__AN__</b> 和 <b>__BN__</b> 附近，所以 <b>__A__↔__B__ 是最稳的 __S__ 分线</b>。把这两头的课排在同一天，来回就翻倍。',
     schHintFill:'还没有足够的课表数据——上传课表截图（或按星期填上课地点）后，这里会自动算出你最稳的打卡线。',
     mySchedH:"我的每周课表", mySchedSub:"点日期改两栋楼，自动保存（含周末）",
-    schHintSample:"⚠️ 当前是示例课表，在上方选日期、改两栋楼即可填入你真实的每周课表，推荐才会准。"
+    schHintSample:"⚠️ 当前是示例课表，在上方选日期、改两栋楼即可填入你真实的每周课表，推荐才会准。",
+    ocrBtn:"本地识别截图",
+    ocrNote:"识别在你手机/电脑本地完成，图片不会上传；只取「上课时间 + 哪一栋楼」，课程名和教室号一律不记录。",
+    ocrNoImg:"先上传一张课表截图，再点「本地识别截图」。",
+    ocrLoading:"🔍 正在本地识别…首次会下载识别库（约几 MB），之后就快了。",
+    ocrFail:"识别失败或下载不到识别库（可能没联网）。可以照着截图手动选两栋楼。",
+    ocrNone:"没从截图里认出时间和楼名。可以换张更清晰、更正的截图，或照着手动选两栋楼。",
+    ocrFound:"识别到 __N__ 天的课：",
+    ocrApply:"用这个结果填课表",
   },
   yue:{
     title:"大·部·行 Walk for Green 攻略卡",
@@ -792,7 +809,15 @@ const I18N = {
     schHintDyn:'根據你填嘅課表：最多課喺 <b>__AN__</b> 同 <b>__BN__</b> 附近，所以 <b>__A__↔__B__ 係最穩嘅 __S__ 分線</b>。將兩頭嘅課排埋同一日，來回就翻倍。',
     schHintFill:'仲未夠課表數據——上傳課表截圖（或者按星期填上課地點）之後，呢度會自動計出你最穩嘅打卡線。',
     mySchedH:"我嘅每週課表", mySchedSub:"點日期改兩棟樓，自動儲存（含週末）",
-    schHintSample:"⚠️ 而家係示範課表，喺上面揀日期、改兩棟樓就可以填入你真實嘅每週課表，推薦先會準。"
+    schHintSample:"⚠️ 而家係示範課表，喺上面揀日期、改兩棟樓就可以填入你真實嘅每週課表，推薦先會準。",
+    ocrBtn:"本地識別截圖",
+    ocrNote:"識別喺你手機/電腦本地完成，圖片唔會上傳；只取「上課時間 + 邊一棟樓」，課程名同班房號一律唔記。",
+    ocrNoImg:"先上傳一張課表截圖，再撳「本地識別截圖」。",
+    ocrLoading:"🔍 本地識別緊…第一次會下載識別庫（約幾 MB），之後就快。",
+    ocrFail:"識別失敗或者下載唔到識別庫（可能冇聯網）。可以對住截圖手動揀兩棟樓。",
+    ocrNone:"認唔到截圖裡面嘅時間同樓名。可以換張清楚啲、正啲嘅截圖，或者對住手動揀兩棟樓。",
+    ocrFound:"識別到 __N__ 日嘅課：",
+    ocrApply:"用呢個結果填課表",
   },
   en:{
     title:"Walk for Green Guide ",
@@ -887,7 +912,15 @@ const I18N = {
     schHintDyn:'From the timetable you entered: most classes are near <b>__AN__</b> and <b>__BN__</b>, so <b>__A__↔__B__ is your safest __S__-pt line</b>. Put classes at both ends on the same day to double it.',
     schHintFill:'Not enough timetable data yet — upload your schedule screenshot (or fill in class locations by weekday) and this will auto-compute your most reliable tap line.',
     mySchedH:"My weekly timetable", mySchedSub:"Pick a day, change the two buildings — auto-saved (incl. weekends)",
-    schHintSample:"⚠️ This is a sample timetable — pick a day above and change the two buildings to enter your real weekly schedule, so the recommendation is accurate."
+    schHintSample:"⚠️ This is a sample timetable — pick a day above and change the two buildings to enter your real weekly schedule, so the recommendation is accurate.",
+    ocrBtn:"Read screenshot locally",
+    ocrNote:"Recognition runs on your device — the image is never uploaded. Only class time + building are read; course names and room numbers are discarded.",
+    ocrNoImg:"Upload a timetable screenshot first, then tap \"Read screenshot locally\".",
+    ocrLoading:"🔍 Reading on-device… the first run downloads the recognition model (a few MB); later runs are fast.",
+    ocrFail:"Recognition failed or the model couldn't be downloaded (maybe offline). You can still pick the two buildings manually.",
+    ocrNone:"No times or buildings recognized. Try a clearer, straight-on screenshot, or pick the buildings manually.",
+    ocrFound:"Found classes on __N__ day(s):",
+    ocrApply:"Use this for my timetable",
   }
 };
 
@@ -1359,6 +1392,131 @@ if(imgInput){ imgInput.addEventListener('change',e=>{
     catch(err){ alert('图片太大，存不进手机本地（localStorage 上限约 5MB）。可改存到相册，在本卡只留文字提醒。'); } };
   r.readAsDataURL(f);
 }); }
+
+/* ---------- 本地识别课表截图（Tesseract.js，全程在本机，图片不上传） ----------
+   只取「上课时间 + 哪一栋楼」，课程名 / 教室号一律不读取、不存储。 */
+const OCR_ALIAS=[
+  ["YIA",["YIA","康本","康本國際","Yasumoto"]],
+  ["FYB",["FYB","王福元"]],
+  ["PSC",["PSC","龐萬倫","庞万伦"]],
+  ["HSHEB",["HSHEB","何善衡"]],
+  ["MMW",["MMW","蒙民偉","蒙民伟"]],
+  ["LKSP",["LKSP","文物館","文物馆","羅桂祥","罗桂祥"]],
+  ["LSB",["LSB","邵逸夫夫人"]],
+  ["UMSO",["UMSO","保健醫療","保健医疗"]],
+  ["LSK",["LSK","李兆基","Lee Shau Kee"]],
+  ["UCA",["UCA","曾肇添"]],
+  ["UCC",["UCC","鄭棟材","郑栋材"]],
+  ["WMY",["WMY","伍何曼"]],
+  ["ELB",["ELB","利黃瑤璧","利黄瑶璧"]],
+  ["SRRS",["SRRS","邵逸夫堂"]],
+  ["LWS",["LWS","和聲","和声"]],
+  ["WYS",["WYS","伍宜孫","伍宜孙"]],
+  ["TEN",["TEN","網球場","网球场"]],
+  ["STN",["STN","大學站","大学站"]],
+  ["MIL",["MIL","百萬大道","百万大道"]],
+  ["UC",["UC","聯合書院","联合书院","United College"]]
+];
+const OCR_FLAT=OCR_ALIAS.reduce((a,e)=>a.concat(e[1].map(x=>[x,e[0]])),[])
+  .sort((x,y)=>y[0].length-x[0].length);
+const DAY_TOKENS=[
+  ["mon",["周一","星期一","週一","MON","Monday","MONDAY"]],
+  ["tue",["周二","星期二","週二","TUE","Tuesday"]],
+  ["wed",["周三","星期三","週三","WED","Wednesday"]],
+  ["thu",["周四","星期四","週四","THU","Thursday"]],
+  ["fri",["周五","星期五","週五","FRI","Friday"]],
+  ["sat",["周六","星期六","週六","SAT","Saturday"]],
+  ["sun",["周日","星期日","星期天","週日","SUN","Sunday"]]
+];
+function ocrMatchDay(line){
+  const L=String(line).toLowerCase();
+  for(let i=0;i<DAY_TOKENS.length;i++){
+    const toks=DAY_TOKENS[i][1];
+    for(let j=0;j<toks.length;j++) if(L.indexOf(toks[j].toLowerCase())>=0) return DAY_TOKENS[i][0];
+  }
+  return null;
+}
+function ocrMatchBuildings(line){
+  const L=String(line).toLowerCase(); const res=[]; let i=0;
+  while(i<L.length){
+    let hit=null;
+    for(let k=0;k<OCR_FLAT.length;k++){
+      const al=OCR_FLAT[k][0];
+      if(L.substr(i,al.length)===al.toLowerCase()){ hit=OCR_FLAT[k]; break; }
+    }
+    if(hit){ res.push(hit[1]); i+=hit[0].length; } else i++;
+  }
+  return res;
+}
+function ocrToMin(s){ const m=/(\d{1,2})[:.：](\d{2})/.exec(s||''); return m?(+m[1])*60+(+m[2]):null; }
+function parseSchedText(text){
+  const lines=String(text||'').split(/\r?\n/);
+  let cur=null; const found={};
+  lines.forEach(line=>{
+    const d=ocrMatchDay(line); if(d) cur=d;
+    if(!cur) return;
+    const bs=ocrMatchBuildings(line); if(!bs.length) return;
+    const ts=(line.match(/\d{1,2}[:.：]\d{2}/g)||[]).map(ocrToMin);
+    const n=Math.min(ts.length, bs.length);
+    found[cur]=found[cur]||[];
+    if(n===0) found[cur].push({t:null,b:bs[0]});
+    else for(let i=0;i<n;i++) found[cur].push({t:ts[i],b:bs[i]});
+  });
+  const out=[];
+  Object.keys(found).forEach(d=>{
+    const arr=found[d].slice().sort((x,y)=>(x.t==null?9999:x.t)-(y.t==null?9999:y.t));
+    if(!arr.length) return;
+    out.push({d:d,a:arr[0].b,b:arr.length>1?arr[arr.length-1].b:arr[0].b});
+  });
+  return out;
+}
+let LAST_OCR=null;
+async function loadTesseract(){
+  if(window.Tesseract) return window.Tesseract;
+  await new Promise((res,rej)=>{
+    const sc=document.createElement('script');
+    sc.src='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+    sc.onload=res; sc.onerror=()=>rej(new Error('load-fail'));
+    document.head.appendChild(sc);
+  });
+  return window.Tesseract;
+}
+async function parseSchedImg(){
+  const box=document.getElementById('ocrBox'); if(!box) return;
+  let src=null; try{ src=localStorage.getItem(IMG_KEY); }catch(e){}
+  if(!src){ box.innerHTML=`<div class="ocr-msg">${t('ocrNoImg')}</div>`; return; }
+  box.innerHTML=`<div class="ocr-msg">${t('ocrLoading')}</div>`;
+  try{
+    const T=await loadTesseract();
+    const worker=await T.createWorker('eng');
+    const ret=await worker.recognize(src);
+    await worker.terminate();
+    const parsed=parseSchedText((ret&&ret.data&&ret.data.text)||'');
+    LAST_OCR=parsed;
+    box.innerHTML=renderOcrResult(parsed);
+  }catch(e){
+    box.innerHTML=`<div class="ocr-msg">${t('ocrFail')}</div>`;
+  }
+}
+function renderOcrResult(parsed){
+  if(!parsed||!parsed.length) return `<div class="ocr-msg">${t('ocrNone')}</div>`;
+  const dn=t('day');
+  let s=`<div class="ocr-msg"><b>${t('ocrFound').replace('__N__',parsed.length)}</b></div>`;
+  parsed.forEach(r=>{
+    s+=`<div class="ocr-row">${dn[r.d][curLang]}：${tLbl(r.a)}${r.b!==r.a?' → '+tLbl(r.b):''}</div>`;
+  });
+  s+=`<button class="ocr-apply" onclick="applyOcr()">${t('ocrApply')}</button>`;
+  return s;
+}
+function applyOcr(){
+  if(!LAST_OCR||!LAST_OCR.length) return;
+  LAST_OCR.forEach(r=>{
+    const i=SCHED.findIndex(x=>x.d===r.d);
+    if(i>=0){ SCHED[i].a=r.a; SCHED[i].b=r.b; } else SCHED.push({d:r.d,a:r.a,b:r.b});
+  });
+  saveSched(); renderSchedTabs(); syncSchSelects(); renderToday(); renderSchHint();
+  const box=document.getElementById('ocrBox'); if(box) box.innerHTML='';
+}
 try{ const saved=JSON.parse(localStorage.getItem(SCHED_KEY));
   if(Array.isArray(saved)&&saved.length && saved.every(r=>r&&r.d&&PLACES[r.a]&&PLACES[r.b])) SCHED=saved;
 }catch(e){}
