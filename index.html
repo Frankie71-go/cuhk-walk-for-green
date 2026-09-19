@@ -191,7 +191,7 @@ body{
 /* ---------- Hero：深紫 + 山峦 + 校巴 ---------- */
 .hero{
   position:relative; overflow:hidden; text-align:left;
-  padding:30px 22px 64px; border-radius:22px; margin:0 0 20px;
+  padding:30px 22px 34px; border-radius:22px; margin:0 0 20px;
   background:
     radial-gradient(120% 90% at 88% 8%, rgba(217,173,38,.30) 0%, transparent 55%),
     linear-gradient(158deg, #3d2f63 0%, #5b3a8b 52%, #6d4a9e 100%);
@@ -206,15 +206,10 @@ body{
     radial-gradient(70% 92% at 88% 100%, rgba(255,255,255,.12) 0%, transparent 70%);
 }
 /* 校巴驶过 */
+/* 山脚路面：给 hero 收尾，不再是空荡的底部 */
 .hero::after{
-  content:"🚌"; position:absolute; right:16px; bottom:22px; font-size:25px;
-  opacity:.9; z-index:1; animation:tramRun 13s linear infinite;
-}
-@keyframes tramRun{
-  0%{transform:translateX(46px) scaleX(-1)} 
-  49%{transform:translateX(-8px) scaleX(-1)}
-  50%{transform:translateX(-8px) scaleX(1)}
-  100%{transform:translateX(-320px) scaleX(1)}
+  content:""; position:absolute; left:0; right:0; bottom:0; height:2px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.28) 20%, rgba(255,255,255,.28) 80%, transparent);
 }
 .hero h1{
   position:relative; z-index:1;
@@ -238,6 +233,23 @@ body{
 /* hero 进度条：紫→金 */
 .hero-prog{position:relative;z-index:2;margin-top:14px;background:rgba(255,255,255,.14);border-radius:14px;padding:12px 13px;border:1px solid rgba(255,255,255,.16)}
 .hbar{height:10px;border-radius:999px;background:rgba(255,255,255,.20);overflow:hidden}
+/* 校巴行驶：进度条就是路，车停在已走到的分数位置 */
+.tram-road{position:relative;padding-top:24px}
+.tram-road .road-line{
+  position:absolute; left:0; right:0; bottom:-7px; height:0;
+  border-top:2px dashed rgba(255,255,255,.34);
+}
+.tram-road .tram{
+  position:absolute; top:0; left:calc(12px + var(--p,0) * (100% - 24px));
+  transform:translateX(-50%) scaleX(-1); font-size:19px; line-height:1;
+  transition:left .55s cubic-bezier(.22,.61,.36,1);
+  filter:drop-shadow(0 3px 7px rgba(0,0,0,.32));
+}
+.tram-road .tram::after{
+  content:""; position:absolute; left:50%; bottom:-9px; width:16px; height:2px;
+  transform:translateX(-50%); border-radius:2px;
+  background:linear-gradient(90deg,rgba(217,173,38,.9),rgba(153,117,67,.9));
+}
 .hbar i{background:linear-gradient(90deg,var(--tram) 0%,#f0d071 55%,var(--gold) 100%);border-radius:999px;box-shadow:0 0 12px rgba(217,173,38,.55)}
 .hnum{font-size:20px;font-weight:700;color:#fff}
 .hrow .hmuted{color:rgba(255,255,255,.78)}
@@ -427,7 +439,11 @@ body{
   <h1 data-page-node-id="RTGjonTL0c3jxcJEH0WSyf">大·部·行 Walk for Green</h1>
   <div class="goal" data-i18n-html="heroGoal" data-page-node-id="ooIygAXfyJgThqmHHBz7LE"><b>Walk for Green 40 分 = 5 个 PE 参与分(P1)。</b>相邻两次拍卡须间隔一个小时以内，否则不计算分数。</div>
   <div class="hero-prog" data-page-node-id="lWLdK4r1Ze9K4U1Zlyv2jv">
-    <div class="hbar" data-page-node-id="hV1CTeq1TFmcC16RQO6Qmc"><i id="h-bar" data-page-node-id="3TYtwPj3lG7hMjkJSDpyNw"></i></div>
+    <div class="tram-road" id="h-road" data-page-node-id="hV1CTeq1TFmcC16RQO6Qmc">
+      <span class="tram" id="h-tram" data-page-node-id="tramBusNode">🚌</span>
+      <div class="hbar"><i id="h-bar" data-page-node-id="3TYtwPj3lG7hMjkJSDpyNw"></i></div>
+      <div class="road-line"></div>
+    </div>
     <div class="hrow" data-page-node-id="HbvjfKFf7NceaYEWEQu1lb"><span data-page-node-id="aH8fTA8HfemaOsV56y5pZ0"><span class="hnum" id="h-pt" data-page-node-id="4rrlsmkrRRWzHfUgPZPcN0">0</span> <span class="hmuted" data-i18n="progUnit" data-page-node-id="b7ONZcjLBFPoE43C2A9kNA">/ 40 分</span></span><span class="hmuted" id="h-left" data-page-node-id="fqZEQSX7ZKNLKtSGfMydpC">还差 40 分</span></div>
     <div class="hbtns" data-page-node-id="qdM2uwRRFRz7WReSC6XNaV">
       <button class="hb" onclick="add(2)" data-i18n="btn2" data-page-node-id="1Uck6ofJUIn0ZWnpXLjvpl">+2（一趟单程）</button>
@@ -1030,6 +1046,7 @@ function leftText(short){
 function renderHero(){
   const hp=document.getElementById('h-pt'); if(hp) hp.textContent=p;
   const hb=document.getElementById('h-bar'); if(hb) hb.style.width=(p/40*100)+"%";
+const hr=document.getElementById('h-road'); if(hr) hr.style.setProperty('--p', Math.min(p/40,1));
   const hl=document.getElementById('h-left'); if(hl) hl.textContent=leftText(true);
 }
 function render(){
