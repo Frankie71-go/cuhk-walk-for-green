@@ -671,7 +671,7 @@ const I18N = {
     schHintSample:"⚠️ 当前是示例课表，在上方选日期、改两栋楼即可填入你真实的每周课表，推荐才会准。",
     ocrBtn:"本地识别截图",
     ocrNoImg:"先上传一张课表截图，再点「本地识别截图」。",
-    ocrLoading:"🔍 正在本地识别…首次会下载识别库（约几 MB），之后就快了。",
+    ocrLoading:"🔍 正在本地识别…首次会下载识别库（含中文模型，约十几 MB），之后就快了。",
     ocrFail:"识别失败或下载不到识别库（可能没联网）。可以照着截图手动选两栋楼。",
     ocrNone:"没从截图里认出时间和楼名。可以换张更清晰、更正的截图，或照着手动选两栋楼。",
     ocrFound:"识别到 __N__ 天的课：",
@@ -768,7 +768,7 @@ const I18N = {
     schHintSample:"⚠️ 而家係示範課表，喺上面揀日期、改兩棟樓就可以填入你真實嘅每週課表，推薦先會準。",
     ocrBtn:"本地識別截圖",
     ocrNoImg:"先上傳一張課表截圖，再撳「本地識別截圖」。",
-    ocrLoading:"🔍 本地識別緊…第一次會下載識別庫（約幾 MB），之後就快。",
+    ocrLoading:"🔍 本地識別緊…第一次會下載識別庫（含中文模型，約十幾 MB），之後就快。",
     ocrFail:"識別失敗或者下載唔到識別庫（可能冇聯網）。可以對住截圖手動揀兩棟樓。",
     ocrNone:"認唔到截圖裡面嘅時間同樓名。可以換張清楚啲、正啲嘅截圖，或者對住手動揀兩棟樓。",
     ocrFound:"識別到 __N__ 日嘅課：",
@@ -865,7 +865,7 @@ const I18N = {
     schHintSample:"⚠️ This is a sample timetable — pick a day above and change the two buildings to enter your real weekly schedule, so the recommendation is accurate.",
     ocrBtn:"Read screenshot locally",
     ocrNoImg:"Upload a timetable screenshot first, then tap \"Read screenshot locally\".",
-    ocrLoading:"🔍 Reading on-device… the first run downloads the recognition model (a few MB); later runs are fast.",
+    ocrLoading:"🔍 Reading on-device… the first run downloads the recognition model (incl. Chinese, ~15 MB); later runs are fast.",
     ocrFail:"Recognition failed or the model couldn't be downloaded (maybe offline). You can still pick the two buildings manually.",
     ocrNone:"No times or buildings recognized. Try a clearer, straight-on screenshot, or pick the buildings manually.",
     ocrFound:"Found classes on __N__ day(s):",
@@ -1360,6 +1360,13 @@ function ocrMatchDay(line){
   }
   return null;
 }
+/* 编辑距离，用于英文楼名代码 OCR 误读时的容错匹配（如 L5K / UCA） */
+function ocrLev(a,b){ a=a.toUpperCase(); b=b.toUpperCase(); const m=a.length,n=b.length;
+  if(!m) return n; if(!n) return m;
+  const d=Array.from({length:n+1},(_,i)=>i);
+  for(let i=1;i<=m;i++){ let prev=d[0]; d[0]=i;
+    for(let j=1;j<=n;j++){ const tmp=d[j]; d[j]=Math.min(d[j]+1,d[j-1]+1,prev+(a[i-1]===b[j-1]?0:1)); prev=tmp; } }
+  return d[n]; }
 function ocrMatchBuildings(line){
   const L=String(line).toLowerCase(); const res=[]; let i=0;
   while(i<L.length){
@@ -1370,6 +1377,12 @@ function ocrMatchBuildings(line){
     }
     if(hit){ res.push(hit[1]); i+=hit[0].length; } else i++;
   }
+  /* 容错：抽出英文楼名代码（2-5 字母），与楼代码做编辑距离 ≤1 的模糊匹配 */
+  const toks=(String(line).toUpperCase().match(/[A-Z]{2,5}/g)||[]);
+  toks.forEach(tok=>{ for(let k=0;k<OCR_FLAT.length;k++){
+    const code=OCR_FLAT[k][1]; if(code.length<2) continue;
+    if(ocrLev(tok,code)<=(code.length>=4?1:0) && res.indexOf(code)<0){ res.push(code); break; }
+  } });
   return res;
 }
 function ocrToMin(s){ const m=/(\d{1,2})[:.：](\d{2})/.exec(s||''); return m?(+m[1])*60+(+m[2]):null; }
@@ -1412,7 +1425,9 @@ async function parseSchedImg(){
   box.innerHTML=`<div class="ocr-msg">${t('ocrLoading')}</div>`;
   try{
     const T=await loadTesseract();
-    const worker=await T.createWorker('eng');
+    let worker;
+    try{ worker=await T.createWorker('chi_tra+eng',1); }   /* 繁中+英文：课表楼名多为中文 */
+    catch(e){ worker=await T.createWorker('eng'); }          /* 中文模型下不到则退回英文 */
     const ret=await worker.recognize(src);
     await worker.terminate();
     const parsed=parseSchedText((ret&&ret.data&&ret.data.text)||'');
