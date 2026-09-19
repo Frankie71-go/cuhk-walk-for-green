@@ -181,6 +181,7 @@
   .langfab-item{background:var(--chip);color:var(--ink);border:none;border-radius:10px;padding:9px 16px;font-weight:600;
     text-align:left;font-size:13px;cursor:pointer}
   .langfab-item.on{background:var(--accent);color:#fff}
+  .langrow{display:flex;gap:8px;flex-wrap:wrap}
   .langfab-item:hover{filter:brightness(.97)}
   .today-empty{font-size:12.5px;color:var(--sub);background:#f3f6fc;border-radius:10px;padding:10px 12px}
 
@@ -563,18 +564,14 @@ body{
         <li data-i18n-html="planLi2" data-page-node-id="RGLzTZp7B0HcjvsF4Yzv96"></li>
         <li data-i18n-html="planLi3" data-page-node-id="ZmD9GFNJwpaoBph5Oqi081"></li>
       </ul>
+      <h3 data-i18n="langH">🌐 语言</h3>
+      <div class="langrow">
+        <button class="langfab-item" data-lang="zh">普通话</button>
+        <button class="langfab-item" data-lang="yue">粤语</button>
+        <button class="langfab-item" data-lang="en">English</button>
+      </div>
     </div>
   </div>
-</div>
-
-<!-- 语言切换悬浮窗（固定右下角） -->
-<div class="langfab" id="langFab" data-page-node-id="dvgpVtPgPNGURR5BLIFEMW">
-  <div class="langfab-menu" id="langMenu" style="display:none" data-page-node-id="L05Jl97Hz9KMvGCaeu1rdC">
-    <button class="langfab-item" data-lang="zh" data-page-node-id="DMjmqFeqCEL36CyplCyekD">普通话</button>
-    <button class="langfab-item" data-lang="yue" data-page-node-id="aVrT2vFbEFEneEJjes6PRn">粤语</button>
-    <button class="langfab-item" data-lang="en" data-page-node-id="IMYatf76OdsCWB93FgOq4B">English</button>
-  </div>
-  <button class="langfab-main" id="langFabMain" onclick="toggleLangMenu()" data-page-node-id="VyvHbvgv3dvSl34ULaUXpb">🌐 <span id="langCur" data-page-node-id="jyKOtkXfEpdy8vAyapV1jN">普通话</span></button>
 </div>
 
 <script>
@@ -602,6 +599,7 @@ const I18N = {
     planLi3:'<b>最低门槛</b>：每周顺路刷一次来回（6 分），7 周达标，几乎不费劲。',
     foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"本卡为个人攻略，规则以 CUHK SRSDO 官网为准",
     rulesTitle:"📖 规则速查", rulesFab:"📖 规则",
+    langH:"🌐 语言",
     mapFab:"🗺️ 打卡点",
     pOneway:"单程", pTotal:"本趟共计", pIncl:"（含回程）", pTapDep:"出发时拍", pTapArr:"到达拍（与上一拍须在 1 小时内）",
     pTapRet:"回程再拍", pViewMap:"校园地图",
@@ -703,6 +701,7 @@ const I18N = {
     planLi3:'<b>最低門檻</b>：每週順路刷一次來回（6 分），7 週達標，幾乎唔費力。',
     foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"本卡為個人攻略，規則以 CUHK SRSDO 官網為準",
     rulesTitle:"📖 規則速查", rulesFab:"📖 規則",
+    langH:"🌐 語言",
     mapFab:"🗺️ 打卡點",
     pOneway:"單程", pTotal:"呢趟總共", pIncl:"（含返程）", pTapDep:"出發嗰陣拍", pTapArr:"到達拍（同上一拍要喺 1 個鐘內）",
     pTapRet:"返程再拍", pViewMap:"校園地圖",
@@ -804,6 +803,7 @@ const I18N = {
     planLi3:'<b>Lowest bar</b>: one round-trip swipe per week (6 pts), hit 40 in 7 weeks, almost effortless.',
     foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"Personal guide; rules per CUHK SRSDO official site",
     rulesTitle:"📖 Rules cheat-sheet", rulesFab:"📖 Rules",
+    langH:"🌐 Language",
     mapFab:"🗺️ Spots",
     pOneway:"one-way", pTotal:"This trip total", pIncl:"(incl. return)", pTapDep:"Tap on departure", pTapArr:"Tap on arrival (within 1 hr of previous tap)",
     pTapRet:"Tap again on return", pViewMap:"Campus map",
@@ -1659,23 +1659,12 @@ function closeRules(){ const m=document.getElementById('rulesModal'); if(m) m.cl
 function openMap(){ const m=document.getElementById('mapModal'); if(m) m.classList.add('show'); }
 function closeMap(){ const m=document.getElementById('mapModal'); if(m) m.classList.remove('show'); }
 
-/* ---------- 语言切换（悬浮窗） ---------- */
+/* ---------- 语言切换（收进规则浮窗，右下角不再有悬浮窗） ---------- */
 function updateLangUI(){
-  const curName = curLang==="zh"?"普通话":(curLang==="yue"?"粤语":"English");
-  document.getElementById('langCur').textContent = curName;
   document.querySelectorAll('.langfab-item').forEach(b=> b.classList.toggle('on', b.dataset.lang===curLang));
 }
-function toggleLangMenu(){
-  const m=document.getElementById('langMenu');
-  m.style.display = (m.style.display==="none") ? "flex" : "none";
-}
-function hideLangMenu(){ document.getElementById('langMenu').style.display="none"; }
 document.querySelectorAll('.langfab-item').forEach(b=>{
-  b.addEventListener('click',()=>{ curLang=b.dataset.lang; try{ localStorage.setItem("wfg_lang",curLang); }catch(e){} applyLang(); hideLangMenu(); });
-});
-document.addEventListener('click',e=>{
-  const fab=document.getElementById('langFab');
-  if(fab && !fab.contains(e.target)) hideLangMenu();
+  b.addEventListener('click',()=>{ curLang=b.dataset.lang; try{ localStorage.setItem("wfg_lang",curLang); }catch(e){} applyLang(); });
 });
 
 /* ---------- 初始化 ---------- */
