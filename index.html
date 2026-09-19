@@ -1388,16 +1388,29 @@ function ocrMatchBuildings(line){
 function ocrToMin(s){ const m=/(\d{1,2})[:.：](\d{2})/.exec(s||''); return m?(+m[1])*60+(+m[2]):null; }
 function parseSchedText(text){
   const lines=String(text||'').split(/\r?\n/);
-  let cur=null; const found={};
-  lines.forEach(line=>{
-    const d=ocrMatchDay(line); if(d) cur=d;
+  let cur=null;            // 当前星期
+  let pendingT=null;       // 暂存「上一行的时间」（上课地点在时间的下方）
+  const found={};
+  const push=(d,t,b)=>{ (found[d]=found[d]||[]).push({t:t,b:b}); };
+  lines.forEach(raw=>{
+    const line=raw.trim(); if(!line) return;
+    const d=ocrMatchDay(line); if(d){ cur=d; pendingT=null; return; }
     if(!cur) return;
-    const bs=ocrMatchBuildings(line); if(!bs.length) return;
     const ts=(line.match(/\d{1,2}[:.：]\d{2}/g)||[]).map(ocrToMin);
-    const n=Math.min(ts.length, bs.length);
-    found[cur]=found[cur]||[];
-    if(n===0) found[cur].push({t:null,b:bs[0]});
-    else for(let i=0;i<n;i++) found[cur].push({t:ts[i],b:bs[i]});
+    const bs=ocrMatchBuildings(line);
+    if(bs.length && ts.length){
+      // 时间 + 地点在同一行：直接配对
+      const n=Math.min(ts.length, bs.length);
+      for(let i=0;i<n;i++) push(cur, ts[i], bs[i]);
+      pendingT=null;
+    } else if(bs.length){
+      // 地点独占一行（在时间的下方）：与最近一行的时间配对
+      push(cur, pendingT!=null?pendingT:null, bs[0]);
+      pendingT=null;
+    } else if(ts.length){
+      // 时间独占一行：先记下来，等下一行的地点
+      pendingT=ts[0];
+    }
   });
   const out=[];
   Object.keys(found).forEach(d=>{
@@ -1418,6 +1431,17 @@ async function loadTesseract(){
   });
   return window.Tesseract;
 }
+function loadImage(src){ return new Promise((res,rej)=>{ const im=new Image(); im.onload=()=>res(im); im.onerror=()=>rej(new Error('img-load')); im.src=src; }); }
+/* 转灰度：去掉绿色格子等底色噪点，提升英文楼名识别率（不反相，避免文字变黑） */
+function ocrGrayscale(img){
+  let w=img.naturalWidth||img.width, h=img.naturalHeight||img.height;
+  const maxW=1600; if(w>maxW){ h=Math.round(h*maxW/w); w=maxW; }
+  const c=document.createElement('canvas'); c.width=w; c.height=h;
+  const ctx=c.getContext('2d'); ctx.drawImage(img,0,0,w,h);
+  const d=ctx.getImageData(0,0,w,h), p=d.data;
+  for(let i=0;i<p.length;i+=4){ const g=(p[i]*0.299+p[i+1]*0.587+p[i+2]*0.114)|0; p[i]=p[i+1]=p[i+2]=g; }
+  ctx.putImageData(d,0,0); return c;
+}
 async function parseSchedImg(){
   const box=document.getElementById('ocrBox'); if(!box) return;
   let src=null; try{ src=localStorage.getItem(IMG_KEY); }catch(e){}
@@ -1426,9 +1450,11 @@ async function parseSchedImg(){
   try{
     const T=await loadTesseract();
     let worker;
-    try{ worker=await T.createWorker('chi_tra+eng',1); }   /* 繁中+英文：课表楼名多为中文 */
+    try{ worker=await T.createWorker('chi_tra+eng',1); }   /* 繁中+英文：星期/楼名都可能中英文 */
     catch(e){ worker=await T.createWorker('eng'); }          /* 中文模型下不到则退回英文 */
-    const ret=await worker.recognize(src);
+    const img=await loadImage(src);
+    const proc=ocrGrayscale(img);
+    const ret=await worker.recognize(proc);
     await worker.terminate();
     const parsed=parseSchedText((ret&&ret.data&&ret.data.text)||'');
     LAST_OCR=parsed;
