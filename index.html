@@ -143,7 +143,6 @@
   .up-btn{display:inline-block;font-size:12px;color:var(--accent);background:#fff;border:1px dashed #cfc0e6;border-radius:8px;padding:6px 10px;cursor:pointer;font-weight:600}
   .ocr-btn{display:inline-block;margin-left:6px;font-size:12px;color:#fff;background:var(--accent);border:none;border-radius:8px;padding:6px 11px;cursor:pointer;font-weight:700}
   .ocr-btn:active{filter:brightness(.94)}
-  .ocr-note{font-size:10.5px;color:var(--sub);margin-top:5px;line-height:1.45}
   .ocr-msg{font-size:11.5px;color:var(--ink);background:#f3f6fc;border-radius:8px;padding:7px 9px;margin-top:7px;line-height:1.5}
   .ocr-row{font-size:12px;color:var(--ink);padding:3px 0;border-bottom:1px dashed #e6e0f2}
   .ocr-apply{margin-top:8px;font-size:12.5px;font-weight:700;color:#fff;background:var(--ok);border:none;border-radius:9px;padding:7px 13px;cursor:pointer}
@@ -424,26 +423,6 @@ body{
     .reader .thumb,.reader .thumb-ph{width:112px !important;height:82px !important}
   }
 
-/* ---------- 校园大地图（SVG，紫金同色系） ---------- */
-.campus-map{
-  margin-top:14px;border:1px solid var(--line);border-radius:14px;
-  background:#fbf9f4;padding:12px 10px 10px;
-}
-.cm-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap}
-.cm-head b{font-family:var(--font-h);font-size:14px;color:var(--ink);font-weight:700}
-.cm-tools{display:flex;gap:8px}
-.cm-tools a{
-  text-decoration:none;font-size:12px;font-weight:700;color:#fff;
-  background:linear-gradient(135deg,var(--accent) 0%,#7b52ad 100%);
-  border-radius:8px;padding:6px 10px;transition:.18s;
-}
-.cm-tools a:hover{transform:translateY(-1px);filter:brightness(1.06)}
-.cm-tools a.apple{background:linear-gradient(135deg,#3a3a3c 0%,#1f1f21 100%)}
-.gmap{
-  width:100%;height:320px;border:0;border-radius:10px;display:block;background:#e9e4f0;
-}
-.cm-note{margin-top:9px;font-size:11.5px;color:var(--sub);line-height:1.5}
-
 /* ---------- 结果区 ---------- */
 .out.show{animation:fadeUp .34s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -548,10 +527,8 @@ body{
     <div class="upload"><label class="up-btn">📷 <span data-i18n="schUpload">（可选）上传课表截图，对照着填更快</span>
       <input type="file" id="schedImg" accept="image/*" hidden data-page-node-id="schedImg"></label>
       <button class="ocr-btn" id="ocrBtn" onclick="parseSchedImg()">🔍 <span data-i18n="ocrBtn">本地识别截图</span></button></div>
-    <div class="ocr-note" data-i18n="ocrNote">识别在你手机/电脑本地完成，图片不会上传；只取「上课时间 + 哪一栋楼」，课程名和教室号一律不记录。</div>
     <div id="ocrBox"></div>
     <div id="schedImgWrap" data-page-node-id="schedImgWrap"></div>
-    <div class="sched-hint" id="schHintBox"></div>
   </div>
   <div id="todayBody" data-page-node-id="7QX3tS44G68959lTUKSbMH"></div>
 </div>
@@ -561,16 +538,6 @@ body{
   <h2 data-page-node-id="nZAkKVu0he9C0TyADKAgiR"><span class="dot" data-page-node-id="6v223ZY9GHXtL0HmZWcamG"></span><span data-i18n="rdH2" data-page-node-id="oSPOGhdFvjjmQBDw2hItYF">打卡点地图 · 实拍图与校园位置</span></h2>
   <div class="muted" data-i18n-html="rdDesc" data-page-node-id="EA1cAZgCBaDrDAD6hs3NEE">读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。每张打卡点卡片下方都有 Google / Apple 地图链接，点开即可定位到该楼。</div>
   <div id="readerBox" data-page-node-id="P3FhTM9BDIN7PkS0kIIWWr"></div>
-<div class="campus-map" id="campusMap">
-    <div class="cm-head"><b data-i18n="mapTitle">校园实景地图</b>
-      <span class="cm-tools">
-        <a href="https://www.google.com/maps/search/?api=1&query=%E9%A6%99%E6%B8%AF%E4%B8%AD%E6%96%87%E5%A4%A7%E5%AD%B8" target="_blank" rel="noopener">Google 地图 ↗</a>
-        <a class="apple" href="https://maps.apple.com/?q=%E9%A6%99%E6%B8%AF%E4%B8%AD%E6%96%87%E5%A4%A7%E5%AD%B8" target="_blank" rel="noopener">Apple 地图 ↗</a>
-      </span>
-    </div>
-    <iframe class="gmap" src="https://www.openstreetmap.org/export/embed.html?bbox=114.196%2C22.408%2C114.218%2C22.426&amp;layer=mapnik&amp;marker=22.417%2C114.207" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="CUHK 校园地图（OpenStreetMap）"></iframe>
-    <div class="cm-note" data-i18n="mapNote">下方为校园地图（OpenStreetMap，可拖动缩放）。Google 地图已禁止被网页嵌入，所以内嵌改用 OpenStreetMap；要看 Google / Apple 实景，请点上方的「Google 地图 ↗ / Apple 地图 ↗」。</div>
-    </div>
 </div>
 
 <div class="foot" data-page-node-id="FYwE0BCHN3EhXrWYkIfY0D">
@@ -625,8 +592,6 @@ const I18N = {
     navH2:"🚶 顺路打卡规划器", navBadge:"随时查",
     navBack:"含回程（终点→起点再算一次）", navBtn:"查顺路打卡点 + 算分",
     rdH2:"📍 打卡点地图 · 实拍图与校园位置",
-  mapTitle:"校园实景地图",
-  mapNote:"下方为校园地图（OpenStreetMap，可拖动缩放）。Google 地图已禁止被网页嵌入，故内嵌改用 OpenStreetMap；要看 Google / Apple 实景请点上方按钮。",
     rdDesc:'读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。每张打卡点卡片下方都有 Google / Apple 地图链接，点开即可定位到该楼。',
     rdGrpA:" 崇基 / 中央核心区", rdGrpB:" 中央 · 工程大楼 / 文物馆", rdGrpC:" 中央 · 李兆基 / 蒙民伟", rdGrpE:" 和声 / 伍宜孙书院（最北）", rdGrpD:" 大学保健医疗中心",
     scoreH2:"分数速查表（每段）", scoreTh1:"走的路段（相邻读卡机）", scoreTh2:"分",
@@ -699,16 +664,12 @@ const I18N = {
     schedTap:"这趟本身：__A__ → __B__ = <b>__P__ 分</b>",
     schedFill:"一键填进规划器",
     estNote:"步行时间是校园估算值（±3 分钟），赶时间请以地图为准。",
-    noSchedDay:"这天还没填，选上面的两栋楼就行",
     tipsHead:"学长姐走过的捷径 · 也欢迎你投稿",
     senAllToggle:"🧑‍🏫 投稿你的捷径（会显示在对应路线推荐里）",
     schUpload:"（可选）上传课表截图，对照着填更快",
-    schHintDyn:'根据你填的课表：最多课落在 <b>__AN__</b> 和 <b>__BN__</b> 附近，所以 <b>__A__↔__B__ 是最稳的 __S__ 分线</b>。把这两头的课排在同一天，来回就翻倍。',
-    schHintFill:'还没有足够的课表数据——上传课表截图（或按星期填上课地点）后，这里会自动算出你最稳的打卡线。',
     mySchedH:"我的每周课表", mySchedSub:"点日期改两栋楼，自动保存（含周末）",
     schHintSample:"⚠️ 当前是示例课表，在上方选日期、改两栋楼即可填入你真实的每周课表，推荐才会准。",
     ocrBtn:"本地识别截图",
-    ocrNote:"识别在你手机/电脑本地完成，图片不会上传；只取「上课时间 + 哪一栋楼」，课程名和教室号一律不记录。",
     ocrNoImg:"先上传一张课表截图，再点「本地识别截图」。",
     ocrLoading:"🔍 正在本地识别…首次会下载识别库（约几 MB），之后就快了。",
     ocrFail:"识别失败或下载不到识别库（可能没联网）。可以照着截图手动选两栋楼。",
@@ -728,8 +689,6 @@ const I18N = {
     navH2:"🚶 順路打卡規劃器", navBadge:"隨時查",
     navBack:"含返程（終點→起點再計一次）", navBtn:"查順路打卡點 + 計分",
     rdH2:"📍 打卡點地圖 · 實拍圖與校園位置",
-  mapTitle:"校園實景地圖",
-  mapNote:"下面係校園地圖（OpenStreetMap，可以拖同縮放）。Google 地圖已經唔俾網頁嵌入，所以內嵌改咗用 OpenStreetMap；想睇 Google / Apple 實景請撳上面個掣。",
     rdDesc:'讀卡機貼喺相應樓層嘅電梯口/主通道，留意「大·部·行 Walk for Green」綠色標識。每張打卡點卡片下面都有 Google / Apple 地圖連結，撳開就可以定位到嗰棟樓。',
     rdGrpA:" 崇基 / 中央核心區", rdGrpB:" 中央 · 工程大樓 / 文物館", rdGrpC:" 中央 · 李兆基 / 蒙民偉", rdGrpE:" 和聲 / 伍宜孫書院（最北）", rdGrpD:" 大學保健醫療中心",
     scoreH2:"分數速查表（每段）", scoreTh1:"行嘅路段（相鄰讀卡機）", scoreTh2:"分",
@@ -802,16 +761,12 @@ const I18N = {
     schedTap:"呢趟本身：__A__ → __B__ = <b>__P__ 分</b>",
     schedFill:"一掣填入規劃器",
     estNote:"步行時間係校園估算（±3 分鐘），趕時間請以地圖為準。",
-    noSchedDay:"呢日仲未填，揀上面兩棟樓就得",
     tipsHead:"師兄師姐行過嘅捷徑 · 亦歡迎你投稿",
     senAllToggle:"🧑‍🏫 投稿你嘅捷徑（會顯示喺對應路線推薦入面）",
     schUpload:"（可揀）上傳課表截圖，對住填更快",
-    schHintDyn:'根據你填嘅課表：最多課喺 <b>__AN__</b> 同 <b>__BN__</b> 附近，所以 <b>__A__↔__B__ 係最穩嘅 __S__ 分線</b>。將兩頭嘅課排埋同一日，來回就翻倍。',
-    schHintFill:'仲未夠課表數據——上傳課表截圖（或者按星期填上課地點）之後，呢度會自動計出你最穩嘅打卡線。',
     mySchedH:"我嘅每週課表", mySchedSub:"點日期改兩棟樓，自動儲存（含週末）",
     schHintSample:"⚠️ 而家係示範課表，喺上面揀日期、改兩棟樓就可以填入你真實嘅每週課表，推薦先會準。",
     ocrBtn:"本地識別截圖",
-    ocrNote:"識別喺你手機/電腦本地完成，圖片唔會上傳；只取「上課時間 + 邊一棟樓」，課程名同班房號一律唔記。",
     ocrNoImg:"先上傳一張課表截圖，再撳「本地識別截圖」。",
     ocrLoading:"🔍 本地識別緊…第一次會下載識別庫（約幾 MB），之後就快。",
     ocrFail:"識別失敗或者下載唔到識別庫（可能冇聯網）。可以對住截圖手動揀兩棟樓。",
@@ -831,8 +786,6 @@ const I18N = {
     navH2:"🚶 Route planner", navBadge:"anytime",
     navBack:"Include return trip (end→start counted again)", navBtn:"Find route + score",
     rdH2:"📍 Reader map · photos & campus location",
-  mapTitle:"Campus live map",
-  mapNote:"Campus map below (OpenStreetMap, pannable/zoomable). Google Maps no longer allows embedding, so the inline map uses OpenStreetMap; use the buttons above for Google / Apple Maps.",
     rdDesc:'Readers are by the lift lobbies / main corridors on their floors; look for the green "大·部·行 Walk for Green" sign. Each reader card has Google Maps / Apple Maps links to locate the building.',
     rdGrpA:" Chung Chi / core campus", rdGrpB:" Central · Engineering / Art Museum", rdGrpC:" Central · LEK / Mong Man Wai", rdGrpE:" Lee Woo Sing / Wu Yee Sun (north)", rdGrpD:" University Health Service",
     scoreH2:"Points cheat-sheet (per segment)", scoreTh1:"Route (adjacent readers)", scoreTh2:"Pts",
@@ -905,16 +858,12 @@ const I18N = {
     schedTap:"This trip itself: __A__ → __B__ = <b>__P__ pts</b>",
     schedFill:"Load into planner",
     estNote:"Walking times are campus estimates (±3 min) — trust the map if you're in a hurry.",
-    noSchedDay:"Not filled for this day — just pick two buildings above",
     tipsHead:"💡 Shortcuts seniors took · share yours too",
     senAllToggle:"🧑‍🏫 Submit your shortcut (shows on the matching route)",
     schUpload:"(optional) upload a timetable screenshot to copy from",
-    schHintDyn:'From the timetable you entered: most classes are near <b>__AN__</b> and <b>__BN__</b>, so <b>__A__↔__B__ is your safest __S__-pt line</b>. Put classes at both ends on the same day to double it.',
-    schHintFill:'Not enough timetable data yet — upload your schedule screenshot (or fill in class locations by weekday) and this will auto-compute your most reliable tap line.',
     mySchedH:"My weekly timetable", mySchedSub:"Pick a day, change the two buildings — auto-saved (incl. weekends)",
     schHintSample:"⚠️ This is a sample timetable — pick a day above and change the two buildings to enter your real weekly schedule, so the recommendation is accurate.",
     ocrBtn:"Read screenshot locally",
-    ocrNote:"Recognition runs on your device — the image is never uploaded. Only class time + building are read; course names and room numbers are discarded.",
     ocrNoImg:"Upload a timetable screenshot first, then tap \"Read screenshot locally\".",
     ocrLoading:"🔍 Reading on-device… the first run downloads the recognition model (a few MB); later runs are fast.",
     ocrFail:"Recognition failed or the model couldn't be downloaded (maybe offline). You can still pick the two buildings manually.",
@@ -1090,7 +1039,7 @@ function applyLang(){
   updateLangUI();
   buildPlaceOptions();
   renderReaders(); renderScore(); renderToday(); renderTips(); renderLeft();
-  buildRouteOptions(); renderSchedTabs(); renderSchHint();
+  buildRouteOptions(); renderSchedTabs();
   const outEl=document.getElementById('out');
   if(outEl && outEl.classList.contains('show') && lastPlan) plan();
 }
@@ -1277,29 +1226,6 @@ function onSchChange(){
   else { row.a=schA.value; row.b=schB.value; }
   saveSched();
   renderToday();
-  renderSchHint();
-}
-/* 课表提示：按「你填的课表」动态算出最稳的打卡线，不再写死某条路线 */
-function readerOf(code){ const p=PLACES[code]; return (p&&p.r)?p.r:code; }
-function renderSchHint(){
-  const el=document.getElementById('schHintBox'); if(!el) return;
-  const pc={};
-  SCHED.forEach(function(r){
-    const ra=readerOf(r.a), rb=readerOf(r.b);
-    if(ra===rb || !RINFO[ra] || !RINFO[rb]) return;
-    const sc=pts(ra,rb).p;
-    if(!sc || sc<=0) return;
-    const k=[ra,rb].sort().join('|');
-    pc[k]=(pc[k]||0)+1;
-  });
-  const keys=Object.keys(pc).sort(function(x,y){ return pc[y]-pc[x]; });
-  if(!keys.length){ el.innerHTML=t('schHintFill'); return; }
-  const parts=keys[0].split('|');
-  const A=parts[0], B=parts[1], sc=pts(A,B).p;
-  el.innerHTML=t('schHintDyn')
-    .replace(/__AN__/g,tLbl(A)).replace(/__BN__/g,tLbl(B))
-    .replace(/__A__/g,A).replace(/__B__/g,B)
-    .replace(/__S__/g,sc);
 }
 function renderSchedTabs(){
   const tabs=document.getElementById('dayTabs'); if(!tabs) return;
@@ -1350,9 +1276,7 @@ async function renderToday(){
     box.innerHTML=`<div class="today-empty">${t("todayWeekend")}</div>`; return;
   }
   const row=SCHED.find(r=>r.d===today);
-  if(!row){
-    box.innerHTML=`<div class="today-empty">${t("noSchedDay")}</div>`; return;
-  }
+  if(!row){ box.innerHTML=""; return; }
   const dn=t("day")[today][curLang];
   const ra=PLACES[row.a].r, rb=PLACES[row.b].r;
   const sc=pts(ra,rb).p;
@@ -1514,7 +1438,7 @@ function applyOcr(){
     const i=SCHED.findIndex(x=>x.d===r.d);
     if(i>=0){ SCHED[i].a=r.a; SCHED[i].b=r.b; } else SCHED.push({d:r.d,a:r.a,b:r.b});
   });
-  saveSched(); renderSchedTabs(); syncSchSelects(); renderToday(); renderSchHint();
+  saveSched(); renderSchedTabs(); syncSchSelects(); renderToday();
   const box=document.getElementById('ocrBox'); if(box) box.innerHTML='';
 }
 try{ const saved=JSON.parse(localStorage.getItem(SCHED_KEY));
