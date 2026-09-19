@@ -361,19 +361,52 @@ body{
   display:inline-block;background:var(--accent-soft);color:var(--accent);
   border:1px solid #e2d6f2;border-radius:7px;padding:2px 8px;font-size:11.5px;font-weight:700;
 }
-.reader .go{
-  flex-shrink:0;text-decoration:none;border-radius:9px;padding:7px 12px;
-  font-size:12px;font-weight:700;color:#fff;
-  background:linear-gradient(135deg,var(--tram) 0%,var(--gold) 100%);
-  box-shadow:0 4px 12px rgba(153,117,67,.28);transition:.18s;
+/* 标签统一走校徽紫，不再用黄色（导航已改为地图定位） */
+.reader .fl{
+  display:inline-block;background:var(--accent-soft);color:var(--accent);
+  border:1px solid #e2d6f2;border-radius:7px;padding:2px 8px;
+  font-size:11.5px;font-weight:700;letter-spacing:.3px;
 }
-.reader .go:hover{transform:translateY(-1px);filter:brightness(1.06)}
+.reader .thumb{
+  width:66px;height:50px;object-fit:cover;flex-shrink:0;
+  border-radius:9px;border:1px solid var(--line);background:#f3f0ea;
+}
+.reader .thumb-ph{
+  width:66px;height:50px;flex-shrink:0;border-radius:9px;
+  border:1px dashed #d9d2c6;background:#f7f4ee;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:#9a9187;text-align:center;line-height:1.35;padding:2px;box-sizing:border-box;
+}
+.reader.hl{border-color:var(--accent);background:#faf7ff;box-shadow:0 6px 18px rgba(91,58,139,.14)}
 .reader .desc{font-size:11.5px;color:var(--sub)}
 .reader-note{display:flex;align-items:center;gap:8px}
 .reader .floor-tag{color:var(--sub);font-size:11.5px}
 .badge{background:var(--accent-soft);color:var(--accent);border:1px solid #e2d6f2;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:700}
 .pin-note{display:inline-flex;align-items:center;gap:6px;background:#fff6e0;border:1px solid #f0dfae;color:#8a6512;border-radius:9px;padding:4px 9px;font-size:11.5px}
 .hint-inline{font-size:11.5px;color:var(--sub)}
+
+/* ---------- 校园大地图（SVG，紫金同色系） ---------- */
+.campus-map{
+  margin-top:14px;border:1px solid var(--line);border-radius:14px;
+  background:#fbf9f4;padding:12px 10px 10px;
+}
+.cmap{width:100%;height:auto;display:block}
+.cm-zone{fill:#efeaf6;stroke:#e0d6ee;stroke-width:1}
+.cm-zone.a{fill:#ece6f6}.cm-zone.b{fill:#f3eefa}
+.cm-zone.c{fill:#f5efe4}.cm-zone.d{fill:#f1ece1}.cm-zone.e{fill:#e9e4f2}
+.cm-road{stroke:#e2dae9;stroke-width:7;stroke-linecap:round;fill:none}
+.cm-road.sub{stroke-width:3}
+.cm-dot{stroke:#fff;stroke-width:2;cursor:pointer;transition:.16s}
+.cm-dot:hover{r:9}
+.cm-dot.a{fill:#5b3a8b}.cm-dot.b{fill:#7b52ad}
+.cm-dot.c{fill:#997543}.cm-dot.d{fill:#8c7ba6}.cm-dot.e{fill:#b39d86}
+.cm-lbl{font-size:10.5px;fill:#4a4356}
+.cm-code{font-size:9.5px;fill:#8d8496;letter-spacing:.4px}
+.cm-stn{fill:#fff;stroke:#a89fb4;stroke-width:1.5}
+.cm-stn-t{font-size:10px;fill:#6d6478}
+.cm-legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.cm-legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+.cm-legend span{font-size:11.5px;color:var(--sub)}
 
 /* ---------- 结果区 ---------- */
 .out.show{animation:fadeUp .34s ease both}
@@ -457,7 +490,7 @@ body{
 
 <!-- 板块1：顺路打卡规划器（A→B 算分）—— 原样保留 -->
 <div class="card" id="plannerCard" data-page-node-id="Uq8dBklurttDzB7LO6b3FL">
-  <h2 data-page-node-id="cDjtJhxHPWuH4bhn0ay42s"><span class="dot" data-page-node-id="pZgY1ZtUSYCjJCakqYoR7B"></span><span data-i18n="navH2" data-page-node-id="reXYT6ZtXBoQxfxrYlUMYU">🧭 顺路打卡规划器</span><span class="badge" data-i18n="navBadge" data-page-node-id="npmF4x0lUjv5qYrYPqMbsv">随时查</span></h2>
+  <h2 data-page-node-id="cDjtJhxHPWuH4bhn0ay42s"><span class="dot" data-page-node-id="pZgY1ZtUSYCjJCakqYoR7B"></span><span data-i18n="navH2" data-page-node-id="reXYT6ZtXBoQxfxrYlUMYU">顺路打卡规划器</span><span class="badge" data-i18n="navBadge" data-page-node-id="npmF4x0lUjv5qYrYPqMbsv">随时查</span></h2>
   <div class="nav-in" data-page-node-id="o7TLW8SUkwSixVnmJsQb0C">
     <select id="from" data-page-node-id="1GYdWZWCTL9pgJW3GXLNmD"></select>
     <select id="to" data-page-node-id="mNlqWMlq8hbpZtg2kAruLQ"></select>
@@ -469,15 +502,61 @@ body{
 
 <!-- 板块2：今日顺路打卡推荐（第 2 位，学长姐投稿揉进路线） -->
 <div class="card hi" id="todayCard" data-page-node-id="B2PVmoxOSM47ZOdGIKOIkL">
-  <h2 data-page-node-id="bwEUtqAYzKoIyJSgfh49dH"><span class="dot" data-page-node-id="ZSxo4vKyXRQWT8qAGWdry9"></span><span data-i18n="todayH" data-page-node-id="JFcPYzcrXJLBvNTOaDeVWo">📌 今日顺路打卡推荐</span></h2>
+  <h2 data-page-node-id="bwEUtqAYzKoIyJSgfh49dH"><span class="dot" data-page-node-id="ZSxo4vKyXRQWT8qAGWdry9"></span><span data-i18n="todayH" data-page-node-id="JFcPYzcrXJLBvNTOaDeVWo">今日顺路打卡推荐</span></h2>
   <div id="todayBody" data-page-node-id="7QX3tS44G68959lTUKSbMH"></div>
 </div>
 
-<!-- 板块3：打卡点地图（放最下面，原形式：点 🗺️ 在 Google Maps 导航） -->
+<!-- 板块3：打卡点地图（放最下面：列表配实拍图 + 下方校园大地图定位） -->
 <div class="card" id="mapCard" data-page-node-id="0gJDbEtgYhsg4hg2hVM6xY">
-  <h2 data-page-node-id="nZAkKVu0he9C0TyADKAgiR"><span class="dot" data-page-node-id="6v223ZY9GHXtL0HmZWcamG"></span><span data-i18n="rdH2" data-page-node-id="oSPOGhdFvjjmQBDw2hItYF">📍 打卡点地图 · Google Maps 导航</span></h2>
-  <div class="muted" data-i18n-html="rdDesc" data-page-node-id="EA1cAZgCBaDrDAD6hs3NEE">读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。点右侧 🗺️ 可直接导航过去。</div>
+  <h2 data-page-node-id="nZAkKVu0he9C0TyADKAgiR"><span class="dot" data-page-node-id="6v223ZY9GHXtL0HmZWcamG"></span><span data-i18n="rdH2" data-page-node-id="oSPOGhdFvjjmQBDw2hItYF">打卡点地图 · 实拍图与校园位置</span></h2>
+  <div class="muted" data-i18n-html="rdDesc" data-page-node-id="EA1cAZgCBaDrDAD6hs3NEE">读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。点下方地图上的圆点，可定位到该打卡点。</div>
   <div id="readerBox" data-page-node-id="P3FhTM9BDIN7PkS0kIIWWr"></div>
+<div class="campus-map" id="campusMap">
+    <svg class="cmap" viewBox="0 0 680 500" role="img" aria-label="中大校园读卡机位置示意图">
+      <path class="cm-road" d="M395 60 V470"/>
+      <path class="cm-road sub" d="M60 236 H620"/>
+      <path class="cm-road sub" d="M120 342 H360"/>
+      <rect class="cm-zone e" x="90" y="46" width="310" height="96" rx="14"/>
+      <rect class="cm-zone c" x="250" y="168" width="190" height="68" rx="14"/>
+      <rect class="cm-zone b" x="175" y="246" width="290" height="92" rx="14"/>
+      <rect class="cm-zone d" x="470" y="150" width="175" height="100" rx="14"/>
+      <rect class="cm-zone a" x="80" y="370" width="305" height="110" rx="14"/>
+      <text class="cm-code" x="100" y="66">北 · 书院区</text>
+      <text class="cm-code" x="260" y="186">联合 / 邵逸夫堂</text>
+      <text class="cm-code" x="185" y="264">中央核心</text>
+      <text class="cm-code" x="480" y="168">大学站 / 保健中心</text>
+      <text class="cm-code" x="90" y="388">崇基校园</text>
+      <circle class="cm-dot e" data-id="LWS" cx="170" cy="92" r="7"/>
+      <text class="cm-lbl" x="170" y="112" text-anchor="middle">LWS 和声书院</text>
+      <circle class="cm-dot e" data-id="WYS" cx="285" cy="84" r="7"/>
+      <text class="cm-lbl" x="285" y="104" text-anchor="middle">WYS 伍宜孙书院</text>
+      <circle class="cm-dot c" data-id="LSK" cx="330" cy="200" r="7"/>
+      <text class="cm-lbl" x="330" y="220" text-anchor="middle">LSK 李兆基楼</text>
+      <circle class="cm-dot c" data-id="MMW" cx="250" cy="282" r="7"/>
+      <text class="cm-lbl" x="250" y="302" text-anchor="middle">MMW 蒙民伟楼</text>
+      <circle class="cm-dot b" data-id="HSHEB" cx="330" cy="314" r="7"/>
+      <text class="cm-lbl" x="330" y="334" text-anchor="middle">HSHEB 工程大楼</text>
+      <circle class="cm-dot b" data-id="LKSP" cx="418" cy="288" r="7"/>
+      <text class="cm-lbl" x="418" y="308" text-anchor="middle">LKSP 文物馆</text>
+      <circle class="cm-dot d" data-id="UMSO" cx="540" cy="196" r="7"/>
+      <text class="cm-lbl" x="540" y="216" text-anchor="middle">UMSO 保健中心</text>
+      <circle class="cm-dot a" data-id="YIA" cx="140" cy="400" r="7"/>
+      <text class="cm-lbl" x="140" y="420" text-anchor="middle">YIA 康本园</text>
+      <circle class="cm-dot a" data-id="FYB" cx="225" cy="428" r="7"/>
+      <text class="cm-lbl" x="225" y="448" text-anchor="middle">FYB 崇基</text>
+      <circle class="cm-dot a" data-id="PSC" cx="300" cy="448" r="7"/>
+      <text class="cm-lbl" x="300" y="468" text-anchor="middle">PSC 庞万伦中心</text>
+      <rect class="cm-stn" x="546" y="246" width="28" height="14" rx="3"/>
+      <text class="cm-stn-t" x="560" y="272" text-anchor="middle">大学站</text>
+    </svg>
+    <div class="cm-legend">
+      <span><i style="background:#5b3a8b"></i><span data-i18n="rdGrpA">崇基 / 中央核心区</span></span>
+      <span><i style="background:#7b52ad"></i><span data-i18n="rdGrpB">中央 · 工程大楼 / 文物馆</span></span>
+      <span><i style="background:#997543"></i><span data-i18n="rdGrpC">中央 · 李兆基 / 蒙民伟</span></span>
+      <span><i style="background:#8c7ba6"></i><span data-i18n="rdGrpD">大学保健医疗中心</span></span>
+      <span><i style="background:#b39d86"></i><span data-i18n="rdGrpE">和声 / 伍宜孙书院（最北）</span></span>
+    </div>
+  </div>
 </div>
 
 <div class="foot" data-page-node-id="FYwE0BCHN3EhXrWYkIfY0D">
@@ -526,14 +605,14 @@ const I18N = {
     heroGoal2:'同一趟行程 <b>1 小时内</b>，起点 + 终点各拍一次中大通即计分。每天封顶 <b>6 分</b>。可通过搭电梯等走捷径（系统只看你拍了哪两个点）。',
     progH2:"我的 40 分进度", progUnit:"/ 40 分",
     navHere:"导航",
-    todayH:"📌 今日顺路打卡推荐",
+    todayH:"今日顺路打卡推荐",
     tpBefore:"课前", tpAt:"到课 / 到目的地",
     btn2:"+2（一趟单程）", btn4:"+4（通勤来回）", btn6:"+6（周末满额）", btnSub:"−2", btnReset:"重置",
-    navH2:"🧭 顺路打卡规划器", navBadge:"随时查",
+    navH2:"顺路打卡规划器", navBadge:"随时查",
     navBack:"含回程（终点→起点再算一次）", navBtn:"查顺路打卡点 + 算分",
-    rdH2:"📍 打卡点地图 · Google Maps 导航",
-    rdDesc:'读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。点右侧 🗺️ 可直接导航过去。',
-    rdGrpA:"🟦 崇基 / 中央核心区", rdGrpB:"🟩 中央 · 工程大楼 / 文物馆", rdGrpC:"🟨 中央 · 李兆基 / 蒙民伟", rdGrpE:"🟪 和声 / 伍宜孙书院（最北）", rdGrpD:"🟧 大学保健医疗中心",
+    rdH2:"打卡点地图 · 实拍图与校园位置",
+    rdDesc:'读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。点下方地图上的圆点，可定位到该打卡点。',
+    rdGrpA:" 崇基 / 中央核心区", rdGrpB:" 中央 · 工程大楼 / 文物馆", rdGrpC:" 中央 · 李兆基 / 蒙民伟", rdGrpE:" 和声 / 伍宜孙书院（最北）", rdGrpD:" 大学保健医疗中心",
     scoreH2:"分数速查表（每段）", scoreTh1:"走的路段（相邻读卡机）", scoreTh2:"分",
     scoreNote:'⚠️ <b># 陷阱（只限这一条长线！）</b>：从崇基直奔和声/伍宜孙（只拍 YIA/FYB/PSC 和 LWS/WYS 两头）= <b>0 分</b>，必须经过一个中间读卡机（HSHEB/MMW/LSK/LKSP/UMSO）。<br><b>其他路段不用中转</b>：例如 LSK↔YIA（2 分）、MMW↔LWS（1 分）、HSHEB↔LWS（2 分）直接拍两头就计分。同区内两个读卡机互拍（如 LSK↔MMW）= 0。',
     planH2:"凑满 40 分的最省事节奏",
@@ -543,7 +622,7 @@ const I18N = {
     foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"本卡为个人攻略，规则以 CUHK SRSDO 官网为准",
     rulesTitle:"📖 规则速查", rulesFab:"📖 规则",
     pOneway:"单程", pTotal:"本趟共计", pIncl:"（含回程）", pTapDep:"出发时拍", pTapArr:"到达拍（与上一拍须在 1 小时内）",
-    pTapRet:"回程再拍", pViewMap:"🗺️ 看校园地图",
+    pTapRet:"回程再拍", pViewMap:"校园地图",
     pTrap:"⚠️ 崇基 ↔ 和声/伍宜孙 直接拍两头 = 0 分！必须<b>在途中经过一个中间读卡机</b>才计分（下面第 2 步）。",
     pSameZone:"⚠️ 这两个点同属一个区域，互拍 = 0 分，需跨区打卡。",
     pNoScore:"这条路线系统不计分（可能不在活动覆盖的读卡机组合内）。试试拆成两段相邻读卡机。",
@@ -587,7 +666,7 @@ const I18N = {
     senCloudOn:"云端共享", senApiLabel:"后端地址", senSave:"保存",
     senApiPh:"云端后端地址（如 https://xxx.apigw.tcloudbase.com）",
     senCloudHint:"开启「云端共享」并填入后端地址后，同学打开同一链接即可共享投稿与点赞。后端需部署一个公开读写接口——代码在项目的 <b>tips-backend</b> 文件夹，部署说明见同文件夹 README。",
-    leftDone:"🎉 已达标！去换 5 个 PE 分",
+    leftDone:"已达标！去换 5 个 PE 分",
     leftRemain:"还差 __N__ 分",
     todayWeekend:"周末休息，没课～下周一再战（或周末去刷 6 分满额）",
     todayBtn:"一键填入规划器",
@@ -595,7 +674,7 @@ const I18N = {
     senRouteAll:"全部路线",
     senFilterLabel:"🔍 按路线筛选",
     senRoutePh:"🏷️ 路线分类（选填）",
-    nearA:"📍 目的地 __R__ 附近（步行 ≤15 分钟可顺手拍）",
+    nearA:"目的地 __R__ 附近（步行 ≤15 分钟可顺手拍）",
     nearB:"↩️ 回程路上还能补的点",
     nearNone:"附近 15 分钟内没有其他读卡机——这趟就拍这一个吧",
     minUnit:"分钟", walkZero:"就在楼下", detour:"绕 __D__ 分钟",
@@ -603,10 +682,10 @@ const I18N = {
     schedFill:"一键填进规划器",
     estNote:"步行时间是校园估算值（±3 分钟），赶时间请以地图为准。",
     noSchedDay:"这天还没填，选上面的两栋楼就行",
-    tipsHead:"💡 学长姐走过的捷径 · 也欢迎你投稿",
+    tipsHead:"学长姐走过的捷径 · 也欢迎你投稿",
     senAllToggle:"🧑‍🏫 投稿你的捷径（会显示在对应路线推荐里）",
     schUpload:"（可选）上传课表截图，对照着填更快",
-    schHint:'💡 绝大多数课在「联合（→LSK）」或「崇基/ECON（→YIA）」，所以 <b>LSK↔YIA 是最稳的 2 分线</b>。把两头的课配成一天，来回就 4 分。',
+    schHint:'绝大多数课在「联合（→LSK）」或「崇基/ECON（→YIA）」，所以 <b>LSK↔YIA 是最稳的 2 分线</b>。把两头的课配成一天，来回就 4 分。',
     schHintSample:"⚠️ 当前是示例课表，点「✎ 修改课表」填入你真实的每周课表，推荐才会准。"
   },
   yue:{
@@ -615,14 +694,14 @@ const I18N = {
     heroGoal2:'同一趟行程 <b>1 個鐘內</b>，起點+終點各拍一次中大通即計分。每日上限 <b>6 分</b>。可透過搭電梯等走捷徑（系統只看你拍咗邊兩個點）。',
     progH2:"我嘅 40 分進度", progUnit:"/ 40 分",
     navHere:"導航",
-    todayH:"📌 今日順路打卡推薦",
+    todayH:"今日順路打卡推薦",
     tpBefore:"課前", tpAt:"到課 / 到目的地",
     btn2:"+2（單程一趟）", btn4:"+4（返學來回）", btn6:"+6（週末滿額）", btnSub:"−2", btnReset:"重置",
-    navH2:"🧭 順路打卡規劃器", navBadge:"隨時查",
+    navH2:"順路打卡規劃器", navBadge:"隨時查",
     navBack:"含返程（終點→起點再計一次）", navBtn:"查順路打卡點 + 計分",
-    rdH2:"📍 打卡點地圖 · Google Maps 導航",
-    rdDesc:'讀卡機貼喺相應樓層嘅電梯口/主通道，留意「大·部·行 Walk for Green」綠色標識。點右側 🗺️ 可直接導航過去。',
-    rdGrpA:"🟦 崇基 / 中央核心區", rdGrpB:"🟩 中央 · 工程大樓 / 文物館", rdGrpC:"🟨 中央 · 李兆基 / 蒙民偉", rdGrpE:"🟪 和聲 / 伍宜孫書院（最北）", rdGrpD:"🟧 大學保健醫療中心",
+    rdH2:"打卡點地圖 · 實拍圖與校園位置",
+    rdDesc:'讀卡機貼喺相應樓層嘅電梯口/主通道，留意「大·部·行 Walk for Green」綠色標識。撳下面地圖上面嘅圓點，可以定位到呢個打卡點。',
+    rdGrpA:" 崇基 / 中央核心區", rdGrpB:" 中央 · 工程大樓 / 文物館", rdGrpC:" 中央 · 李兆基 / 蒙民偉", rdGrpE:" 和聲 / 伍宜孫書院（最北）", rdGrpD:" 大學保健醫療中心",
     scoreH2:"分數速查表（每段）", scoreTh1:"行嘅路段（相鄰讀卡機）", scoreTh2:"分",
     scoreNote:'⚠️ <b># 陷阱（只限呢條長線！）</b>：由崇基直去和聲/伍宜孫（淨係拍 YIA/FYB/PSC 同 LWS/WYS 兩頭）= <b>0 分</b>，必須經過一個中間讀卡機（HSHEB/MMW/LSK/LKSP/UMSO）。<br><b>其他路段唔使中轉</b>：例如 LSK↔YIA（2 分）、MMW↔LWS（1 分）、HSHEB↔LWS（2 分）直接拍兩頭就計分。同一區兩個讀卡機互拍（例如 LSK↔MMW）= 0。',
     planH2:"湊滿 40 分最慳力節奏",
@@ -632,7 +711,7 @@ const I18N = {
     foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"本卡為個人攻略，規則以 CUHK SRSDO 官網為準",
     rulesTitle:"📖 規則速查", rulesFab:"📖 規則",
     pOneway:"單程", pTotal:"呢趟總共", pIncl:"（含返程）", pTapDep:"出發嗰陣拍", pTapArr:"到達拍（同上一拍要喺 1 個鐘內）",
-    pTapRet:"返程再拍", pViewMap:"🗺️ 睇校園地圖",
+    pTapRet:"返程再拍", pViewMap:"校園地圖",
     pTrap:"⚠️ 崇基 ↔ 和聲/伍宜孫 直接拍兩頭 = 0 分！必須<b>途中經過一個中間讀卡機</b>先計分（下面第 2 步）。",
     pSameZone:"⚠️ 呢兩個點同屬一個區域，互拍 = 0 分，要跨區打卡。",
     pNoScore:"呢條路線系統唔計分（可能唔喺活動覆蓋嘅讀卡機組合內）。試下拆成兩段相鄰讀卡機。",
@@ -676,7 +755,7 @@ const I18N = {
     senCloudOn:"雲端共享", senApiLabel:"後端地址", senSave:"儲存",
     senApiPh:"雲端後端地址（例如 https://xxx.apigw.tcloudbase.com）",
     senCloudHint:"開啟「雲端共享」並填好後端地址後，同學打開同一連結即可共享投稿同點讚。後端要部署一個公開讀寫介面——代碼喺項目嘅 <b>tips-backend</b> 資料夾，部署說明見同資料夾 README。",
-    leftDone:"🎉 達標啦！去換 5 個 PE 分",
+    leftDone:"達標啦！去換 5 個 PE 分",
     leftRemain:"還差 __N__ 分",
     todayWeekend:"週末休息，冇課～下週一再戰（或者週末去刷 6 分滿額）",
     todayBtn:"一掣填入規劃器",
@@ -684,7 +763,7 @@ const I18N = {
     senRouteAll:"全部路線",
     senFilterLabel:"🔍 按路線篩選",
     senRoutePh:"🏷️ 路線分類（可揀）",
-    nearA:"📍 目的地 __R__ 附近（行 ≤15 分鐘順手拍到）",
+    nearA:"目的地 __R__ 附近（行 ≤15 分鐘順手拍到）",
     nearB:"↩️ 返程路上仲可以補嘅點",
     nearNone:"附近 15 分鐘內冇其他讀卡機——呢趟拍呢個就夠",
     minUnit:"分鐘", walkZero:"就喺樓下", detour:"繞 __D__ 分鐘",
@@ -692,10 +771,10 @@ const I18N = {
     schedFill:"一掣填入規劃器",
     estNote:"步行時間係校園估算（±3 分鐘），趕時間請以地圖為準。",
     noSchedDay:"呢日仲未填，揀上面兩棟樓就得",
-    tipsHead:"💡 師兄師姐行過嘅捷徑 · 亦歡迎你投稿",
+    tipsHead:"師兄師姐行過嘅捷徑 · 亦歡迎你投稿",
     senAllToggle:"🧑‍🏫 投稿你嘅捷徑（會顯示喺對應路線推薦入面）",
     schUpload:"（可揀）上傳課表截圖，對住填更快",
-    schHint:'💡 絕大多數課喺「聯合（→LSK）」或「崇基/ECON（→YIA）」，所以 <b>LSK↔YIA 係最穩嘅 2 分線</b>。將兩頭嘅課配埋一日，來回就 4 分。',
+    schHint:'絕大多數課喺「聯合（→LSK）」或「崇基/ECON（→YIA）」，所以 <b>LSK↔YIA 係最穩嘅 2 分線</b>。將兩頭嘅課配埋一日，來回就 4 分。',
     schHintSample:"⚠️ 而家係示範課表，點「✎ 修改課表」填入你真實嘅每週課表，推薦先會準。"
   },
   en:{
@@ -704,14 +783,14 @@ const I18N = {
     heroGoal2:'Within <b>1 hour</b>, tap at start + end — the system scores it. Cap <b>6 pts/day</b>. Shortcuts (lift etc.) are fine — only the two tap points matter.',
     progH2:"My 40-point progress", progUnit:"/ 40 pts",
     navHere:"Navigate",
-    todayH:"📌 Today's en-route taps",
+    todayH:"Today's en-route taps",
     tpBefore:"Before class", tpAt:"At class / destination",
     btn2:"+2 (one-way)", btn4:"+4 (round commute)", btn6:"+6 (weekend cap)", btnSub:"−2", btnReset:"Reset",
-    navH2:"🧭 Route planner", navBadge:"anytime",
+    navH2:"Route planner", navBadge:"anytime",
     navBack:"Include return trip (end→start counted again)", navBtn:"Find route + score",
-    rdH2:"📍 Reader map · Google Maps",
-    rdDesc:'Readers are by the lift lobbies / main corridors on their floors; look for the green "大·部·行 Walk for Green" sign. Tap 🗺️ to navigate.',
-    rdGrpA:"🟦 Chung Chi / core campus", rdGrpB:"🟩 Central · Engineering / Art Museum", rdGrpC:"🟨 Central · LEK / Mong Man Wai", rdGrpE:"🟪 Lee Woo Sing / Wu Yee Sun (north)", rdGrpD:"🟧 University Health Service",
+    rdH2:"Reader map · photos & campus location",
+    rdDesc:'Readers are by the lift lobbies / main corridors on their floors; look for the green "大·部·行 Walk for Green" sign. Tap a dot on the map below to locate it.',
+    rdGrpA:" Chung Chi / core campus", rdGrpB:" Central · Engineering / Art Museum", rdGrpC:" Central · LEK / Mong Man Wai", rdGrpE:" Lee Woo Sing / Wu Yee Sun (north)", rdGrpD:" University Health Service",
     scoreH2:"Points cheat-sheet (per segment)", scoreTh1:"Route (adjacent readers)", scoreTh2:"Pts",
     scoreNote:'⚠️ <b># Trap (only this long line!)</b>: Chung Chi straight to Lee Woo Sing/Wu Yee Sun (tapping only YIA/FYB/PSC and LWS/WYS ends) = <b>0 pts</b> — you must pass through an intermediate reader (HSHEB/MMW/LSK/LKSP/UMSO).<br><b>Other routes need no transfer</b>: e.g. LSK↔YIA (2 pts), MMW↔LWS (1 pt), HSHEB↔LWS (2 pts) score by tapping just the two ends. Two readers in the same zone (e.g. LSK↔MMW) = 0.',
     planH2:"Easiest ways to reach 40 points",
@@ -721,7 +800,7 @@ const I18N = {
     foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"Personal guide; rules per CUHK SRSDO official site",
     rulesTitle:"📖 Rules cheat-sheet", rulesFab:"📖 Rules",
     pOneway:"one-way", pTotal:"This trip total", pIncl:"(incl. return)", pTapDep:"Tap on departure", pTapArr:"Tap on arrival (within 1 hr of previous tap)",
-    pTapRet:"Tap again on return", pViewMap:"🗺️ View campus map",
+    pTapRet:"Tap again on return", pViewMap:"Campus map",
     pTrap:"⚠️ Chung Chi ↔ Lee Woo Sing/Wu Yee Sun tapping only the two ends = 0 pts! You must <b>pass through an intermediate reader en route</b> to score (step 2 below).",
     pSameZone:"⚠️ These two points are in the same zone; tapping them = 0 pts, you need to cross zones.",
     pNoScore:"The system scores this route 0 (may not be a covered reader combo). Try splitting into two adjacent-reader segments.",
@@ -765,7 +844,7 @@ const I18N = {
     senCloudOn:"Cloud share", senApiLabel:"Backend URL", senSave:"Save",
     senApiPh:"Cloud backend URL (e.g. https://xxx.apigw.tcloudbase.com)",
     senCloudHint:"Turn on \"Cloud share\" and enter the backend URL — then anyone opening the same link can see and like each other's tips. The backend is a public read/write API; code is in the project's <b>tips-backend</b> folder, deploy guide in its README.",
-    leftDone:"🎉 Done! Go claim your 5 PE credits",
+    leftDone:"Done! Go claim your 5 PE credits",
     leftRemain:"__N__ pts to go",
     todayWeekend:"Weekend — no classes. Battle again Monday (or grind 6 pts on a weekend day)",
     todayBtn:"Load into planner",
@@ -773,7 +852,7 @@ const I18N = {
     senRouteAll:"All routes",
     senFilterLabel:"🔍 Filter by route",
     senRoutePh:"🏷️ Route category (optional)",
-    nearA:"📍 Near destination __R__ (within a 15-min walk)",
+    nearA:"Near destination __R__ (within a 15-min walk)",
     nearB:"↩️ Bonus stops on the way back",
     nearNone:"No other reader within 15 min — just tap this one",
     minUnit:"min", walkZero:"same building", detour:"+__D__ min detour",
@@ -784,7 +863,7 @@ const I18N = {
     tipsHead:"💡 Shortcuts seniors took · share yours too",
     senAllToggle:"🧑‍🏫 Submit your shortcut (shows on the matching route)",
     schUpload:"(optional) upload a timetable screenshot to copy from",
-    schHint:'💡 Most classes are at United (→LSK) or Chung Chi/ECON (→YIA), so <b>LSK↔YIA is the safest 2-pt line</b>. Pair classes at both ends in one day for 4 pts round trip.',
+    schHint:'Most classes are at United (→LSK) or Chung Chi/ECON (→YIA), so <b>LSK↔YIA is the safest 2-pt line</b>. Pair classes at both ends in one day for 4 pts round trip.',
     schHintSample:"⚠️ This is a sample timetable — tap \"✎ Edit timetable\" and enter your real weekly schedule so the recommendation is accurate."
   }
 };
@@ -915,6 +994,7 @@ function applyLang(){
   updateLangUI();
   buildPlaceOptions();
   renderReaders(); renderScore(); renderToday(); renderTips(); renderLeft();
+  initMapClicks();
   buildRouteOptions();
   const outEl=document.getElementById('out');
   if(outEl && outEl.classList.contains('show') && lastPlan) plan();
@@ -925,13 +1005,29 @@ function rcard(id){
   const i=RINFO[id];
   const ph = i.photo ? `<img src="${i.photo}" alt="${id}" loading="lazy">` : `<div class="ph">📍<br>${tLbl(id)}</div>`;
   const nm = tLbl(id);
-  return `<div class="spot" style="margin:6px 0">${ph}<div class="info"><div class="nm">${nm}</div><span class="fl">${i.floor}</span><div class="how">${tHow(id)}</div><a class="go" href="${gmapHere(id)}" target="_blank" rel="noopener">🗺️ ${t("navHere")}</a></div></div>`;
+  return `<div class="spot" style="margin:6px 0">${ph}<div class="info"><div class="nm">${nm}</div><span class="fl">${i.floor}</span><div class="how">${tHow(id)}</div><span class="fl">${i.floor}</span></div></div>`;
 }
+const GRP_OF={YIA:"a",FYB:"a",PSC:"a",HSHEB:"b",LKSP:"b",MMW:"c",LSK:"c",UMSO:"d",LWS:"e",WYS:"e"};
 function rrow(id){
   const i=RINFO[id];
-  return `<div class="reader"><div style="min-width:0"><div class="nm">${tLbl(id)}</div><div class="how">${tHow(id)}</div></div>`
-    + `<div style="text-align:right;white-space:nowrap"><span class="fl">${i.floor}</span><br>`
-    + `<a class="go" href="${gmapHere(id)}" target="_blank" rel="noopener">🗺️ ${t("navHere")}</a></div></div>`;
+  const ph = i.photo
+    ? `<img class="thumb" src="${i.photo}" alt="${tLbl(id)}" loading="lazy">`
+    : `<div class="thumb-ph">暂无<br>实拍图</div>`;
+  return `<div class="reader" id="rw-${id}" data-grp="${GRP_OF[id]||"a"}">${ph}`
+    + `<div style="min-width:0;flex:1"><div class="nm">${tLbl(id)}</div><div class="how">${tHow(id)}</div></div>`
+    + `<div style="text-align:right;white-space:nowrap"><span class="fl">${i.floor}</span></div></div>`;
+}
+/* 点地图上的点 → 列表对应项高亮并滚到可视区 */
+function initMapClicks(){
+  const m=document.getElementById('campusMap'); if(!m || m.dataset.bound) return;
+  m.dataset.bound="1";
+  m.addEventListener('click', e=>{
+    const c=e.target.closest('.cm-dot'); if(!c) return;
+    const id=c.getAttribute('data-id'); if(!id) return;
+    document.querySelectorAll('.reader.hl').forEach(el=>el.classList.remove('hl'));
+    const el=document.getElementById('rw-'+id);
+    if(el){ el.classList.add('hl'); el.scrollIntoView({behavior:'smooth',block:'center'}); }
+  });
 }
 function renderReaders(){
   const order=[["A",["YIA","FYB","PSC"]],["B",["HSHEB","LKSP"]],["C",["MMW","LSK"]],["D",["UMSO"]],["E",["LWS","WYS"]]];
@@ -1040,7 +1136,7 @@ function plan(){
 const KEY="wfg_points";
 let p=parseInt(localStorage.getItem(KEY)||"0",10);
 function leftText(short){
-  if(p>=40) return short ? (curLang==="zh"?"🎉 达标":(curLang==="yue"?"🎉 達標":"🎉 Done")) : t("leftDone");
+  if(p>=40) return short ? (curLang==="zh"?"达标":(curLang==="yue"?"達標":"Done")) : t("leftDone");
   return t("leftRemain").replace("__N__",(40-p));
 }
 function renderHero(){
@@ -1148,10 +1244,10 @@ async function renderToday(){
   const ra=PLACES[row.a].r, rb=PLACES[row.b].r;
   const sc=pts(ra,rb).p;
   const isSample = !localStorage.getItem(SCHED_KEY);
-  let html=`<div class="today-day">📅 今天（${dn}）</div>`;
+  let html=`<div class="today-day">今天（${dn}）</div>`;
   html+=`<div class="today-route2"><span class="from">${tLbl(row.a)}</span><span class="arr">→</span><span class="dest">${tLbl(row.b)}</span></div>`;
-  html+=`<div class="tp"><span class="tp-ic">🕐</span><div><b>${t("tpBefore")}</b>：${t("pTapDep")} <span class="pill">${ra}</span>（出门顺路就拍）</div></div>`;
-  html+=`<div class="tp"><span class="tp-ic">🕐</span><div><b>${t("tpAt")}</b>：${t("pTapArr")} <span class="pill">${rb}</span> → <b>${sc>0?('+'+sc+' '+t("scoreTh2")):'0 '+t("scoreTh2")+'（需换路线）'}</b></div></div>`;
+  html+=`<div class="tp"><div><b>${t("tpBefore")}</b>：${t("pTapDep")} <span class="pill">${ra}</span>（出门顺路就拍）</div></div>`;
+  html+=`<div class="tp"><div><b>${t("tpAt")}</b>：${t("pTapArr")} <span class="pill">${rb}</span> → <b>${sc>0?('+'+sc+' '+t("scoreTh2")):'0 '+t("scoreTh2")+'（需换路线）'}</b></div></div>`;
   html+=`<div class="near-t">${t("nearA").replace("__R__",rb)}</div>`;
   html+=chipsNear(rb);
   html+=`<div style="margin-top:9px"><button class="b-go-sm" onclick="planToday('${row.a}','${row.b}')">${t("schedFill")}</button></div>`;
@@ -1164,13 +1260,13 @@ async function renderToday(){
   const rel=list.filter(tp=>(tp.route||"other")===cat||(tp.route||"other")==="other")
     .sort((x,y)=>tipScore(y)-tipScore(x)||(y.ts||0)-(x.ts||0)).slice(0,2);
   if(rel.length){
-    let sh=`<div class="sen-inline-head">💡 学长姐捷径 · ${tRoute2(cat)}</div>`+rel.map(tipCard).join('');
+    let sh=`<div class="sen-inline-head">学长姐捷径 · ${tRoute2(cat)}</div>`+rel.map(tipCard).join('');
     box.insertAdjacentHTML('beforeend', sh);
   }
 }
 function tipCard(tp){
   const hot=tipScore(tp)>0?' hot':'';
-  const hotTag=tipScore(tp)>0?`<span class="hot-tag">🔥</span>`:'';
+  const hotTag='';
   const rTag = tp.route ? `<span class="hot-tag" style="color:var(--sub);margin-left:6px">🏷️ ${tRoute2(tp.route)}</span>` : '';
   return `<div class="tip${hot}"><div class="who">${tp.name||"匿名"}${hotTag}${rTag}</div><div class="txt">${tp.text}</div></div>`;
 }
