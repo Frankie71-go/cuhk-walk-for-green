@@ -3,7 +3,7 @@
 <head data-page-node-id="uYZTDw9DsyZJkRTCeZ23xu">
 <meta charset="UTF-8" data-page-node-id="HG0tq40b9W0097HsbABnGC">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" data-page-node-id="A6xBLCvfzKbRo72k7CkqFC">
-<title data-i18n="title">大·部·行 Walk for Green 攻略卡</title>
+<title data-i18n="title">打卡点 · Walk for Green</title>
 <style>
   :root{
     --bg:#f5f7fb; --card:#ffffff; --ink:#1f2a44;
@@ -483,9 +483,18 @@ body{
   .reader .go{align-self:flex-start}
 }
 
+
+  /* 打卡点独立页：隐藏主页专属板块与入口 */
+  #plannerCard,#todayCard{display:none !important}
+  .mapfab{display:none !important}
+  .backbar{margin:0 0 12px;font-size:13px}
+  .backbar a{color:var(--accent);text-decoration:none;font-weight:700}
+  .backbar a:hover{text-decoration:underline}
 </style>
 </head>
 <body data-page-node-id="If4Fz3Phr3kADRnbbDnowy">
+<div class="backbar"><a href="index.html">← Walk for Green</a></div>
+
 
 <div class="hero" data-page-node-id="vBrNGPF0YN3EJEBzW4cBrY">
   <h1 data-page-node-id="RTGjonTL0c3jxcJEH0WSyf">大·部·行 Walk for Green</h1>
@@ -535,6 +544,13 @@ body{
     <div id="schedImgWrap" data-page-node-id="schedImgWrap"></div>
   </div>
   <div id="todayBody" data-page-node-id="7QX3tS44G68959lTUKSbMH"></div>
+</div>
+
+
+<div class="card" id="mapCard">
+  <h2><span class="dot"></span><span data-i18n="rdH2">打卡点地图 · 实拍图与校园位置</span></h2>
+  <div class="muted" data-i18n-html="rdDesc">读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。每张打卡点卡片下方都有 Google / Apple 地图链接，点开即可定位到该楼。</div>
+  <div id="readerBox"></div>
 </div>
 
 <div class="foot" data-page-node-id="FYwE0BCHN3EhXrWYkIfY0D">
