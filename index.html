@@ -151,6 +151,10 @@
   .rulesfab{position:fixed;left:14px;bottom:16px;z-index:999;background:rgba(31,42,68,.92);color:#fff;border:1px solid rgba(255,255,255,.25);
     border-radius:22px;padding:9px 14px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);font-size:13px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
   .rulesfab:hover{filter:brightness(1.1)}
+  /* 打卡点浮窗按钮：叠在“规则”上方，同一列左下角 */
+  .mapfab{position:fixed;left:14px;bottom:62px;z-index:999;background:rgba(31,42,68,.92);color:#fff;border:1px solid rgba(255,255,255,.25);
+    border-radius:22px;padding:9px 14px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);font-size:13px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .mapfab:hover{filter:brightness(1.1)}
   .modal{position:fixed;inset:0;background:rgba(20,28,48,.55);display:none;z-index:1000;align-items:flex-end;justify-content:center}
   .modal.show{display:flex}
   .modalcard{background:#fff;width:100%;max-width:560px;max-height:86vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px 16px 30px}
@@ -533,20 +537,27 @@ body{
   <div id="todayBody" data-page-node-id="7QX3tS44G68959lTUKSbMH"></div>
 </div>
 
-<!-- 板块3：打卡点地图（放最下面：列表配实拍图 + 下方校园大地图定位） -->
-<div class="card" id="mapCard" data-page-node-id="0gJDbEtgYhsg4hg2hVM6xY">
-  <h2 data-page-node-id="nZAkKVu0he9C0TyADKAgiR"><span class="dot" data-page-node-id="6v223ZY9GHXtL0HmZWcamG"></span><span data-i18n="rdH2" data-page-node-id="oSPOGhdFvjjmQBDw2hItYF">打卡点地图 · 实拍图与校园位置</span></h2>
-  <div class="muted" data-i18n-html="rdDesc" data-page-node-id="EA1cAZgCBaDrDAD6hs3NEE">读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。每张打卡点卡片下方都有 Google / Apple 地图链接，点开即可定位到该楼。</div>
-  <div id="readerBox" data-page-node-id="P3FhTM9BDIN7PkS0kIIWWr"></div>
-</div>
-
 <div class="foot" data-page-node-id="FYwE0BCHN3EhXrWYkIfY0D">
   <span data-i18n="foot1" data-page-node-id="SHaczEIRPWZ8aQZjEaeJY9">© 2026 Walk for Green · All Rights Reserved</span><br data-page-node-id="dZ7Zr5yM1Abr7SFS8V2IIf">
   <span data-i18n="foot2" data-page-node-id="giDpYxRctuQQQNET8yOfVl">规则以 CUHK SRSDO 官网为准</span>
 </div>
 
+<!-- 打卡点浮窗按钮（左下角，规则之上） -->
+<div class="mapfab" onclick="openMap()" data-page-node-id="mapFabBtn"><span data-i18n="mapFab">🗺️ 打卡点</span></div>
+
 <!-- 规则浮窗按钮（左下角） -->
 <div class="rulesfab" onclick="openRules()" data-i18n="rulesFab" data-page-node-id="sW9TxL5ETbvb7CYcYBPWvO">📖 规则</div>
+
+<!-- 打卡点弹窗（原本的“打卡点地图”板块，收进浮窗，主页只留前两块） -->
+<div class="modal" id="mapModal" onclick="if(event.target===this)closeMap()">
+  <div class="modalcard">
+    <div class="modalhead"><span data-i18n="rdH2">打卡点地图 · 实拍图与校园位置</span><button onclick="closeMap()">✕</button></div>
+    <div class="modalbody">
+      <div class="muted" data-i18n-html="rdDesc">读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。每张打卡点卡片下方都有 Google / Apple 地图链接，点开即可定位到该楼。</div>
+      <div id="readerBox" data-page-node-id="P3FhTM9BDIN7PkS0kIIWWr"></div>
+    </div>
+  </div>
+</div>
 
 <!-- 规则弹窗（把分数表 / 40分计划 / 坑点 / 示例 / 官方 全部收进来） -->
 <div class="modal" id="rulesModal" onclick="if(event.target===this)closeRules()" data-page-node-id="BXJMgAJ1XAGjtNXDXuLTeC">
@@ -602,6 +613,7 @@ const I18N = {
     planLi3:'<b>最低门槛</b>：每周顺路刷一次来回（6 分），7 周达标，几乎不费劲。',
     foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"本卡为个人攻略，规则以 CUHK SRSDO 官网为准",
     rulesTitle:"📖 规则速查", rulesFab:"📖 规则",
+    mapFab:"🗺️ 打卡点",
     pOneway:"单程", pTotal:"本趟共计", pIncl:"（含回程）", pTapDep:"出发时拍", pTapArr:"到达拍（与上一拍须在 1 小时内）",
     pTapRet:"回程再拍", pViewMap:"校园地图",
     pTrap:"⚠️ 崇基 ↔ 和声/伍宜孙 直接拍两头 = 0 分！必须<b>在途中经过一个中间读卡机</b>才计分（下面第 2 步）。",
@@ -658,11 +670,13 @@ const I18N = {
     pgPlace:"这两个地方有什么", pgWalkH:"抄近路走法", pgSeniorH:"学长姐投稿路线",
     pgWalkGen:"按校园步道走约 __M__ 分钟；系统只看你拍了哪两个点，中间怎么走都行。",
     nearA:"目的地 __R__ 附近（步行 ≤15 分钟可顺手拍）",
+    nearFrom:"出发上课的 __R__ 附近（步行 ≤15 分钟可顺手拍）",
     nearB:"↩️ 回程路上还能补的点",
     nearNone:"附近 15 分钟内没有其他读卡机——这趟就拍这一个吧",
     minUnit:"分钟", walkZero:"就在楼下", detour:"绕 __D__ 分钟",
     schedTap:"这趟本身：__A__ → __B__ = <b>__P__ 分</b>",
     schedFill:"一键填进规划器",
+    viewAllSpots:"🗺️ 全部打卡点（含楼层）",
     estNote:"步行时间是校园估算值（±3 分钟），赶时间请以地图为准。",
     tipsHead:"学长姐走过的捷径 · 也欢迎你投稿",
     senAllToggle:"🧑‍🏫 投稿你的捷径（会显示在对应路线推荐里）",
@@ -676,6 +690,7 @@ const I18N = {
     ocrNone:"没从截图里认出时间和楼名。可以换张更清晰、更正的截图，或照着手动选两栋楼。",
     ocrFound:"识别到 __N__ 天的课：",
     ocrApply:"用这个结果填课表",
+
   },
   yue:{
     title:"大·部·行 Walk for Green 攻略卡",
@@ -699,6 +714,7 @@ const I18N = {
     planLi3:'<b>最低門檻</b>：每週順路刷一次來回（6 分），7 週達標，幾乎唔費力。',
     foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"本卡為個人攻略，規則以 CUHK SRSDO 官網為準",
     rulesTitle:"📖 規則速查", rulesFab:"📖 規則",
+    mapFab:"🗺️ 打卡點",
     pOneway:"單程", pTotal:"呢趟總共", pIncl:"（含返程）", pTapDep:"出發嗰陣拍", pTapArr:"到達拍（同上一拍要喺 1 個鐘內）",
     pTapRet:"返程再拍", pViewMap:"校園地圖",
     pTrap:"⚠️ 崇基 ↔ 和聲/伍宜孫 直接拍兩頭 = 0 分！必須<b>途中經過一個中間讀卡機</b>先計分（下面第 2 步）。",
@@ -755,11 +771,13 @@ const I18N = {
     pgPlace:"呢兩個地方有咩", pgWalkH:"抄捷徑走法", pgSeniorH:"師兄師姐投稿路線",
     pgWalkGen:"沿校園步道行約 __M__ 分鐘；系統只睇你拍咗邊兩個點，中間點行都得。",
     nearA:"目的地 __R__ 附近（行 ≤15 分鐘順手拍到）",
+    nearFrom:"出發上課嘅 __R__ 附近（行 ≤15 分鐘順手拍到）",
     nearB:"↩️ 返程路上仲可以補嘅點",
     nearNone:"附近 15 分鐘內冇其他讀卡機——呢趟拍呢個就夠",
     minUnit:"分鐘", walkZero:"就喺樓下", detour:"繞 __D__ 分鐘",
     schedTap:"呢趟本身：__A__ → __B__ = <b>__P__ 分</b>",
     schedFill:"一掣填入規劃器",
+    viewAllSpots:"🗺️ 全部打卡點（含樓層）",
     estNote:"步行時間係校園估算（±3 分鐘），趕時間請以地圖為準。",
     tipsHead:"師兄師姐行過嘅捷徑 · 亦歡迎你投稿",
     senAllToggle:"🧑‍🏫 投稿你嘅捷徑（會顯示喺對應路線推薦入面）",
@@ -773,6 +791,7 @@ const I18N = {
     ocrNone:"認唔到截圖裡面嘅時間同樓名。可以換張清楚啲、正啲嘅截圖，或者對住手動揀兩棟樓。",
     ocrFound:"識別到 __N__ 日嘅課：",
     ocrApply:"用呢個結果填課表",
+
   },
   en:{
     title:"Walk for Green Guide ",
@@ -796,6 +815,7 @@ const I18N = {
     planLi3:'<b>Lowest bar</b>: one round-trip swipe per week (6 pts), hit 40 in 7 weeks, almost effortless.',
     foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"Personal guide; rules per CUHK SRSDO official site",
     rulesTitle:"📖 Rules cheat-sheet", rulesFab:"📖 Rules",
+    mapFab:"🗺️ Spots",
     pOneway:"one-way", pTotal:"This trip total", pIncl:"(incl. return)", pTapDep:"Tap on departure", pTapArr:"Tap on arrival (within 1 hr of previous tap)",
     pTapRet:"Tap again on return", pViewMap:"Campus map",
     pTrap:"⚠️ Chung Chi ↔ Lee Woo Sing/Wu Yee Sun tapping only the two ends = 0 pts! You must <b>pass through an intermediate reader en route</b> to score (step 2 below).",
@@ -852,11 +872,13 @@ const I18N = {
     pgPlace:"What's at these two spots", pgWalkH:"Shortcut route", pgSeniorH:"Senior-submitted route",
     pgWalkGen:"Walk along campus paths ~__M__ min; the system only cares which two points you tap — any route in between counts.",
     nearA:"Near destination __R__ (within a 15-min walk)",
+    nearFrom:"Near __R__ (your class building) — other readers within 15 min",
     nearB:"↩️ Bonus stops on the way back",
     nearNone:"No other reader within 15 min — just tap this one",
     minUnit:"min", walkZero:"same building", detour:"+__D__ min detour",
     schedTap:"This trip itself: __A__ → __B__ = <b>__P__ pts</b>",
     schedFill:"Load into planner",
+    viewAllSpots:"🗺️ All spots (with floors)",
     estNote:"Walking times are campus estimates (±3 min) — trust the map if you're in a hurry.",
     tipsHead:"💡 Shortcuts seniors took · share yours too",
     senAllToggle:"🧑‍🏫 Submit your shortcut (shows on the matching route)",
@@ -870,6 +892,7 @@ const I18N = {
     ocrNone:"No times or buildings recognized. Try a clearer, straight-on screenshot, or pick the buildings manually.",
     ocrFound:"Found classes on __N__ day(s):",
     ocrApply:"Use this for my timetable",
+
   }
 };
 
@@ -1285,9 +1308,11 @@ async function renderToday(){
   html+=`<div class="today-route2"><span class="from">${tLbl(row.a)}</span><span class="arr">→</span><span class="dest">${tLbl(row.b)}</span></div>`;
   html+=`<div class="tp"><div><b>${t("tpBefore")}</b>：${t("pTapDep")} <span class="pill">${ra}</span>（出门顺路就拍）</div></div>`;
   html+=`<div class="tp"><div><b>${t("tpAt")}</b>：${t("pTapArr")} <span class="pill">${rb}</span> → <b>${sc>0?('+'+sc+' '+t("scoreTh2")):'0 '+t("scoreTh2")+'（需换路线）'}</b></div></div>`;
+  html+=`<div class="near-t">${t("nearFrom").replace("__R__",tLbl(row.a))}</div>`;
+  html+=chipsNear(ra);
   html+=`<div class="near-t">${t("nearA").replace("__R__",rb)}</div>`;
   html+=chipsNear(rb);
-  html+=`<div style="margin-top:9px"><button class="b-go-sm" onclick="planToday('${row.a}','${row.b}')">${t("schedFill")}</button></div>`;
+  html+=`<div style="margin-top:9px"><button class="b-go-sm" onclick="planToday('${row.a}','${row.b}')">${t("schedFill")}</button> <button class="b-go-sm" onclick="openMap()">${t("viewAllSpots")}</button></div>`;
   html+=`<div class="tiny" style="margin-top:7px">${t("estNote")}</div>`;
   if(isSample) html+=`<div class="sched-hint">${t("schHintSample")}</div>`;
   box.innerHTML=html;
@@ -1353,10 +1378,10 @@ const DAY_TOKENS=[
   ["sun",["周日","星期日","星期天","週日","SUN","Sunday"]]
 ];
 function ocrMatchDay(line){
-  const L=String(line).toLowerCase();
+  const L=ocrNorm(String(line).toLowerCase());
   for(let i=0;i<DAY_TOKENS.length;i++){
     const toks=DAY_TOKENS[i][1];
-    for(let j=0;j<toks.length;j++) if(L.indexOf(toks[j].toLowerCase())>=0) return DAY_TOKENS[i][0];
+    for(let j=0;j<toks.length;j++) if(L.indexOf(ocrNorm(toks[j].toLowerCase()))>=0) return DAY_TOKENS[i][0];
   }
   return null;
 }
@@ -1367,21 +1392,24 @@ function ocrLev(a,b){ a=a.toUpperCase(); b=b.toUpperCase(); const m=a.length,n=b
   for(let i=1;i<=m;i++){ let prev=d[0]; d[0]=i;
     for(let j=1;j<=n;j++){ const tmp=d[j]; d[j]=Math.min(d[j]+1,d[j-1]+1,prev+(a[i-1]===b[j-1]?0:1)); prev=tmp; } }
   return d[n]; }
+/* 常见 OCR 误读归一化：0→O、1→I、5→S（数字被读成字母 / 反过来） */
+function ocrNorm(s){ return String(s).replace(/[0]/g,'O').replace(/[1]/g,'I').replace(/[5]/g,'S'); }
 function ocrMatchBuildings(line){
-  const L=String(line).toLowerCase(); const res=[]; let i=0;
+  const L=ocrNorm(String(line).toLowerCase()); const res=[]; let i=0;
   while(i<L.length){
     let hit=null;
     for(let k=0;k<OCR_FLAT.length;k++){
       const al=OCR_FLAT[k][0];
-      if(L.substr(i,al.length)===al.toLowerCase()){ hit=OCR_FLAT[k]; break; }
+      if(L.substr(i,al.length)===ocrNorm(al.toLowerCase())){ hit=OCR_FLAT[k]; break; }
     }
     if(hit){ res.push(hit[1]); i+=hit[0].length; } else i++;
   }
-  /* 容错：抽出英文楼名代码（2-5 字母），与楼代码做编辑距离 ≤1 的模糊匹配 */
-  const toks=(String(line).toUpperCase().match(/[A-Z]{2,5}/g)||[]);
+  /* 容错：抽出英文楼名代码（2-6 字母），与楼代码做「同长度 + 编辑距离 ≤1」的模糊匹配
+     （3 字母代码 LSK/YIA 误读成 1SK/L5K/Y1A 也能救回来） */
+  const toks=(ocrNorm(String(line)).toUpperCase().match(/[A-Z]{2,6}/g)||[]);
   toks.forEach(tok=>{ for(let k=0;k<OCR_FLAT.length;k++){
     const code=OCR_FLAT[k][1]; if(code.length<2) continue;
-    if(ocrLev(tok,code)<=(code.length>=4?1:0) && res.indexOf(code)<0){ res.push(code); break; }
+    if(tok.length===code.length && ocrLev(tok,code)<=1 && res.indexOf(code)<0){ res.push(code); break; }
   } });
   return res;
 }
@@ -1420,7 +1448,61 @@ function parseSchedText(text){
   });
   return out;
 }
-let LAST_OCR=null;
+let LAST_OCR=null, LAST_OCR_RAW='';
+/* 从 Tesseract 结果抽取带坐标的词（兼容 v5 的 words / lines.words 结构） */
+function extractWords(ret){
+  const out=[];
+  let src=[];
+  const d=ret&&ret.data;
+  if(d&&d.words&&d.words.length) src=d.words;
+  else if(d&&d.lines) d.lines.forEach(l=>{ if(l.words) src=src.concat(l.words); });
+  src.forEach(w=>{
+    const t=(w&&w.text||'').trim(); if(!t) return;
+    const b=(w&&w.bbox)||{}; if(b.x0==null||b.y0==null) return;
+    out.push({t:t, cx:(b.x0+b.x1)/2, cy:(b.y0+b.y1)/2});
+  });
+  return out;
+}
+/* 版面感知解析：星期作列/节标题，地点与「上方同列最近时间」配对（兼容网格与竖排两种课表） */
+function parseSchedWords(words){
+  if(!words||words.length<3) return null;
+  const cols=[];
+  words.forEach(w=>{ const d=ocrMatchDay(w.t); if(d) cols.push({day:d, cx:w.cx, cy:w.cy}); });
+  if(!cols.length) return null;                       // 没识别出星期 → 退化为纯文本解析
+  const dayOfItem=(it)=>{
+    let best=null,bc=1e9;
+    cols.forEach(c=>{ if(c.cy<it.cy){ const cost=(it.cy-c.cy)+Math.abs(c.cx-it.cx); if(cost<bc){bc=cost;best=c.day;} } });
+    if(best) return best;
+    let b2=null,bd=1e9; cols.forEach(c=>{ const dd=Math.abs(c.cx-it.cx); if(dd<bd){bd=dd;b2=c.day;} }); return b2;
+  };
+  const found={};
+  const pushB=(day,t,b)=>{ if(!day||!b) return; (found[day]=found[day]||[]).push({t:t,b:b}); };
+  words.forEach(w=>{
+    if(ocrMatchDay(w.t)) return;                       // 星期标题本身跳过
+    const ts=(w.t.match(/\d{1,2}[:.：]\d{2}/g)||[]).map(ocrToMin);
+    const bs=ocrMatchBuildings(w.t);
+    const day=dayOfItem(w); if(!day) return;
+    if(bs.length && ts.length){
+      const n=Math.min(ts.length,bs.length);
+      for(let i=0;i<n;i++) pushB(day,ts[i],bs[i]);
+    } else if(bs.length){
+      let best=null,bc=1e9;                            // 楼名：找上方同列最近的时间
+      words.forEach(o=>{ if(o===w) return;
+        const ots=(o.t.match(/\d{1,2}[:.：]\d{2}/g)||[]).map(ocrToMin);
+        if(!ots.length) return;
+        if(o.cy<w.cy){ const cost=(w.cy-o.cy)+Math.abs(o.cx-w.cx); if(cost<bc){bc=cost;best=ots[0];} }
+      });
+      pushB(day, best!=null?best:null, bs[0]);
+    }
+  });
+  const out=[];
+  Object.keys(found).forEach(dd=>{
+    const arr=found[dd].slice().sort((x,y)=>(x.t==null?9999:x.t)-(y.t==null?9999:y.t));
+    if(!arr.length) return;
+    out.push({d:dd,a:arr[0].b,b:arr.length>1?arr[arr.length-1].b:arr[0].b});
+  });
+  return out.length?out:null;
+}
 async function loadTesseract(){
   if(window.Tesseract) return window.Tesseract;
   await new Promise((res,rej)=>{
@@ -1456,7 +1538,10 @@ async function parseSchedImg(){
     const proc=ocrGrayscale(img);
     const ret=await worker.recognize(proc);
     await worker.terminate();
-    const parsed=parseSchedText((ret&&ret.data&&ret.data.text)||'');
+    LAST_OCR_RAW=(ret&&ret.data&&ret.data.text)||'';
+    const words=extractWords(ret);
+    let parsed=parseSchedWords(words);                 // 优先：带坐标的版面感知解析
+    if(!parsed) parsed=parseSchedText(LAST_OCR_RAW);   // 退化：纯文本逐行解析
     LAST_OCR=parsed;
     box.innerHTML=renderOcrResult(parsed);
   }catch(e){
@@ -1464,13 +1549,17 @@ async function parseSchedImg(){
   }
 }
 function renderOcrResult(parsed){
-  if(!parsed||!parsed.length) return `<div class="ocr-msg">${t('ocrNone')}</div>`;
-  const dn=t('day');
-  let s=`<div class="ocr-msg"><b>${t('ocrFound').replace('__N__',parsed.length)}</b></div>`;
-  parsed.forEach(r=>{
-    s+=`<div class="ocr-row">${dn[r.d][curLang]}：${tLbl(r.a)}${r.b!==r.a?' → '+tLbl(r.b):''}</div>`;
-  });
-  s+=`<button class="ocr-apply" onclick="applyOcr()">${t('ocrApply')}</button>`;
+  let s='';
+  if(!parsed||!parsed.length){
+    s+=`<div class="ocr-msg">${t('ocrNone')}</div>`;
+  } else {
+    const dn=t('day');
+    s+=`<div class="ocr-msg"><b>${t('ocrFound').replace('__N__',parsed.length)}</b></div>`;
+    parsed.forEach(r=>{
+      s+=`<div class="ocr-row">${dn[r.d][curLang]}：${tLbl(r.a)}${r.b!==r.a?' → '+tLbl(r.b):''}</div>`;
+    });
+    s+=`<button class="ocr-apply" onclick="applyOcr()">${t('ocrApply')}</button>`;
+  }
   return s;
 }
 function applyOcr(){
@@ -1578,6 +1667,8 @@ function planToday(a,b){
 /* ---------- 规则弹窗 ---------- */
 function openRules(){ const m=document.getElementById('rulesModal'); if(m) m.classList.add('show'); }
 function closeRules(){ const m=document.getElementById('rulesModal'); if(m) m.classList.remove('show'); }
+function openMap(){ const m=document.getElementById('mapModal'); if(m) m.classList.add('show'); }
+function closeMap(){ const m=document.getElementById('mapModal'); if(m) m.classList.remove('show'); }
 
 /* ---------- 语言切换（悬浮窗） ---------- */
 function updateLangUI(){
