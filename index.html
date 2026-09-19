@@ -559,8 +559,8 @@ body{
         <a class="apple" href="https://maps.apple.com/?q=%E9%A6%99%E6%B8%AF%E4%B8%AD%E6%96%87%E5%A4%A7%E5%AD%B8" target="_blank" rel="noopener">Apple 地图 ↗</a>
       </span>
     </div>
-    <iframe class="gmap" src="https://maps.google.com/maps?q=Chinese%20University%20of%20Hong%20Kong&amp;z=15&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="CUHK 校园实景地图"></iframe>
-    <div class="cm-note" data-i18n="mapNote">下方为校园实景地图（Google 地图）。每张打卡点卡片下方都有「Google 地图 / Apple 地图」链接，点开即可定位到该楼。</div>
+    <iframe class="gmap" src="https://www.openstreetmap.org/export/embed.html?bbox=114.196%2C22.408%2C114.218%2C22.426&amp;layer=mapnik&amp;marker=22.417%2C114.207" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="CUHK 校园地图（OpenStreetMap）"></iframe>
+    <div class="cm-note" data-i18n="mapNote">下方为校园地图（OpenStreetMap，可拖动缩放）。Google 地图已禁止被网页嵌入，所以内嵌改用 OpenStreetMap；要看 Google / Apple 实景，请点上方的「Google 地图 ↗ / Apple 地图 ↗」。</div>
     </div>
 </div>
 
@@ -617,7 +617,7 @@ const I18N = {
     navBack:"含回程（终点→起点再算一次）", navBtn:"查顺路打卡点 + 算分",
     rdH2:"📍 打卡点地图 · 实拍图与校园位置",
   mapTitle:"校园实景地图",
-  mapNote:"下方为校园实景地图（Google 地图）。每张打卡点卡片下方都有「Google 地图 / Apple 地图」链接，点开即可定位到该楼。",
+  mapNote:"下方为校园地图（OpenStreetMap，可拖动缩放）。Google 地图已禁止被网页嵌入，故内嵌改用 OpenStreetMap；要看 Google / Apple 实景请点上方按钮。",
     rdDesc:'读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。每张打卡点卡片下方都有 Google / Apple 地图链接，点开即可定位到该楼。',
     rdGrpA:" 崇基 / 中央核心区", rdGrpB:" 中央 · 工程大楼 / 文物馆", rdGrpC:" 中央 · 李兆基 / 蒙民伟", rdGrpE:" 和声 / 伍宜孙书院（最北）", rdGrpD:" 大学保健医疗中心",
     scoreH2:"分数速查表（每段）", scoreTh1:"走的路段（相邻读卡机）", scoreTh2:"分",
@@ -712,7 +712,7 @@ const I18N = {
     navBack:"含返程（終點→起點再計一次）", navBtn:"查順路打卡點 + 計分",
     rdH2:"📍 打卡點地圖 · 實拍圖與校園位置",
   mapTitle:"校園實景地圖",
-  mapNote:"下面係校園實景地圖（Google 地圖）。每張打卡點卡片下面都有「Google 地圖 / Apple 地圖」連結，撳開就可以定位到嗰棟樓。",
+  mapNote:"下面係校園地圖（OpenStreetMap，可以拖同縮放）。Google 地圖已經唔俾網頁嵌入，所以內嵌改咗用 OpenStreetMap；想睇 Google / Apple 實景請撳上面個掣。",
     rdDesc:'讀卡機貼喺相應樓層嘅電梯口/主通道，留意「大·部·行 Walk for Green」綠色標識。每張打卡點卡片下面都有 Google / Apple 地圖連結，撳開就可以定位到嗰棟樓。',
     rdGrpA:" 崇基 / 中央核心區", rdGrpB:" 中央 · 工程大樓 / 文物館", rdGrpC:" 中央 · 李兆基 / 蒙民偉", rdGrpE:" 和聲 / 伍宜孫書院（最北）", rdGrpD:" 大學保健醫療中心",
     scoreH2:"分數速查表（每段）", scoreTh1:"行嘅路段（相鄰讀卡機）", scoreTh2:"分",
@@ -807,7 +807,7 @@ const I18N = {
     navBack:"Include return trip (end→start counted again)", navBtn:"Find route + score",
     rdH2:"📍 Reader map · photos & campus location",
   mapTitle:"Campus live map",
-  mapNote:"Real campus map below (Google Maps). Each reader card has Google Maps / Apple Maps links to locate the building.",
+  mapNote:"Campus map below (OpenStreetMap, pannable/zoomable). Google Maps no longer allows embedding, so the inline map uses OpenStreetMap; use the buttons above for Google / Apple Maps.",
     rdDesc:'Readers are by the lift lobbies / main corridors on their floors; look for the green "大·部·行 Walk for Green" sign. Each reader card has Google Maps / Apple Maps links to locate the building.',
     rdGrpA:" Chung Chi / core campus", rdGrpB:" Central · Engineering / Art Museum", rdGrpC:" Central · LEK / Mong Man Wai", rdGrpE:" Lee Woo Sing / Wu Yee Sun (north)", rdGrpD:" University Health Service",
     scoreH2:"Points cheat-sheet (per segment)", scoreTh1:"Route (adjacent readers)", scoreTh2:"Pts",
