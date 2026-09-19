@@ -40,12 +40,20 @@
   .card.hi{border:2px solid var(--accent);background:linear-gradient(180deg,#f2f8ff,#ffffff);
     box-shadow:0 8px 22px rgba(58,123,213,.16)}
   .grp{font-size:12px;color:var(--sub);margin:12px 0 5px;font-weight:700}
-  .reader{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border:1px solid var(--line);
-    border-radius:12px;margin-bottom:7px;background:#fbfcff}
-  .reader .nm{font-size:13.5px;font-weight:700}
-  .reader .fl{font-size:11.5px;color:var(--sub);background:var(--chip);padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .reader{
+  display:flex;align-items:flex-start;gap:10px;
+  border:1px solid var(--line);border-radius:13px;background:#fff;
+  padding:9px 11px;margin:6px 0;transition:.18s;
+}
+.reader .info{flex:1;min-width:0}
+.reader .media{display:flex;align-items:center;flex-shrink:0}
+  .reader .nm{font-size:14px;font-weight:700;color:var(--ink)}
+  .reader .fl{font-size:10.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);border:1px solid #e2d6f2;padding:1px 7px;border-radius:6px;white-space:nowrap}
   .reader.hot{border-color:var(--accent);background:#f3f8ff}
-  .reader .how{font-size:11.5px;color:var(--sub);margin-top:2px;line-height:1.4}
+  .reader .how{font-size:11px;color:var(--sub);margin-top:1px;line-height:1.4}
+.reader .maplinks{display:flex;gap:10px;margin-top:5px}
+.reader .maplinks a{font-size:11px;font-weight:700;color:var(--accent);text-decoration:none;border-bottom:1px solid #d9c9ee;padding-bottom:1px;transition:.15s}
+.reader .maplinks a:hover{color:#7b52ad}
   .reader .go{display:inline-block;margin-top:5px;font-size:12.5px;font-weight:700;color:#fff;background:var(--accent);text-decoration:none;border-radius:9px;padding:4px 11px;-webkit-tap-highlight-color:transparent}
   .reader .go:active{filter:brightness(.95)}
   .tag{font-size:10px;color:#fff;background:var(--ok);padding:1px 6px;border-radius:10px;margin-left:6px;vertical-align:middle}
@@ -368,14 +376,14 @@ body{
   font-size:11.5px;font-weight:700;letter-spacing:.3px;
 }
 .reader .thumb{
-  width:66px;height:50px;object-fit:cover;flex-shrink:0;
+  width:88px;height:56px;object-fit:cover;flex-shrink:0;
   border-radius:9px;border:1px solid var(--line);background:#f3f0ea;
 }
 .reader .thumb-ph{
-  width:66px;height:50px;flex-shrink:0;border-radius:9px;
+  width:88px;height:56px;flex-shrink:0;border-radius:9px;
   border:1px dashed #d9d2c6;background:#f7f4ee;
   display:flex;align-items:center;justify-content:center;
-  font-size:10px;color:#9a9187;text-align:center;line-height:1.35;padding:2px;box-sizing:border-box;
+  font-size:9px;color:#9a9187;text-align:center;line-height:1.3;padding:2px;box-sizing:border-box;
 }
 .reader.hl{border-color:var(--accent);background:#faf7ff;box-shadow:0 6px 18px rgba(91,58,139,.14)}
 .reader .desc{font-size:11.5px;color:var(--sub)}
@@ -390,23 +398,20 @@ body{
   margin-top:14px;border:1px solid var(--line);border-radius:14px;
   background:#fbf9f4;padding:12px 10px 10px;
 }
-.cmap{width:100%;height:auto;display:block}
-.cm-zone{fill:#efeaf6;stroke:#e0d6ee;stroke-width:1}
-.cm-zone.a{fill:#ece6f6}.cm-zone.b{fill:#f3eefa}
-.cm-zone.c{fill:#f5efe4}.cm-zone.d{fill:#f1ece1}.cm-zone.e{fill:#e9e4f2}
-.cm-road{stroke:#e2dae9;stroke-width:7;stroke-linecap:round;fill:none}
-.cm-road.sub{stroke-width:3}
-.cm-dot{stroke:#fff;stroke-width:2;cursor:pointer;transition:.16s}
-.cm-dot:hover{r:9}
-.cm-dot.a{fill:#5b3a8b}.cm-dot.b{fill:#7b52ad}
-.cm-dot.c{fill:#997543}.cm-dot.d{fill:#8c7ba6}.cm-dot.e{fill:#b39d86}
-.cm-lbl{font-size:10.5px;fill:#4a4356}
-.cm-code{font-size:9.5px;fill:#8d8496;letter-spacing:.4px}
-.cm-stn{fill:#fff;stroke:#a89fb4;stroke-width:1.5}
-.cm-stn-t{font-size:10px;fill:#6d6478}
-.cm-legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
-.cm-legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
-.cm-legend span{font-size:11.5px;color:var(--sub)}
+.cm-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.cm-head b{font-family:var(--font-h);font-size:14px;color:var(--ink);font-weight:700}
+.cm-tools{display:flex;gap:8px}
+.cm-tools a{
+  text-decoration:none;font-size:12px;font-weight:700;color:#fff;
+  background:linear-gradient(135deg,var(--accent) 0%,#7b52ad 100%);
+  border-radius:8px;padding:6px 10px;transition:.18s;
+}
+.cm-tools a:hover{transform:translateY(-1px);filter:brightness(1.06)}
+.cm-tools a.apple{background:linear-gradient(135deg,#3a3a3c 0%,#1f1f21 100%)}
+.gmap{
+  width:100%;height:320px;border:0;border-radius:10px;display:block;background:#e9e4f0;
+}
+.cm-note{margin-top:9px;font-size:11.5px;color:var(--sub);line-height:1.5}
 
 /* ---------- 结果区 ---------- */
 .out.show{animation:fadeUp .34s ease both}
@@ -509,54 +514,18 @@ body{
 <!-- 板块3：打卡点地图（放最下面：列表配实拍图 + 下方校园大地图定位） -->
 <div class="card" id="mapCard" data-page-node-id="0gJDbEtgYhsg4hg2hVM6xY">
   <h2 data-page-node-id="nZAkKVu0he9C0TyADKAgiR"><span class="dot" data-page-node-id="6v223ZY9GHXtL0HmZWcamG"></span><span data-i18n="rdH2" data-page-node-id="oSPOGhdFvjjmQBDw2hItYF">打卡点地图 · 实拍图与校园位置</span></h2>
-  <div class="muted" data-i18n-html="rdDesc" data-page-node-id="EA1cAZgCBaDrDAD6hs3NEE">读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。点下方地图上的圆点，可定位到该打卡点。</div>
+  <div class="muted" data-i18n-html="rdDesc" data-page-node-id="EA1cAZgCBaDrDAD6hs3NEE">读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。每张打卡点卡片下方都有 Google / Apple 地图链接，点开即可定位到该楼。</div>
   <div id="readerBox" data-page-node-id="P3FhTM9BDIN7PkS0kIIWWr"></div>
 <div class="campus-map" id="campusMap">
-    <svg class="cmap" viewBox="0 0 680 500" role="img" aria-label="中大校园读卡机位置示意图">
-      <path class="cm-road" d="M395 60 V470"/>
-      <path class="cm-road sub" d="M60 236 H620"/>
-      <path class="cm-road sub" d="M120 342 H360"/>
-      <rect class="cm-zone e" x="90" y="46" width="310" height="96" rx="14"/>
-      <rect class="cm-zone c" x="250" y="168" width="190" height="68" rx="14"/>
-      <rect class="cm-zone b" x="175" y="246" width="290" height="92" rx="14"/>
-      <rect class="cm-zone d" x="470" y="150" width="175" height="100" rx="14"/>
-      <rect class="cm-zone a" x="80" y="370" width="305" height="110" rx="14"/>
-      <text class="cm-code" x="100" y="66">北 · 书院区</text>
-      <text class="cm-code" x="260" y="186">联合 / 邵逸夫堂</text>
-      <text class="cm-code" x="185" y="264">中央核心</text>
-      <text class="cm-code" x="480" y="168">大学站 / 保健中心</text>
-      <text class="cm-code" x="90" y="388">崇基校园</text>
-      <circle class="cm-dot e" data-id="LWS" cx="170" cy="92" r="7"/>
-      <text class="cm-lbl" x="170" y="112" text-anchor="middle">LWS 和声书院</text>
-      <circle class="cm-dot e" data-id="WYS" cx="285" cy="84" r="7"/>
-      <text class="cm-lbl" x="285" y="104" text-anchor="middle">WYS 伍宜孙书院</text>
-      <circle class="cm-dot c" data-id="LSK" cx="330" cy="200" r="7"/>
-      <text class="cm-lbl" x="330" y="220" text-anchor="middle">LSK 李兆基楼</text>
-      <circle class="cm-dot c" data-id="MMW" cx="250" cy="282" r="7"/>
-      <text class="cm-lbl" x="250" y="302" text-anchor="middle">MMW 蒙民伟楼</text>
-      <circle class="cm-dot b" data-id="HSHEB" cx="330" cy="314" r="7"/>
-      <text class="cm-lbl" x="330" y="334" text-anchor="middle">HSHEB 工程大楼</text>
-      <circle class="cm-dot b" data-id="LKSP" cx="418" cy="288" r="7"/>
-      <text class="cm-lbl" x="418" y="308" text-anchor="middle">LKSP 文物馆</text>
-      <circle class="cm-dot d" data-id="UMSO" cx="540" cy="196" r="7"/>
-      <text class="cm-lbl" x="540" y="216" text-anchor="middle">UMSO 保健中心</text>
-      <circle class="cm-dot a" data-id="YIA" cx="140" cy="400" r="7"/>
-      <text class="cm-lbl" x="140" y="420" text-anchor="middle">YIA 康本园</text>
-      <circle class="cm-dot a" data-id="FYB" cx="225" cy="428" r="7"/>
-      <text class="cm-lbl" x="225" y="448" text-anchor="middle">FYB 崇基</text>
-      <circle class="cm-dot a" data-id="PSC" cx="300" cy="448" r="7"/>
-      <text class="cm-lbl" x="300" y="468" text-anchor="middle">PSC 庞万伦中心</text>
-      <rect class="cm-stn" x="546" y="246" width="28" height="14" rx="3"/>
-      <text class="cm-stn-t" x="560" y="272" text-anchor="middle">大学站</text>
-    </svg>
-    <div class="cm-legend">
-      <span><i style="background:#5b3a8b"></i><span data-i18n="rdGrpA">崇基 / 中央核心区</span></span>
-      <span><i style="background:#7b52ad"></i><span data-i18n="rdGrpB">中央 · 工程大楼 / 文物馆</span></span>
-      <span><i style="background:#997543"></i><span data-i18n="rdGrpC">中央 · 李兆基 / 蒙民伟</span></span>
-      <span><i style="background:#8c7ba6"></i><span data-i18n="rdGrpD">大学保健医疗中心</span></span>
-      <span><i style="background:#b39d86"></i><span data-i18n="rdGrpE">和声 / 伍宜孙书院（最北）</span></span>
+    <div class="cm-head"><b data-i18n="mapTitle">校园实景地图</b>
+      <span class="cm-tools">
+        <a href="https://www.google.com/maps/search/?api=1&query=%E9%A6%99%E6%B8%AF%E4%B8%AD%E6%96%87%E5%A4%A7%E5%AD%B8" target="_blank" rel="noopener">Google 地图 ↗</a>
+        <a class="apple" href="https://maps.apple.com/?q=%E9%A6%99%E6%B8%AF%E4%B8%AD%E6%96%87%E5%A4%A7%E5%AD%B8" target="_blank" rel="noopener">Apple 地图 ↗</a>
+      </span>
     </div>
-  </div>
+    <iframe class="gmap" src="https://maps.google.com/maps?q=Chinese%20University%20of%20Hong%20Kong&amp;z=15&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="CUHK 校园实景地图"></iframe>
+    <div class="cm-note" data-i18n="mapNote">下方为校园实景地图（Google 地图）。每张打卡点卡片下方都有「Google 地图 / Apple 地图」链接，点开即可定位到该楼。</div>
+    </div>
 </div>
 
 <div class="foot" data-page-node-id="FYwE0BCHN3EhXrWYkIfY0D">
@@ -605,13 +574,15 @@ const I18N = {
     heroGoal2:'同一趟行程 <b>1 小时内</b>，起点 + 终点各拍一次中大通即计分。每天封顶 <b>6 分</b>。可通过搭电梯等走捷径（系统只看你拍了哪两个点）。',
     progH2:"我的 40 分进度", progUnit:"/ 40 分",
     navHere:"导航",
-    todayH:"今日顺路打卡推荐",
+    todayH:"🗓️ 今日顺路打卡推荐",
     tpBefore:"课前", tpAt:"到课 / 到目的地",
     btn2:"+2（一趟单程）", btn4:"+4（通勤来回）", btn6:"+6（周末满额）", btnSub:"−2", btnReset:"重置",
-    navH2:"顺路打卡规划器", navBadge:"随时查",
+    navH2:"🚶 顺路打卡规划器", navBadge:"随时查",
     navBack:"含回程（终点→起点再算一次）", navBtn:"查顺路打卡点 + 算分",
-    rdH2:"打卡点地图 · 实拍图与校园位置",
-    rdDesc:'读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。点下方地图上的圆点，可定位到该打卡点。',
+    rdH2:"📍 打卡点地图 · 实拍图与校园位置",
+  mapTitle:"校园实景地图",
+  mapNote:"下方为校园实景地图（Google 地图）。每张打卡点卡片下方都有「Google 地图 / Apple 地图」链接，点开即可定位到该楼。",
+    rdDesc:'读卡机贴在对应楼层的电梯口/主通道，留意「大·部·行 Walk for Green」绿色标识。每张打卡点卡片下方都有 Google / Apple 地图链接，点开即可定位到该楼。',
     rdGrpA:" 崇基 / 中央核心区", rdGrpB:" 中央 · 工程大楼 / 文物馆", rdGrpC:" 中央 · 李兆基 / 蒙民伟", rdGrpE:" 和声 / 伍宜孙书院（最北）", rdGrpD:" 大学保健医疗中心",
     scoreH2:"分数速查表（每段）", scoreTh1:"走的路段（相邻读卡机）", scoreTh2:"分",
     scoreNote:'⚠️ <b># 陷阱（只限这一条长线！）</b>：从崇基直奔和声/伍宜孙（只拍 YIA/FYB/PSC 和 LWS/WYS 两头）= <b>0 分</b>，必须经过一个中间读卡机（HSHEB/MMW/LSK/LKSP/UMSO）。<br><b>其他路段不用中转</b>：例如 LSK↔YIA（2 分）、MMW↔LWS（1 分）、HSHEB↔LWS（2 分）直接拍两头就计分。同区内两个读卡机互拍（如 LSK↔MMW）= 0。',
@@ -666,7 +637,7 @@ const I18N = {
     senCloudOn:"云端共享", senApiLabel:"后端地址", senSave:"保存",
     senApiPh:"云端后端地址（如 https://xxx.apigw.tcloudbase.com）",
     senCloudHint:"开启「云端共享」并填入后端地址后，同学打开同一链接即可共享投稿与点赞。后端需部署一个公开读写接口——代码在项目的 <b>tips-backend</b> 文件夹，部署说明见同文件夹 README。",
-    leftDone:"已达标！去换 5 个 PE 分",
+    leftDone:"🎉 已达标！去换 5 个 PE 分",
     leftRemain:"还差 __N__ 分",
     todayWeekend:"周末休息，没课～下周一再战（或周末去刷 6 分满额）",
     todayBtn:"一键填入规划器",
@@ -694,13 +665,15 @@ const I18N = {
     heroGoal2:'同一趟行程 <b>1 個鐘內</b>，起點+終點各拍一次中大通即計分。每日上限 <b>6 分</b>。可透過搭電梯等走捷徑（系統只看你拍咗邊兩個點）。',
     progH2:"我嘅 40 分進度", progUnit:"/ 40 分",
     navHere:"導航",
-    todayH:"今日順路打卡推薦",
+    todayH:"🗓️ 今日順路打卡推薦",
     tpBefore:"課前", tpAt:"到課 / 到目的地",
     btn2:"+2（單程一趟）", btn4:"+4（返學來回）", btn6:"+6（週末滿額）", btnSub:"−2", btnReset:"重置",
-    navH2:"順路打卡規劃器", navBadge:"隨時查",
+    navH2:"🚶 順路打卡規劃器", navBadge:"隨時查",
     navBack:"含返程（終點→起點再計一次）", navBtn:"查順路打卡點 + 計分",
-    rdH2:"打卡點地圖 · 實拍圖與校園位置",
-    rdDesc:'讀卡機貼喺相應樓層嘅電梯口/主通道，留意「大·部·行 Walk for Green」綠色標識。撳下面地圖上面嘅圓點，可以定位到呢個打卡點。',
+    rdH2:"📍 打卡點地圖 · 實拍圖與校園位置",
+  mapTitle:"校園實景地圖",
+  mapNote:"下面係校園實景地圖（Google 地圖）。每張打卡點卡片下面都有「Google 地圖 / Apple 地圖」連結，撳開就可以定位到嗰棟樓。",
+    rdDesc:'讀卡機貼喺相應樓層嘅電梯口/主通道，留意「大·部·行 Walk for Green」綠色標識。每張打卡點卡片下面都有 Google / Apple 地圖連結，撳開就可以定位到嗰棟樓。',
     rdGrpA:" 崇基 / 中央核心區", rdGrpB:" 中央 · 工程大樓 / 文物館", rdGrpC:" 中央 · 李兆基 / 蒙民偉", rdGrpE:" 和聲 / 伍宜孫書院（最北）", rdGrpD:" 大學保健醫療中心",
     scoreH2:"分數速查表（每段）", scoreTh1:"行嘅路段（相鄰讀卡機）", scoreTh2:"分",
     scoreNote:'⚠️ <b># 陷阱（只限呢條長線！）</b>：由崇基直去和聲/伍宜孫（淨係拍 YIA/FYB/PSC 同 LWS/WYS 兩頭）= <b>0 分</b>，必須經過一個中間讀卡機（HSHEB/MMW/LSK/LKSP/UMSO）。<br><b>其他路段唔使中轉</b>：例如 LSK↔YIA（2 分）、MMW↔LWS（1 分）、HSHEB↔LWS（2 分）直接拍兩頭就計分。同一區兩個讀卡機互拍（例如 LSK↔MMW）= 0。',
@@ -755,7 +728,7 @@ const I18N = {
     senCloudOn:"雲端共享", senApiLabel:"後端地址", senSave:"儲存",
     senApiPh:"雲端後端地址（例如 https://xxx.apigw.tcloudbase.com）",
     senCloudHint:"開啟「雲端共享」並填好後端地址後，同學打開同一連結即可共享投稿同點讚。後端要部署一個公開讀寫介面——代碼喺項目嘅 <b>tips-backend</b> 資料夾，部署說明見同資料夾 README。",
-    leftDone:"達標啦！去換 5 個 PE 分",
+    leftDone:"🎉 達標啦！去換 5 個 PE 分",
     leftRemain:"還差 __N__ 分",
     todayWeekend:"週末休息，冇課～下週一再戰（或者週末去刷 6 分滿額）",
     todayBtn:"一掣填入規劃器",
@@ -783,13 +756,15 @@ const I18N = {
     heroGoal2:'Within <b>1 hour</b>, tap at start + end — the system scores it. Cap <b>6 pts/day</b>. Shortcuts (lift etc.) are fine — only the two tap points matter.',
     progH2:"My 40-point progress", progUnit:"/ 40 pts",
     navHere:"Navigate",
-    todayH:"Today's en-route taps",
+    todayH:"🗓️ Today's en-route taps",
     tpBefore:"Before class", tpAt:"At class / destination",
     btn2:"+2 (one-way)", btn4:"+4 (round commute)", btn6:"+6 (weekend cap)", btnSub:"−2", btnReset:"Reset",
-    navH2:"Route planner", navBadge:"anytime",
+    navH2:"🚶 Route planner", navBadge:"anytime",
     navBack:"Include return trip (end→start counted again)", navBtn:"Find route + score",
-    rdH2:"Reader map · photos & campus location",
-    rdDesc:'Readers are by the lift lobbies / main corridors on their floors; look for the green "大·部·行 Walk for Green" sign. Tap a dot on the map below to locate it.',
+    rdH2:"📍 Reader map · photos & campus location",
+  mapTitle:"Campus live map",
+  mapNote:"Real campus map below (Google Maps). Each reader card has Google Maps / Apple Maps links to locate the building.",
+    rdDesc:'Readers are by the lift lobbies / main corridors on their floors; look for the green "大·部·行 Walk for Green" sign. Each reader card has Google Maps / Apple Maps links to locate the building.',
     rdGrpA:" Chung Chi / core campus", rdGrpB:" Central · Engineering / Art Museum", rdGrpC:" Central · LEK / Mong Man Wai", rdGrpE:" Lee Woo Sing / Wu Yee Sun (north)", rdGrpD:" University Health Service",
     scoreH2:"Points cheat-sheet (per segment)", scoreTh1:"Route (adjacent readers)", scoreTh2:"Pts",
     scoreNote:'⚠️ <b># Trap (only this long line!)</b>: Chung Chi straight to Lee Woo Sing/Wu Yee Sun (tapping only YIA/FYB/PSC and LWS/WYS ends) = <b>0 pts</b> — you must pass through an intermediate reader (HSHEB/MMW/LSK/LKSP/UMSO).<br><b>Other routes need no transfer</b>: e.g. LSK↔YIA (2 pts), MMW↔LWS (1 pt), HSHEB↔LWS (2 pts) score by tapping just the two ends. Two readers in the same zone (e.g. LSK↔MMW) = 0.',
@@ -844,7 +819,7 @@ const I18N = {
     senCloudOn:"Cloud share", senApiLabel:"Backend URL", senSave:"Save",
     senApiPh:"Cloud backend URL (e.g. https://xxx.apigw.tcloudbase.com)",
     senCloudHint:"Turn on \"Cloud share\" and enter the backend URL — then anyone opening the same link can see and like each other's tips. The backend is a public read/write API; code is in the project's <b>tips-backend</b> folder, deploy guide in its README.",
-    leftDone:"Done! Go claim your 5 PE credits",
+    leftDone:"🎉 Done! Go claim your 5 PE credits",
     leftRemain:"__N__ pts to go",
     todayWeekend:"Weekend — no classes. Battle again Monday (or grind 6 pts on a weekend day)",
     todayBtn:"Load into planner",
@@ -994,7 +969,6 @@ function applyLang(){
   updateLangUI();
   buildPlaceOptions();
   renderReaders(); renderScore(); renderToday(); renderTips(); renderLeft();
-  initMapClicks();
   buildRouteOptions();
   const outEl=document.getElementById('out');
   if(outEl && outEl.classList.contains('show') && lastPlan) plan();
@@ -1007,28 +981,21 @@ function rcard(id){
   const nm = tLbl(id);
   return `<div class="spot" style="margin:6px 0">${ph}<div class="info"><div class="nm">${nm}</div><span class="fl">${i.floor}</span><div class="how">${tHow(id)}</div><span class="fl">${i.floor}</span></div></div>`;
 }
-const GRP_OF={YIA:"a",FYB:"a",PSC:"a",HSHEB:"b",LKSP:"b",MMW:"c",LSK:"c",UMSO:"d",LWS:"e",WYS:"e"};
+
+function gmapUrl(id){return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(tLbl(id)+' 香港中文大學');}
+function amapUrl(id){return 'https://maps.apple.com/?q='+encodeURIComponent(tLbl(id));}
 function rrow(id){
   const i=RINFO[id];
   const ph = i.photo
     ? `<img class="thumb" src="${i.photo}" alt="${tLbl(id)}" loading="lazy">`
     : `<div class="thumb-ph">暂无<br>实拍图</div>`;
-  return `<div class="reader" id="rw-${id}" data-grp="${GRP_OF[id]||"a"}">${ph}`
-    + `<div style="min-width:0;flex:1"><div class="nm">${tLbl(id)}</div><div class="how">${tHow(id)}</div></div>`
-    + `<div style="text-align:right;white-space:nowrap"><span class="fl">${i.floor}</span></div></div>`;
+  return `<div class="reader" id="rw-${id}">`
+    + `<div class="info"><div class="nm">${tLbl(id)} <span class="fl">${i.floor}</span></div><div class="how">${tHow(id)}</div>`
+    + `<div class="maplinks"><a href="${gmapUrl(id)}" target="_blank" rel="noopener">Google 地图</a><a href="${amapUrl(id)}" target="_blank" rel="noopener">Apple 地图</a></div></div>`
+    + `<div class="media">${ph}</div></div>`;
 }
 /* 点地图上的点 → 列表对应项高亮并滚到可视区 */
-function initMapClicks(){
-  const m=document.getElementById('campusMap'); if(!m || m.dataset.bound) return;
-  m.dataset.bound="1";
-  m.addEventListener('click', e=>{
-    const c=e.target.closest('.cm-dot'); if(!c) return;
-    const id=c.getAttribute('data-id'); if(!id) return;
-    document.querySelectorAll('.reader.hl').forEach(el=>el.classList.remove('hl'));
-    const el=document.getElementById('rw-'+id);
-    if(el){ el.classList.add('hl'); el.scrollIntoView({behavior:'smooth',block:'center'}); }
-  });
-}
+
 function renderReaders(){
   const order=[["A",["YIA","FYB","PSC"]],["B",["HSHEB","LKSP"]],["C",["MMW","LSK"]],["D",["UMSO"]],["E",["LWS","WYS"]]];
   const gn={A:"rdGrpA",B:"rdGrpB",C:"rdGrpC",D:"rdGrpD",E:"rdGrpE"};
@@ -1069,7 +1036,7 @@ const GRPNAME={
 function grpName(g){ const o=GRPNAME[g]; return o ? o[curLang] : g; }
 function fillSelect(sel){
   sel.innerHTML="";
-  Object.keys(grps).forEach(g=>{
+  Object.keys(grps).filter(g=>g==="读卡机").forEach(g=>{
     const og=document.createElement('optgroup'); og.label=grpName(g);
     grps[g].forEach(k=>{ og.appendChild(new Option(tLbl(k),k)); });
     sel.appendChild(og);
@@ -1077,8 +1044,8 @@ function fillSelect(sel){
 }
 function buildPlaceOptions(){
   [fromSel,toSel,schA,schB].forEach(sel=>{ if(sel) fillSelect(sel); });
-  if(fromSel) fromSel.value="UC";
-  if(toSel) toSel.value="WMY";
+  if(fromSel) fromSel.value="YIA";
+  if(toSel) toSel.value="WYS";
   syncSchSelects();
 }
 let lastPlan=null;
