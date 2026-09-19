@@ -191,7 +191,7 @@ body{
 /* ---------- Hero：深紫 + 山峦 + 校巴 ---------- */
 .hero{
   position:relative; overflow:hidden; text-align:left;
-  padding:30px 22px 34px; border-radius:22px; margin:0 0 20px;
+  padding:30px 22px 64px; border-radius:22px; margin:0 0 20px;
   background:
     radial-gradient(120% 90% at 88% 8%, rgba(217,173,38,.30) 0%, transparent 55%),
     linear-gradient(158deg, #3d2f63 0%, #5b3a8b 52%, #6d4a9e 100%);
@@ -207,8 +207,8 @@ body{
 }
 /* 校巴驶过 */
 .hero::after{
-  content:"🚌"; position:absolute; right:16px; bottom:14px; font-size:26px;
-  opacity:.85; animation:tramRun 13s linear infinite;
+  content:"🚌"; position:absolute; right:16px; bottom:22px; font-size:25px;
+  opacity:.9; z-index:1; animation:tramRun 13s linear infinite;
 }
 @keyframes tramRun{
   0%{transform:translateX(46px) scaleX(-1)} 
@@ -236,7 +236,7 @@ body{
 }
 
 /* hero 进度条：紫→金 */
-.hero-prog{margin-top:14px;background:rgba(255,255,255,.14);border-radius:14px;padding:12px 13px;border:1px solid rgba(255,255,255,.16)}
+.hero-prog{position:relative;z-index:2;margin-top:14px;background:rgba(255,255,255,.14);border-radius:14px;padding:12px 13px;border:1px solid rgba(255,255,255,.16)}
 .hbar{height:10px;border-radius:999px;background:rgba(255,255,255,.20);overflow:hidden}
 .hbar i{background:linear-gradient(90deg,var(--tram) 0%,#f0d071 55%,var(--gold) 100%);border-radius:999px;box-shadow:0 0 12px rgba(217,173,38,.55)}
 .hnum{font-size:20px;font-weight:700;color:#fff}
@@ -250,6 +250,9 @@ body{
 .hb:hover{background:rgba(255,255,255,.28);transform:translateY(-1px)}
 .hb.a{background:rgba(217,173,38,.30);border-color:rgba(217,173,38,.5)}
 .hb.r{background:rgba(255,255,255,.10)}
+.hb.sub{color:#ffcaa6;border-color:rgba(255,202,166,.5);background:rgba(255,202,166,.16)}
+.hb.res{color:#e7dff5;border-color:rgba(231,223,245,.45);background:rgba(231,223,245,.13)}
+.hb.sub:hover,.hb.res:hover{background:rgba(255,255,255,.26)}
 
 /* ---------- 卡片 ---------- */
 .card{
