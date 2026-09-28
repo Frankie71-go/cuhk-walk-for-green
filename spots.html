@@ -155,6 +155,9 @@
   .mapfab{position:fixed;left:14px;bottom:62px;z-index:999;background:rgba(31,42,68,.92);color:#fff;border:1px solid rgba(255,255,255,.25);
     border-radius:22px;padding:9px 14px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);font-size:13px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
   .mapfab:hover{filter:brightness(1.1)}
+  .contactfab{position:fixed;left:14px;bottom:108px;z-index:999;background:rgba(31,42,68,.92);color:#fff;border:1px solid rgba(255,255,255,.25);
+    border-radius:22px;padding:9px 14px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);font-size:13px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .contactfab:hover{filter:brightness(1.1)}
   .modal{position:fixed;inset:0;background:rgba(20,28,48,.55);display:none;z-index:1000;align-items:flex-end;justify-content:center}
   .modal.show{display:flex}
   .modalcard{background:#fff;width:100%;max-width:560px;max-height:86vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px 16px 30px}
@@ -164,6 +167,9 @@
   .modalbody h3{margin:14px 0 6px;font-size:14px;display:flex;align-items:center;gap:6px}
   table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px}
   th,td{border:1px solid var(--line);padding:6px 7px;text-align:left}
+  .contact-via{margin-top:12px;font-size:13px;font-weight:600;color:var(--ink)}
+  .contact-link{display:inline-block;margin-top:7px;background:var(--accent);color:#fff;text-decoration:none;border-radius:10px;padding:9px 14px;font-weight:700;font-size:13.5px;word-break:break-all}
+  .contact-link:hover{filter:brightness(1.08)}
   th{background:#f3f6fc;font-weight:600}
   td.p{text-align:center;font-weight:700;color:var(--accent)}
   .note{background:#fffaf0;border:1px solid #ffe6b0;border-radius:10px;padding:9px 11px;font-size:12.5px;margin-top:8px;color:#8a6a1e}
@@ -444,6 +450,12 @@ body{
   box-shadow:0 8px 24px rgba(91,58,139,.34);transition:.2s;
 }
 .rulesfab:hover{transform:translateY(-2px)}
+.contactfab{
+  background:linear-gradient(135deg,var(--accent),#7b52ad);color:#fff;
+  border-radius:999px;padding:11px 17px;font-size:13.5px;font-weight:700;
+  box-shadow:0 8px 24px rgba(91,58,139,.34);transition:.2s;
+}
+.contactfab:hover{transform:translateY(-2px)}
 .modalbox{border-radius:18px;border:1px solid var(--line)}
 .rulehead{border-bottom:1px solid var(--line)}
 .rule-note{background:#fdfbf6;border-color:var(--line)}
@@ -560,6 +572,9 @@ body{
 </div>
 
 <!-- 打卡点入口（左下角，规则之上）→ 跳独立页 spots.html -->
+<!-- 联系开发者按钮（左下角，最上方） -->
+<div class="contactfab" onclick="openContact()" data-i18n="contactFab">💬 联系</div>
+
 <div class="mapfab" onclick="location.href='spots.html'" data-page-node-id="mapFabBtn"><span data-i18n="mapFab">🗺️ 打卡点</span></div>
 
 <!-- 规则浮窗按钮（左下角） -->
@@ -586,6 +601,23 @@ body{
         <button class="langfab-item" data-lang="yue">粤语</button>
         <button class="langfab-item" data-lang="en">English</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- 联系开发者弹窗 -->
+<div class="modal" id="contactModal" onclick="if(event.target===this)closeContact()">
+  <div class="modalcard">
+    <div class="modalhead"><span data-i18n="contactH">💬 联系开发者</span><button onclick="closeContact()">✕</button></div>
+    <div class="modalbody">
+      <div class="muted" data-i18n="contactDesc">这卡是我边走边做的攻略，欢迎随时找我。尤其这几种情况：</div>
+      <ul class="tight">
+        <li data-i18n="contactLi1"></li>
+        <li data-i18n="contactLi2"></li>
+        <li data-i18n="contactLi3"></li>
+      </ul>
+      <div class="contact-via" data-i18n="contactVia">在 GitHub 开 Issue 或私信我：</div>
+      <a class="contact-link" href="https://github.com/Frankie71-go/cuhk-walk-for-green" target="_blank" rel="noopener" data-i18n="contactLink">cuhk-walk-for-green ↗</a>
     </div>
   </div>
 </div>
@@ -617,6 +649,13 @@ const I18N = {
     rulesTitle:"📖 规则速查", rulesFab:"📖 规则",
     langH:"🌐 语言",
     mapFab:"🗺️ 打卡点",
+    contactFab:"💬 联系", contactH:"💬 联系开发者",
+    contactDesc:"这卡是我边走边做的攻略，欢迎随时找我。尤其这几种情况：",
+    contactLi1:"🐞 用得不顺手 / 发现 bug / 有改进建议",
+    contactLi2:"🛤️ 有更省步数的「抄近路」路线想分享",
+    contactLi3:"📷 想上传某栋楼的打卡机实拍图",
+    contactVia:"在 GitHub 开 Issue 或私信我：",
+    contactLink:"cuhk-walk-for-green ↗",
     pOneway:"单程", pTotal:"本趟共计", pIncl:"（含回程）", pTapDep:"出发时拍", pTapArr:"到达拍（与上一拍须在 1 小时内）",
     pTapRet:"回程再拍", pViewMap:"校园地图",
     pTrap:"⚠️ 崇基 ↔ 和声/伍宜孙 直接拍两头 = 0 分！必须<b>在途中经过一个中间读卡机</b>才计分（下面第 2 步）。",
@@ -719,6 +758,13 @@ const I18N = {
     rulesTitle:"📖 規則速查", rulesFab:"📖 規則",
     langH:"🌐 語言",
     mapFab:"🗺️ 打卡點",
+    contactFab:"💬 聯絡", contactH:"💬 聯絡開發者",
+    contactDesc:"呢張卡係我邊走邊做嘅攻略，隨時歡迎搵我。尤其呢幾種情況：",
+    contactLi1:"🐞 用得唔順手 / 搵到 bug / 有改善建議",
+    contactLi2:"🛤️ 有更慳步數嘅「抄近路」路線想分享",
+    contactLi3:"📷 想上傳某棟樓嘅打卡機實拍圖",
+    contactVia:"喺 GitHub 開 Issue 或私訊我：",
+    contactLink:"cuhk-walk-for-green ↗",
     pOneway:"單程", pTotal:"呢趟總共", pIncl:"（含返程）", pTapDep:"出發嗰陣拍", pTapArr:"到達拍（同上一拍要喺 1 個鐘內）",
     pTapRet:"返程再拍", pViewMap:"校園地圖",
     pTrap:"⚠️ 崇基 ↔ 和聲/伍宜孫 直接拍兩頭 = 0 分！必須<b>途中經過一個中間讀卡機</b>先計分（下面第 2 步）。",
@@ -821,6 +867,13 @@ const I18N = {
     rulesTitle:"📖 Rules cheat-sheet", rulesFab:"📖 Rules",
     langH:"🌐 Language",
     mapFab:"🗺️ Spots",
+    contactFab:"💬 Contact", contactH:"💬 Contact the dev",
+    contactDesc:"I built this guide while walking the routes myself — feel free to reach out, especially for:",
+    contactLi1:"🐞 Something broke / a bug / improvement ideas",
+    contactLi2:"🛤️ A shorter \"cut-through\" route you want to share",
+    contactLi3:"📷 Want to upload a card-reader photo for a building",
+    contactVia:"Open an Issue on GitHub or DM me:",
+    contactLink:"cuhk-walk-for-green ↗",
     pOneway:"one-way", pTotal:"This trip total", pIncl:"(incl. return)", pTapDep:"Tap on departure", pTapArr:"Tap on arrival (within 1 hr of previous tap)",
     pTapRet:"Tap again on return", pViewMap:"Campus map",
     pTrap:"⚠️ Chung Chi ↔ Lee Woo Sing/Wu Yee Sun tapping only the two ends = 0 pts! You must <b>pass through an intermediate reader en route</b> to score (step 2 below).",
@@ -1674,6 +1727,8 @@ function openRules(){ const m=document.getElementById('rulesModal'); if(m) m.cla
 function closeRules(){ const m=document.getElementById('rulesModal'); if(m) m.classList.remove('show'); }
 function openMap(){ const m=document.getElementById('mapModal'); if(m) m.classList.add('show'); }
 function closeMap(){ const m=document.getElementById('mapModal'); if(m) m.classList.remove('show'); }
+function openContact(){ const m=document.getElementById('contactModal'); if(m) m.classList.add('show'); }
+function closeContact(){ const m=document.getElementById('contactModal'); if(m) m.classList.remove('show'); }
 
 /* ---------- 语言切换（收进规则浮窗，右下角不再有悬浮窗） ---------- */
 function updateLangUI(){
