@@ -170,6 +170,12 @@
   .contact-via{margin-top:12px;font-size:13px;font-weight:600;color:var(--ink)}
   .contact-link{display:inline-block;margin-top:7px;background:var(--accent);color:#fff;text-decoration:none;border-radius:10px;padding:9px 14px;font-weight:700;font-size:13.5px;word-break:break-all}
   .contact-link:hover{filter:brightness(1.08)}
+  /* 点击放大 lightbox */
+  #lightbox{align-items:center !important}
+  #lightbox .lbwrap{position:relative;max-width:94vw;max-height:92vh;display:flex;align-items:center;justify-content:center}
+  #lightbox #lbimg{max-width:94vw;max-height:92vh;border-radius:12px;display:block;background:#fff;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+  #lightbox .lbclose{position:absolute;top:-16px;right:-16px;width:38px;height:38px;border-radius:50%;border:none;background:rgba(31,42,68,.95);color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+  .reader .thumb,.spot img{cursor:pointer}
   th{background:#f3f6fc;font-weight:600}
   td.p{text-align:center;font-weight:700;color:var(--accent)}
   .note{background:#fffaf0;border:1px solid #ffe6b0;border-radius:10px;padding:9px 11px;font-size:12.5px;margin-top:8px;color:#8a6a1e}
@@ -603,6 +609,14 @@ body{
       <div class="contact-via" data-i18n="contactVia">在 GitHub 开 Issue 或私信我：</div>
       <a class="contact-link" href="https://github.com/Frankie71-go/cuhk-walk-for-green" target="_blank" rel="noopener" data-i18n="contactLink">cuhk-walk-for-green ↗</a>
     </div>
+  </div>
+</div>
+
+<!-- 点击放大 lightbox -->
+<div class="modal" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <div class="lbwrap">
+    <img id="lbimg" src="" alt="">
+    <button class="lbclose" onclick="closeLightbox()" aria-label="关闭">✕</button>
   </div>
 </div>
 
@@ -1112,7 +1126,7 @@ function applyLang(){
 /* ---------- 读卡机渲染（板块3：地图 + 实拍图 + 楼层） ---------- */
 function rcard(id){
   const i=RINFO[id];
-  const ph = i.photo ? `<img src="${i.photo}" alt="${id}" loading="lazy">` : `<div class="ph">📍<br>${tLbl(id)}</div>`;
+  const ph = i.photo ? `<img src="${i.photo}" alt="${id}" loading="lazy" onclick="openLightbox(this)">` : `<div class="ph">📍<br>${tLbl(id)}</div>`;
   const nm = tLbl(id);
   return `<div class="spot" style="margin:6px 0"><div class="info"><div class="nm">${nm}</div><span class="fl">${i.floor}</span><div class="how">${tHow(id)}</div></div>${ph}</div>`;
 }
@@ -1122,7 +1136,7 @@ function amapUrl(id){return 'https://maps.apple.com/?q='+encodeURIComponent(tLbl
 function rrow(id){
   const i=RINFO[id];
   const ph = i.photo
-    ? `<img class="thumb" src="${i.photo}" alt="${tLbl(id)}" loading="lazy">`
+    ? `<img class="thumb" src="${i.photo}" alt="${tLbl(id)}" loading="lazy" onclick="openLightbox(this)">`
     : `<div class="thumb-ph">暂无<br>实拍图</div>`;
   return `<div class="reader" id="rw-${id}">`
     + `<div class="info"><div class="nm">${tLbl(id)} <span class="fl">${i.floor}</span></div><div class="how">${tHow(id)}</div>`
@@ -1713,6 +1727,8 @@ function openMap(){ const m=document.getElementById('mapModal'); if(m) m.classLi
 function closeMap(){ const m=document.getElementById('mapModal'); if(m) m.classList.remove('show'); }
 function openContact(){ const m=document.getElementById('contactModal'); if(m) m.classList.add('show'); }
 function closeContact(){ const m=document.getElementById('contactModal'); if(m) m.classList.remove('show'); }
+function openLightbox(el){ const lb=document.getElementById('lightbox'); const img=document.getElementById('lbimg'); if(!lb||!img||!el) return; img.src = el.getAttribute('src')||el.src; lb.classList.add('show'); }
+function closeLightbox(){ const lb=document.getElementById('lightbox'); if(lb) lb.classList.remove('show'); }
 
 /* ---------- 语言切换（收进规则浮窗，右下角不再有悬浮窗） ---------- */
 function updateLangUI(){
