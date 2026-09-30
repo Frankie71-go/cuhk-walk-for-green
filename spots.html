@@ -1678,12 +1678,16 @@ function parseSchedWords(words){
 }
 async function loadTesseract(){
   if(window.Tesseract) return window.Tesseract;
-  await new Promise((res,rej)=>{
+  const selfHost=new URL('./ocr/js/', location.href).href;            // 部署版：同源自托管（去 jsdelivr 依赖）
+  const cdn='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/';  // 兜底公网 CDN
+  const tryLoad=(base)=> new Promise((res,rej)=>{
     const sc=document.createElement('script');
-    sc.src='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+    sc.src=base+'tesseract.min.js';
     sc.onload=res; sc.onerror=()=>rej(new Error('load-fail'));
     document.head.appendChild(sc);
   });
+  try{ await tryLoad(location.protocol==='file:' ? cdn : selfHost); }   // 本地双击：用公网；部署版：用同源
+  catch(e){ if(location.protocol!=='file:') await tryLoad(cdn); else throw e; } // 自托管失败则回退公网 CDN
   return window.Tesseract;
 }
 function loadImage(src){ return new Promise((res,rej)=>{ const im=new Image(); im.onload=()=>res(im); im.onerror=()=>rej(new Error('img-load')); im.src=src; }); }
@@ -1707,10 +1711,22 @@ async function parseSchedImg(){
     const lp = location.protocol==='file:'
       ? 'https://tessdata.projectnaptha.com/4.0.0'          // 本地双击打开：回退公网 CDN（和以前一样）
       : new URL('./ocr/', location.href).href;               // 部署版：同源自托管，避免外网 projectnaptha 不稳
+    const jsBase = location.protocol==='file:'
+      ? 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/'
+      : new URL('./ocr/js/', location.href).href;            // 同源自托管 worker（去 jsdelivr 依赖）
+    const coreBase = location.protocol==='file:'
+      ? 'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.1.1/'
+      : new URL('./ocr/js/', location.href).href;            // 同源自托管 wasm 内核（目录；worker 自动选 SIMD 版）
     let worker;
-    try{ worker=await T.createWorker('chi_tra+eng',1,{ langPath:lp }); }  // 繁中+英文：星期/楼名都可能中英文
+    try{
+      worker=await T.createWorker('chi_tra+eng',1,{
+        langPath:lp,
+        workerPath: jsBase+'worker.min.js',
+        corePath: coreBase                                          // 传目录，worker 自动拼 tesseract-core(-simd).wasm.js
+      });
+    }
     catch(e){
-      // 中文模型加载失败：明确提示，不再静默退化成纯英文（否则中文课表识别成乱码 → 误报「没认出」）
+      // 中文模型/内核加载失败：明确提示，不再静默退化成纯英文（否则中文课表识别成乱码 → 误报「没认出」）
       box.innerHTML=`<div class="ocr-msg">${t('ocrModelFail')}</div>`;
       return;
     }
