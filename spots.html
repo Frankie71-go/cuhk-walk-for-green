@@ -830,6 +830,7 @@ const I18N = {
     ocrNoImg:"先上传一张课表截图，再点「本地识别截图」。",
     ocrLoading:"🔍 正在本地识别…首次会下载识别库（含中文模型，约十几 MB），之后就快了。",
     ocrFail:"识别失败或下载不到识别库（可能没联网）。可以照着截图手动选两栋楼。",
+    ocrModelFail:"中文识别模型下载失败（约十几 MB）。请检查网络后重试，或照着截图手动选两栋楼。",
     ocrNone:"没从截图里认出时间和楼名。可以换张更清晰、更正的截图，或照着手动选两栋楼。",
     ocrFound:"识别到 __N__ 天的课：",
     ocrApply:"用这个结果填课表",
@@ -948,6 +949,7 @@ const I18N = {
     ocrNoImg:"先上傳一張課表截圖，再撳「本地識別截圖」。",
     ocrLoading:"🔍 本地識別緊…第一次會下載識別庫（含中文模型，約十幾 MB），之後就快。",
     ocrFail:"識別失敗或者下載唔到識別庫（可能冇聯網）。可以對住截圖手動揀兩棟樓。",
+    ocrModelFail:"中文識別模型下載失敗（約十幾 MB）。請檢查網絡後重試，或者對住截圖手動揀兩棟樓。",
     ocrNone:"認唔到截圖裡面嘅時間同樓名。可以換張清楚啲、正啲嘅截圖，或者對住手動揀兩棟樓。",
     ocrFound:"識別到 __N__ 日嘅課：",
     ocrApply:"用呢個結果填課表",
@@ -1066,6 +1068,7 @@ const I18N = {
     ocrNoImg:"Upload a timetable screenshot first, then tap \"Read screenshot locally\".",
     ocrLoading:"🔍 Reading on-device… the first run downloads the recognition model (incl. Chinese, ~15 MB); later runs are fast.",
     ocrFail:"Recognition failed or the model couldn't be downloaded (maybe offline). You can still pick the two buildings manually.",
+    ocrModelFail:"The Chinese recognition model failed to download (~tens of MB). Check your connection and retry, or pick the two buildings manually.",
     ocrNone:"No times or buildings recognized. Try a clearer, straight-on screenshot, or pick the buildings manually.",
     ocrFound:"Found classes on __N__ day(s):",
     ocrApply:"Use this for my timetable",
@@ -1702,9 +1705,14 @@ async function parseSchedImg(){
   box.innerHTML=`<div class="ocr-msg">${t('ocrLoading')}</div>`;
   try{
     const T=await loadTesseract();
+    const lp=new URL('./ocr/', location.href).href;          // 自托管语言模型（同源，避免外网 projectnaptha 不稳）
     let worker;
-    try{ worker=await T.createWorker('chi_tra+eng',1); }   /* 繁中+英文：星期/楼名都可能中英文 */
-    catch(e){ worker=await T.createWorker('eng'); }          /* 中文模型下不到则退回英文 */
+    try{ worker=await T.createWorker('chi_tra+eng',1,{ langPath:lp }); }  // 繁中+英文：星期/楼名都可能中英文
+    catch(e){
+      // 中文模型加载失败：明确提示，不再静默退化成纯英文（否则中文课表识别成乱码 → 误报「没认出」）
+      box.innerHTML=`<div class="ocr-msg">${t('ocrModelFail')}</div>`;
+      return;
+    }
     const img=await loadImage(src);
     const proc=ocrGrayscale(img);
     const ret=await worker.recognize(proc);
