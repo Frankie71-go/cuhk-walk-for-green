@@ -1676,19 +1676,35 @@ function parseSchedWords(words){
   });
   return out.length?out:null;
 }
+/* OCR 资源加载候选源：优先同源自托管(CloudBase)，失败回退到我们自己的 GitHub Pages 镜像（仍属自托管、非公共CDN），最后才是 jsdelivr */
+function ocrCandidates(){
+  if(location.protocol==='file:'){
+    // 本地双击打开：只能用公网（和“原本好”时期一致）
+    return [{ js:'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/', core:'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.1.1/', lang:'https://tessdata.projectnaptha.com/4.0.0' }];
+  }
+  const selfH=new URL('./ocr/', location.href).href;          // CloudBase 同源自托管（首选）
+  const gh='https://raw.githubusercontent.com/Frankie71-go/cuhk-walk-for-green/main/ocr/'; // 我们的 GitHub 镜像（大文件可靠）
+  return [
+    { js:selfH+'js/', core:selfH+'js/', lang:selfH },
+    { js:gh+'js/',   core:gh+'js/',   lang:gh }
+  ];
+}
 async function loadTesseract(){
   if(window.Tesseract) return window.Tesseract;
-  const selfHost=new URL('./ocr/js/', location.href).href;            // 部署版：同源自托管（去 jsdelivr 依赖）
-  const cdn='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/';  // 兜底公网 CDN
-  const tryLoad=(base)=> new Promise((res,rej)=>{
-    const sc=document.createElement('script');
-    sc.src=base+'tesseract.min.js';
-    sc.onload=res; sc.onerror=()=>rej(new Error('load-fail'));
-    document.head.appendChild(sc);
-  });
-  try{ await tryLoad(location.protocol==='file:' ? cdn : selfHost); }   // 本地双击：用公网；部署版：用同源
-  catch(e){ if(location.protocol!=='file:') await tryLoad(cdn); else throw e; } // 自托管失败则回退公网 CDN
-  return window.Tesseract;
+  const cands=ocrCandidates();
+  let lastErr;
+  for(const c of cands){
+    try{
+      await new Promise((res,rej)=>{
+        const sc=document.createElement('script');
+        sc.src=c.js+'tesseract.min.js';
+        sc.onload=res; sc.onerror=()=>rej(new Error('load-fail'));
+        document.head.appendChild(sc);
+      });
+      return window.Tesseract;
+    }catch(e){ lastErr=e; }
+  }
+  throw lastErr||new Error('tesseract-load-fail');
 }
 function loadImage(src){ return new Promise((res,rej)=>{ const im=new Image(); im.onload=()=>res(im); im.onerror=()=>rej(new Error('img-load')); im.src=src; }); }
 /* 转灰度：去掉绿色格子等底色噪点，提升英文楼名识别率（不反相，避免文字变黑） */
@@ -1708,25 +1724,20 @@ async function parseSchedImg(){
   box.innerHTML=`<div class="ocr-msg">${t('ocrLoading')}</div>`;
   try{
     const T=await loadTesseract();
-    const lp = location.protocol==='file:'
-      ? 'https://tessdata.projectnaptha.com/4.0.0'          // 本地双击打开：回退公网 CDN（和以前一样）
-      : new URL('./ocr/', location.href).href;               // 部署版：同源自托管，避免外网 projectnaptha 不稳
-    const jsBase = location.protocol==='file:'
-      ? 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/'
-      : new URL('./ocr/js/', location.href).href;            // 同源自托管 worker（去 jsdelivr 依赖）
-    const coreBase = location.protocol==='file:'
-      ? 'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.1.1/'
-      : new URL('./ocr/js/', location.href).href;            // 同源自托管 wasm 内核（目录；worker 自动选 SIMD 版）
-    let worker;
-    try{
-      worker=await T.createWorker('chi_tra+eng',1,{
-        langPath:lp,
-        workerPath: jsBase+'worker.min.js',
-        corePath: coreBase                                          // 传目录，worker 自动拼 tesseract-core(-simd).wasm.js
-      });
+    const cands=ocrCandidates();
+    let worker=null, lastErr=null;
+    for(const c of cands){
+      try{
+        worker=await T.createWorker('chi_tra+eng',1,{
+          langPath:c.lang,
+          workerPath:c.js+'worker.min.js',
+          corePath:c.core                                          // 目录；worker 自动拼 tesseract-core(-simd).wasm.js
+        });
+        break;                                                    // 任一候选源成功即跳出
+      }catch(e){ lastErr=e; }                                      // 该源失败（如 CloudBase 的 wasm 偶发上传失败）→ 试下一个
     }
-    catch(e){
-      // 中文模型/内核加载失败：明确提示，不再静默退化成纯英文（否则中文课表识别成乱码 → 误报「没认出」）
+    if(!worker){
+      // 全部候选源都失败（语言模型/内核加载失败）：明确提示，不再静默退化成纯英文（否则中文课表识别成乱码 → 误报「没认出」）
       box.innerHTML=`<div class="ocr-msg">${t('ocrModelFail')}</div>`;
       return;
     }
