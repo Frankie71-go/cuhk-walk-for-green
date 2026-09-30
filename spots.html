@@ -8,7 +8,7 @@
   :root{
     --bg:#f5f7fb; --card:#ffffff; --ink:#1f2a44;
     --sub:#6b748c; --line:#e7ecf5; --accent:#3a7bd5; --accent2:#7b5cff;
-    --ok:#1aa97b; --warn:#e8833a; --star:#ffce4d; --chip:#eef3ff;
+    --ok:#2f7d5d; --warn:#e8833a; --star:#ffce4d; --chip:#eef3ff;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -152,13 +152,13 @@
     border-radius:22px;padding:9px 14px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);font-size:13px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
   .rulesfab:hover{filter:brightness(1.1)}
   /* 打卡点浮窗按钮：叠在“规则”上方，同一列左下角 */
-  .mapfab{position:fixed;left:14px;bottom:82px;z-index:999;background:rgba(31,42,68,.92);color:#fff;border:1px solid rgba(255,255,255,.25);
+  .mapfab{position:fixed;right:16px;bottom:16px;z-index:999;background:rgba(31,42,68,.92);color:#fff;border:1px solid rgba(255,255,255,.25);
     border-radius:22px;padding:9px 14px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);font-size:13px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
   .mapfab:hover{filter:brightness(1.1)}
-  .contactfab{position:fixed;right:16px;bottom:90px;z-index:999;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#1aa97b;color:#fff;border:none;box-shadow:0 4px 12px rgba(26,169,123,.3);transition:transform .2s,box-shadow .2s;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);animation:cfin .4s ease both}
+  .contactfab{position:fixed;right:16px;bottom:90px;z-index:999;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--ok);color:#fff;border:none;box-shadow:0 6px 18px rgba(47,125,93,.32);transition:transform .2s,box-shadow .2s;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);animation:cfin .4s ease both}
   .contactfab:hover{transform:scale(1.05);box-shadow:0 6px 16px rgba(26,169,123,.4)}
   .contactfab svg{width:24px;height:24px;display:block}
-  .contactfab .cf-dot{position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:#fff;border:2px solid #1aa97b}
+  .contactfab .cf-dot{position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:#eafff6;border:2px solid #2f7d5d}
   @keyframes cfin{from{opacity:0;transform:translateY(8px) scale(.9)}to{opacity:1}}
   .modal{position:fixed;inset:0;background:rgba(20,28,48,.55);display:none;z-index:1000;align-items:flex-end;justify-content:center}
   .modal.show{display:flex}
@@ -457,10 +457,10 @@ body{
 }
 .rulesfab:hover{transform:translateY(-2px)}
 .contactfab{
-  background:#1aa97b;
-  box-shadow:0 4px 12px rgba(26,169,123,.3);
+  background:linear-gradient(145deg,#3a9a73,#2f7d5d);
+  box-shadow:0 6px 18px rgba(47,125,93,.32), inset 0 1px 2px rgba(255,255,255,.30);
 }
-.contactfab:hover{transform:scale(1.06)}
+.contactfab:hover{transform:scale(1.05);box-shadow:0 9px 22px rgba(47,125,93,.42), inset 0 1px 2px rgba(255,255,255,.35)}
 /* 联系留言表单 */
 .contact-form{display:flex;flex-direction:column;gap:8px;margin-top:12px}
 .cf-input{
@@ -488,6 +488,50 @@ body{
 }
 .langfab-menu{border-radius:13px;border:1px solid var(--line);box-shadow:var(--shadow)}
 .langfab-item.on{background:var(--accent)}
+
+/* ---------- 规则弹窗 / 打卡点小卡 · 统一 CUHK 主题 ---------- */
+.modalcard{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px 20px 0 0;
+  box-shadow:0 -10px 44px rgba(42,35,51,.20);
+  padding:18px 18px 32px;
+}
+@media(min-width:600px){.modalcard{border-radius:20px}}
+.modalhead{
+  font-family:var(--font-h);font-size:18px;color:var(--ink);
+  border-bottom:2px solid var(--gold);padding-bottom:10px;margin-bottom:2px;
+}
+.modalhead button{color:var(--sub)}
+.modalbody h3{
+  font-family:var(--font-h);font-size:15.5px;color:var(--ink);
+  border-left:3px solid var(--gold);padding-left:9px;margin:18px 0 8px;
+}
+table{border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:12.5px}
+th,td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:8px 9px}
+th:last-child,td:last-child{border-right:none}
+tr:last-child td{border-bottom:none}
+th{background:linear-gradient(135deg,var(--accent),#7b52ad);color:#fff;font-weight:600}
+td.p{color:var(--gold);font-weight:700}
+tr:nth-child(even) td{background:#faf8f3}
+.note{background:#fdfbf4;border:1px solid #ecdcae;border-radius:10px;color:#7b5a12}
+ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
+.sched-hint{background:#fdfbf4;border:1px solid var(--line);border-radius:10px;padding:8px 11px;font-size:12.5px;color:var(--sub)}
+/* 打卡点 fab 与规则 fab 统一为紫色胶囊 */
+.mapfab{
+  background:linear-gradient(135deg,var(--accent),#7b52ad);color:#fff;
+  border-radius:999px;padding:11px 17px;font-size:13.5px;font-weight:700;
+  box-shadow:0 8px 24px rgba(91,58,139,.34);transition:.2s;
+}
+.mapfab:hover{transform:translateY(-2px)}
+/* 规划器结果里的打卡点小卡：对齐 .reader */
+.spot{display:flex;gap:12px;align-items:center;padding:10px 12px;margin:7px 0;border:1px solid var(--line);border-radius:13px;background:var(--card);box-shadow:0 1px 2px rgba(42,35,51,.04);transition:.18s}
+.spot:hover{border-color:var(--accent2);box-shadow:0 6px 18px rgba(91,58,139,.10)}
+.spot .nm{font-family:var(--font-h);font-size:14px;font-weight:700;color:var(--ink)}
+.spot .fl{background:var(--accent-soft);color:var(--accent);border:1px solid #e2d6f2;border-radius:7px;padding:2px 8px;font-size:11.5px;font-weight:700}
+.spot .how{font-size:11.5px;color:var(--sub);margin-top:3px;line-height:1.45}
+.spot img{width:112px;height:auto;max-height:150px;object-fit:contain;border-radius:10px;flex:0 0 auto;background:#f3f0ea;display:block}
+.spot .ph{width:112px;height:84px;border-radius:10px;flex:0 0 auto;background:#f7f4ee;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--sub);text-align:center;line-height:1.4}
 
 /* ---------- 页脚：校巴足迹 ---------- */
 .foot{
@@ -779,7 +823,6 @@ const I18N = {
     senAllToggle:"🧑‍🏫 投稿你的捷径（会显示在对应路线推荐里）",
     schUpload:"（可选）上传课表截图，对照着填更快",
     mySchedH:"我的每周课表", mySchedSub:"点日期改两栋楼，自动保存（含周末）",
-    schHintSample:"⚠️ 当前是示例课表，在上方选日期、改两栋楼即可填入你真实的每周课表，推荐才会准。",
     ocrBtn:"本地识别截图",
     ocrNoImg:"先上传一张课表截图，再点「本地识别截图」。",
     ocrLoading:"🔍 正在本地识别…首次会下载识别库（含中文模型，约十几 MB），之后就快了。",
@@ -898,7 +941,6 @@ const I18N = {
     senAllToggle:"🧑‍🏫 投稿你嘅捷徑（會顯示喺對應路線推薦入面）",
     schUpload:"（可揀）上傳課表截圖，對住填更快",
     mySchedH:"我嘅每週課表", mySchedSub:"點日期改兩棟樓，自動儲存（含週末）",
-    schHintSample:"⚠️ 而家係示範課表，喺上面揀日期、改兩棟樓就可以填入你真實嘅每週課表，推薦先會準。",
     ocrBtn:"本地識別截圖",
     ocrNoImg:"先上傳一張課表截圖，再撳「本地識別截圖」。",
     ocrLoading:"🔍 本地識別緊…第一次會下載識別庫（含中文模型，約十幾 MB），之後就快。",
@@ -1017,7 +1059,6 @@ const I18N = {
     senAllToggle:"🧑‍🏫 Submit your shortcut (shows on the matching route)",
     schUpload:"(optional) upload a timetable screenshot to copy from",
     mySchedH:"My weekly timetable", mySchedSub:"Pick a day, change the two buildings — auto-saved (incl. weekends)",
-    schHintSample:"⚠️ This is a sample timetable — pick a day above and change the two buildings to enter your real weekly schedule, so the recommendation is accurate.",
     ocrBtn:"Read screenshot locally",
     ocrNoImg:"Upload a timetable screenshot first, then tap \"Read screenshot locally\".",
     ocrLoading:"🔍 Reading on-device… the first run downloads the recognition model (incl. Chinese, ~15 MB); later runs are fast.",
@@ -1362,13 +1403,7 @@ const SCHED_KEY="wfg_sched_v4";
 const IMG_KEY="wfg_sched_img";
 const DAYS=["mon","tue","wed","thu","fri","sat","sun"];
 const WD2KEY={0:"sun",1:"mon",2:"tue",3:"wed",4:"thu",5:"fri",6:"sat"};
-let SCHED=[
-  {d:"mon",a:"UC",b:"WMY"},
-  {d:"tue",a:"UCC",b:"WMY"},
-  {d:"wed",a:"UC",b:"TEN"},
-  {d:"thu",a:"WMY",b:"LSB"},
-  {d:"fri",a:"UC",b:"LWS"}
-];
+let SCHED=[];
 let selDay = WD2KEY[new Date().getDay()] || "mon";
 function saveSched(){ try{ localStorage.setItem(SCHED_KEY, JSON.stringify(SCHED)); }catch(e){} }
 function schedRow(){ return SCHED.find(r=>r.d===selDay); }
@@ -1438,7 +1473,6 @@ async function renderToday(){
   const dn=t("day")[today][curLang];
   const ra=PLACES[row.a].r, rb=PLACES[row.b].r;
   const sc=pts(ra,rb).p;
-  const isSample = !localStorage.getItem(SCHED_KEY);
   let html=`<div class="today-day">今天（${dn}）</div>`;
   html+=`<div class="today-route2"><span class="from">${tLbl(row.a)}</span><span class="arr">→</span><span class="dest">${tLbl(row.b)}</span></div>`;
   html+=`<div class="tp"><div><b>${t("tpBefore")}</b>：${t("pTapDep")} <span class="pill">${ra}</span>（出门顺路就拍）</div></div>`;
@@ -1449,7 +1483,6 @@ async function renderToday(){
   html+=chipsNear(rb);
   html+=`<div style="margin-top:9px"><button class="b-go-sm" onclick="planToday('${row.a}','${row.b}')">${t("schedFill")}</button> <button class="b-go-sm" onclick="location.href='spots.html'">${t("viewAllSpots")}</button></div>`;
   html+=`<div class="tiny" style="margin-top:7px">${t("estNote")}</div>`;
-  if(isSample) html+=`<div class="sched-hint">${t("schHintSample")}</div>`;
   box.innerHTML=html;
   // 学长姐捷径：融入今日路线，只显示一次（按路线匹配）
   const list=await getTips();
