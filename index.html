@@ -1660,18 +1660,26 @@ function parseSchedWords(words){
   });
   return out.length?out:null;
 }
-/* OCR 资源加载候选源：优先同源自托管(CloudBase)，失败回退到我们自己的 GitHub Pages 镜像（仍属自托管、非公共CDN），最后才是 jsdelivr */
+/* OCR 资源加载候选源：优先香港访问快的 GitHub 镜像代理(均带 CORS*)，其次 github.io 同源与 raw，最后 jsdelivr(本地双击)
+   关键：Frankie 在香港，从 GitHub 直连下载 27MB 繁中模型常超时 → 用 ghfast.top / ghproxy.net 镜像(香港快+有 CORS)做首选。
+   CloudBase 虽快但无 CORS 头，从 github.io 页面跨域拉会被浏览器拦，故不列入跨域候选。 */
 function ocrCandidates(){
   if(location.protocol==='file:'){
     // 本地双击打开：只能用公网（和“原本好”时期一致）
     return [{ js:'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/', core:'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.1.1/', lang:'https://tessdata.projectnaptha.com/4.0.0' }];
   }
-  const selfH=new URL('./ocr/', location.href).href;          // CloudBase 同源自托管（首选）
-  const gh='https://raw.githubusercontent.com/Frankie71-go/cuhk-walk-for-green/main/ocr/'; // 我们的 GitHub 镜像（大文件可靠）
-  return [
-    { js:selfH+'js/', core:selfH+'js/', lang:selfH },
-    { js:gh+'js/',   core:gh+'js/',   lang:gh }
+  const ghPages=new URL('./ocr/', location.href).href;   // github.io 同源(兜底)
+  const ghRaw='https://raw.githubusercontent.com/Frankie71-go/cuhk-walk-for-green/main/ocr/';
+  // 香港访问快的 GitHub 镜像代理(均带 CORS *, 专治 GitHub 在港下载 27MB 模型超时)
+  const MIR=[
+    'https://ghfast.top/https://raw.githubusercontent.com/Frankie71-go/cuhk-walk-for-green/main/ocr/',
+    'https://ghproxy.net/https://raw.githubusercontent.com/Frankie71-go/cuhk-walk-for-green/main/ocr/'
   ];
+  const c=[];
+  MIR.forEach(m=> c.push({ js:m+'js/', core:m+'js/', lang:m }));
+  c.push({ js:ghPages+'js/', core:ghPages+'js/', lang:ghPages });
+  c.push({ js:ghRaw+'js/',   core:ghRaw+'js/',   lang:ghRaw });
+  return c;
 }
 async function loadTesseract(){
   if(window.Tesseract) return window.Tesseract;
