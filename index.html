@@ -610,6 +610,7 @@ ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
     <div class="sched-row">
       <select id="schA" data-page-node-id="schA"></select><span class="arr">→</span><select id="schB" data-page-node-id="schB"></select>
     </div>
+    <div class="tiny" style="margin-top:4px">楼名和打卡机代号可能不同（如「邵逸夫夫人楼」对应打卡机 LSK），系统会自动对应到最近的打卡机。下方今日推荐会标出你要拍的是哪台。</div>
     <div class="upload"><label class="up-btn">📷 <span data-i18n="schUpload">（可选）上传课表截图，对照着填更快</span>
       <input type="file" id="schedImg" accept="image/*" hidden data-page-node-id="schedImg"></label>
       <button class="ocr-btn" id="ocrBtn" onclick="parseSchedImg()">🔍 <span data-i18n="ocrBtn">本地识别截图</span></button></div>
@@ -1464,6 +1465,7 @@ async function renderToday(){
   const sc=pts(ra,rb).p;
   let html=`<div class="today-day">今天（${dn}）</div>`;
   html+=`<div class="today-route2"><span class="from">${tLbl(row.a)}</span><span class="arr">→</span><span class="dest">${tLbl(row.b)}</span></div>`;
+  html+=`<div style="font-size:13px;color:var(--sub);margin:2px 0 6px">📍 你的打卡机：<b>${tLbl(row.a)}</b> → <span class="pill">${ra}</span>　<b>${tLbl(row.b)}</b> → <span class="pill">${rb}</span></div>`;
   html+=`<div class="tp"><div><b>${t("tpBefore")}</b>：${t("pTapDep")} <span class="pill">${ra}</span>（出门顺路就拍）</div></div>`;
   html+=`<div class="tp"><div><b>${t("tpAt")}</b>：${t("pTapArr")} <span class="pill">${rb}</span> → <b>${sc>0?('+'+sc+' '+t("scoreTh2")):'0 '+t("scoreTh2")+'（需换路线）'}</b></div></div>`;
   html+=`<div class="near-t">${t("nearFrom").replace("__R__",tLbl(row.a))}</div>`;
@@ -1755,7 +1757,8 @@ function renderOcrResult(parsed){
     const dn=t('day');
     s+=`<div class="ocr-msg"><b>${t('ocrFound').replace('__N__',parsed.length)}</b></div>`;
     parsed.forEach(r=>{
-      s+=`<div class="ocr-row">${dn[r.d][curLang]}：${tLbl(r.a)}${r.b!==r.a?' → '+tLbl(r.b):''}</div>`;
+      const ra=PLACES[r.a]?PLACES[r.a].r:r.a, rb=PLACES[r.b]?PLACES[r.b].r:r.b;
+      s+=`<div class="ocr-row">${dn[r.d][curLang]}：<b>${tLbl(r.a)}</b> → 打卡机 ${ra}${r.b!==r.a?`，<b>${tLbl(r.b)}</b> → 打卡机 ${rb}`:''}</div>`;
     });
     s+=`<button class="ocr-apply" onclick="applyOcr()">${t('ocrApply')}</button>`;
   }
