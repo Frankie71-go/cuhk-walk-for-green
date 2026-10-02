@@ -1603,7 +1603,8 @@ function parseSchedText(text){
   Object.keys(found).forEach(d=>{
     const arr=found[d].slice().sort((x,y)=>(x.t==null?9999:x.t)-(y.t==null?9999:y.t));
     if(!arr.length) return;
-    out.push({d:d,a:arr[0].b,b:arr.length>1?arr[arr.length-1].b:arr[0].b});
+    const distinct=[]; arr.forEach(o=>{ if(distinct.indexOf(o.b)<0) distinct.push(o.b); });  // 保留当天不同的楼
+    out.push({d:d, a:distinct[0], b:distinct.length>1?distinct[distinct.length-1]:distinct[0]});
   });
   return out;
 }
@@ -1622,34 +1623,66 @@ function extractWords(ret){
   });
   return out;
 }
-/* 版面感知解析：星期作列/节标题，地点与「上方同列最近时间」配对（兼容网格与竖排两种课表） */
+/* 版面感知解析：星期作列标题的网格课表（CUHK/CUSIS 周视图）。
+   关键修复：不单靠“认出的星期文字”定列——eng 模型常漏读中间几天的表头，
+   导致那些列的建筑全归到最近一个被认出的星期（往往周一）。
+   改为：用「列 x 坐标顺序 + 星期顺序插值」还原每一列的真实周几
+   （认出周一+周五即可自动补出周二三四；一个都没认出则默认从周一开始）。
+   每天内保留“不同的楼”（原来 first/last 相同会丢中间的 YIA 等）。 */
 function parseSchedWords(words){
   if(!words||words.length<3) return null;
+  const dayIdx={mon:0,tue:1,wed:2,thu:3,fri:4,sat:5,sun:6};
+  const idxDay=['mon','tue','wed','thu','fri','sat','sun'];
   const cols=[];
   words.forEach(w=>{ const d=ocrMatchDay(w.t); if(d) cols.push({day:d, cx:w.cx, cy:w.cy}); });
-  if(!cols.length) return null;                       // 没识别出星期 → 退化为纯文本解析
-  const dayOfItem=(it)=>{
-    let best=null,bc=1e9;
-    cols.forEach(c=>{ if(c.cy<it.cy){ const cost=(it.cy-c.cy)+Math.abs(c.cx-it.cx); if(cost<bc){bc=cost;best=c.day;} } });
-    if(best) return best;
-    let b2=null,bd=1e9; cols.forEach(c=>{ const dd=Math.abs(c.cx-it.cx); if(dd<bd){bd=dd;b2=c.day;} }); return b2;
+  const items=words.filter(w=>!ocrMatchDay(w.t));
+  if(!items.length) return null;
+  // 对建筑/时间词做 x 坐标聚类，找网格的列中心（用于判断网格 vs 列表，以及兜底锚点）
+  const xs=items.map(w=>w.cx).sort((a,b)=>a-b);
+  const span=((xs[xs.length-1]-xs[0])||1);
+  const th=span*0.08;
+  const clusters=[]; let cur=[xs[0]];
+  for(let i=1;i<xs.length;i++){ if(xs[i]-xs[i-1]<=th) cur.push(xs[i]); else { clusters.push(cur.reduce((s,x)=>s+x,0)/cur.length); cur=[xs[i]]; } }
+  clusters.push(cur.reduce((s,x)=>s+x,0)/cur.length);
+  const nCols=clusters.length;
+  if(nCols<3) return null;                            // 不够列 → 当作列表视图，交给 parseSchedText
+  // 星期锚点：优先用认出的表头；不足则用列中心默认（从首列星期开始，向右顺延）
+  let anchors;
+  if(cols.length>=2){
+    anchors=cols.slice().sort((a,b)=>a.cx-b.cx).map(c=>({x:c.cx, idx:dayIdx[c.day]}));
+  } else if(cols.length===1){
+    const s=dayIdx[cols[0].day];
+    anchors=[{x:clusters[0], idx:s},{x:clusters[clusters.length-1], idx:Math.min(6,s+nCols-1)}];
+  } else {
+    anchors=[{x:clusters[0], idx:0},{x:clusters[clusters.length-1], idx:Math.min(6,nCols-1)}];
+  }
+  const dayAtX=(x)=>{
+    if(x<=anchors[0].x) return idxDay[anchors[0].idx];
+    if(x>=anchors[anchors.length-1].x) return idxDay[anchors[anchors.length-1].idx];
+    for(let i=0;i<anchors.length-1;i++){
+      if(x>=anchors[i].x && x<anchors[i+1].x){
+        const t=(x-anchors[i].x)/((anchors[i+1].x-anchors[i].x)||1);
+        const idx=Math.round(anchors[i].idx + t*(anchors[i+1].idx-anchors[i].idx));
+        return idxDay[Math.max(0,Math.min(6,idx))];
+      }
+    }
+    return idxDay[anchors[anchors.length-1].idx];
   };
+  const ciOf=(w)=>{ let ci=0,bd=1e9; clusters.forEach((c,i)=>{ const d=Math.abs(c-w.cx); if(d<bd){bd=d;ci=i;} }); return ci; };
   const found={};
   const pushB=(day,t,b)=>{ if(!day||!b) return; (found[day]=found[day]||[]).push({t:t,b:b}); };
-  words.forEach(w=>{
-    if(ocrMatchDay(w.t)) return;                       // 星期标题本身跳过
+  items.forEach(w=>{
+    const ci=ciOf(w); const day=dayAtX(clusters[ci]);
     const ts=(w.t.match(/\d{1,2}[:.：]\d{2}/g)||[]).map(ocrToMin);
     const bs=ocrMatchBuildings(w.t);
-    const day=dayOfItem(w); if(!day) return;
     if(bs.length && ts.length){
       const n=Math.min(ts.length,bs.length);
       for(let i=0;i<n;i++) pushB(day,ts[i],bs[i]);
     } else if(bs.length){
-      let best=null,bc=1e9;                            // 楼名：找上方同列最近的时间
-      words.forEach(o=>{ if(o===w) return;
-        const ots=(o.t.match(/\d{1,2}[:.：]\d{2}/g)||[]).map(ocrToMin);
-        if(!ots.length) return;
-        if(o.cy<w.cy){ const cost=(w.cy-o.cy)+Math.abs(o.cx-w.cx); if(cost<bc){bc=cost;best=ots[0];} }
+      let best=null,bc=1e9;                            // 楼名：找同列、上方最近的时间
+      items.forEach(o=>{ if(o===w) return;
+        const ots=(o.t.match(/\d{1,2}[:.：]\d{2}/g)||[]).map(ocrToMin); if(!ots.length) return;
+        if(ciOf(o)===ci && o.cy<w.cy){ const cost=w.cy-o.cy; if(cost<bc){bc=cost;best=ots[0];} }
       });
       pushB(day, best!=null?best:null, bs[0]);
     }
@@ -1658,7 +1691,8 @@ function parseSchedWords(words){
   Object.keys(found).forEach(dd=>{
     const arr=found[dd].slice().sort((x,y)=>(x.t==null?9999:x.t)-(y.t==null?9999:y.t));
     if(!arr.length) return;
-    out.push({d:dd,a:arr[0].b,b:arr.length>1?arr[arr.length-1].b:arr[0].b});
+    const distinct=[]; arr.forEach(o=>{ if(distinct.indexOf(o.b)<0) distinct.push(o.b); });  // 保留当天不同的楼
+    out.push({d:dd, a:distinct[0], b:distinct.length>1?distinct[distinct.length-1]:distinct[0]});
   });
   return out.length?out:null;
 }
