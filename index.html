@@ -1677,7 +1677,13 @@ function ocrCandidates(){
     'https://ghfast.top/https://raw.githubusercontent.com/Frankie71-go/cuhk-walk-for-green/main/ocr/',
     'https://ghproxy.net/https://raw.githubusercontent.com/Frankie71-go/cuhk-walk-for-green/main/ocr/'
   ];
-  const c=[{ js:ghPages+'js/', core:ghPages+'js/', lang:ghPages }];   // 同源优先
+  const JD={
+    js:'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/',
+    core:'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.1.1/',
+    lang:'https://cdn.jsdelivr.net/gh/Frankie71-go/cuhk-walk-for-green@main/ocr/'
+  };
+  const c=[JD];                                                  // jsDelivr 最前（香港快 + CORS，整套 OCR 资源一站托管）
+  c.push({ js:ghPages+'js/', core:ghPages+'js/', lang:ghPages }); // 同源 GitHub Pages 兜底
   c.push({ js:ghRaw+'js/', core:ghRaw+'js/', lang:ghRaw });
   MIR.forEach(m=> c.push({ js:m+'js/', core:m+'js/', lang:m }));
   return c;
