@@ -176,7 +176,7 @@
   #lightbox{align-items:center !important}
   #lightbox .lbwrap{position:relative;max-width:94vw;max-height:92vh;display:flex;align-items:center;justify-content:center}
   #lightbox #lbimg{max-width:94vw;max-height:92vh;border-radius:12px;display:block;background:#fff;box-shadow:0 12px 40px rgba(0,0,0,.5)}
-  #lightbox .lbclose{position:absolute;top:-16px;right:-16px;width:38px;height:38px;border-radius:50%;border:none;background:rgba(31,42,68,.95);color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+  #lightbox .lbclose{position:absolute;top:8px;right:8px;z-index:5;width:40px;height:40px;border-radius:50%;border:2px solid #fff;border:none;background:rgba(31,42,68,.96);color:#fff;font-size:21px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.45)}
   .reader .thumb,.spot img{cursor:pointer}
   th{background:#f3f6fc;font-weight:600}
   td.p{text-align:center;font-weight:700;color:var(--accent)}
@@ -569,13 +569,17 @@ ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
   /* 打卡点独立页：隐藏主页专属板块与入口 */
   #plannerCard,#todayCard{display:none !important}
   .mapfab{display:none !important}
-  .backbar{margin:0 0 12px;font-size:13px}
-  .backbar a{color:var(--accent);text-decoration:none;font-weight:700}
-  .backbar a:hover{text-decoration:underline}
+  /* 返回主页：顶部清晰按钮 + 底部固定大按钮（手机易点，别人一眼能找到） */
+  .backbar{margin:0 0 14px;font-size:14px}
+  .backbar a{display:inline-block;color:#fff;background:linear-gradient(135deg,#3a7bd5,#7b5cff);text-decoration:none;font-weight:700;padding:9px 18px;border-radius:12px;box-shadow:0 4px 14px rgba(58,123,213,.28)}
+  .backbar a:hover{filter:brightness(1.05)}
+  .backbar-fixed{position:fixed;left:0;right:0;bottom:0;z-index:900;text-align:center;padding:14px 12px 16px;background:linear-gradient(180deg,rgba(255,255,255,0),#fff 55%);pointer-events:none}
+  .backbar-fixed a{pointer-events:auto;display:inline-block;color:#fff;background:linear-gradient(135deg,#3a7bd5,#7b5cff);text-decoration:none;font-weight:700;padding:12px 26px;border-radius:14px;box-shadow:0 6px 18px rgba(58,123,213,.38);font-size:15px}
 </style>
 </head>
 <body data-page-node-id="If4Fz3Phr3kADRnbbDnowy">
-<div class="backbar"><a href="index.html">← Walk for Green</a></div>
+<div class="backbar"><a href="index.html">← 返回主页</a></div>
+<div class="backbar-fixed"><a href="index.html">← 返回 Walk for Green 主页</a></div>
 
 
 <div class="hero" data-page-node-id="vBrNGPF0YN3EJEBzW4cBrY">
