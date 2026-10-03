@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Walk for Green · 投稿审核台</title>
+<style>
+  :root{--bg:#f4f7f5;--card:#fff;--ink:#1f2d28;--sub:#6b7d75;--green:#1f9d55;--red:#d64545;--line:#e3eae6;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);padding:18px}
+  h1{font-size:20px;margin:0 0 4px}
+  .sub{color:var(--sub);font-size:13px;margin-bottom:16px}
+  .wrap{max-width:860px;margin:0 auto}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .login input{font-size:16px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;width:100%;margin-bottom:10px}
+  .btn{background:var(--green);color:#fff;border:none;border-radius:10px;padding:11px 18px;font-size:15px;cursor:pointer}
+  .btn:disabled{opacity:.5;cursor:default}
+  .btn.ghost{background:#fff;color:var(--green);border:1px solid var(--green)}
+  .btn.danger{background:#fff;color:var(--red);border:1px solid var(--red);padding:6px 12px;font-size:13px}
+  .err{color:var(--red);font-size:14px;margin-top:8px;min-height:18px}
+  .sec-h{display:flex;justify-content:space-between;align-items:center;margin:0 0 10px}
+  .sec-h h2{font-size:16px;margin:0}
+  .badge{font-size:12px;color:var(--sub);background:#eef3f0;border-radius:20px;padding:3px 10px}
+  .row{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px}
+  .row .meta{font-size:12px;color:var(--sub);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+  .row .body{font-size:14px;white-space:pre-wrap;word-break:break-word}
+  .row .acts{margin-top:8px;text-align:right}
+  .pill{display:inline-block;background:#eef3f0;border-radius:6px;padding:1px 7px;font-size:12px;color:var(--green)}
+  .empty{color:var(--sub);font-size:14px;text-align:center;padding:14px}
+  .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .hidden{display:none}
+  a{color:var(--green)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div>
+      <h1>📋 投稿审核台</h1>
+      <div class="sub">Walk for Green · 仅限 Frankie · 密码保护</div>
+    </div>
+    <button id="logout" class="btn ghost hidden" onclick="logout()">退出</button>
+  </div>
+
+  <!-- 登录 -->
+  <div id="login" class="card login">
+    <div style="font-size:14px;margin-bottom:10px">输入审核密码以查看后台投稿与留言</div>
+    <input id="pw" type="password" placeholder="审核密码" onkeydown="if(event.key==='Enter')login()">
+    <button class="btn" id="loginBtn" onclick="login()">登录</button>
+    <div class="err" id="loginErr"></div>
+    <div class="sub" style="margin-top:10px;font-size:12px">密码在 CloudBase 控制台「云函数 wfg-tips → 环境变量 → ADMIN_PASS」设置。未设置时无法登录（默认锁死）。</div>
+  </div>
+
+  <!-- 内容 -->
+  <div id="panel" class="hidden">
+    <div class="card">
+      <div class="sec-h"><h2>📝 学长姐投稿（公开显示）</h2><span class="badge" id="tipCount">0</span></div>
+      <div id="tips"></div>
+    </div>
+    <div class="card">
+      <div class="sec-h"><h2>💬 客服留言（私密）</h2><span class="badge" id="msgCount">0</span></div>
+      <div id="msgs"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'https://ai-navigator-k-d8g7vx3dn6bcbc310.service.tcloudbase.com';
+let PW = '';
+
+function fmt(ts){
+  if(!ts) return '';
+  const d = new Date(ts);
+  const p = n => (n<10?'0':'')+n;
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+function esc(s){ return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+async function login(){
+  const pw = document.getElementById('pw').value;
+  const err = document.getElementById('loginErr');
+  err.textContent = '';
+  if(!pw){ err.textContent='请输入密码'; return; }
+  document.getElementById('loginBtn').disabled = true;
+  try{
+    const r = await fetch(API+'/admin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
+    const j = await r.json();
+    if(!j.ok){ err.textContent='密码错误，或无权限（请确认 ADMIN_PASS 已设置）'; return; }
+    PW = pw;
+    document.getElementById('login').classList.add('hidden');
+    document.getElementById('panel').classList.remove('hidden');
+    document.getElementById('logout').classList.remove('hidden');
+    render(j.tips||[], j.msgs||[]);
+  }catch(e){ err.textContent='网络错误：'+e.message; }
+  finally{ document.getElementById('loginBtn').disabled = false; }
+}
+
+function render(tips, msgs){
+  document.getElementById('tipCount').textContent = tips.length;
+  document.getElementById('msgCount').textContent = msgs.length;
+  const tBox = document.getElementById('tips');
+  if(!tips.length){ tBox.innerHTML = '<div class="empty">暂无投稿</div>'; }
+  else tBox.innerHTML = tips.map(t=>`
+    <div class="row">
+      <div class="meta"><span>${esc(t.name||'匿名')}</span><span class="pill">${esc(t.route||'其他')}</span><span>👍${t.up||0} 👎${t.down||0}</span><span>${fmt(t.ts)}</span></div>
+      <div class="body">${esc(t.text)}</div>
+      <div class="acts"><button class="btn danger" onclick="del('tip','${t.id}',this)">删除</button></div>
+    </div>`).join('');
+  const mBox = document.getElementById('msgs');
+  if(!msgs.length){ mBox.innerHTML = '<div class="empty">暂无留言</div>'; }
+  else mBox.innerHTML = msgs.map(m=>`
+    <div class="row">
+      <div class="meta"><span>${esc(m.name||'匿名')}</span><span class="pill">${esc(m.cat||'other')}</span><span>${fmt(m.ts)}</span></div>
+      <div class="body">${esc(m.msg)}</div>
+      <div class="acts"><button class="btn danger" onclick="del('msg','${m.id}',this)">删除</button></div>
+    </div>`).join('');
+}
+
+async function del(type, id, btn){
+  if(!confirm('确定删除这条'+(type==='tip'?'投稿':'留言')+'？')) return;
+  btn.disabled = true;
+  try{
+    const r = await fetch(API+'/admin/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:PW,type,id})});
+    const j = await r.json();
+    if(!j.ok){ alert('删除失败：'+(j.error||'未知错误')); btn.disabled=false; return; }
+    const row = btn.closest('.row');
+    if(row) row.remove();
+    if(type==='tip') document.getElementById('tipCount').textContent = Math.max(0,(+document.getElementById('tipCount').textContent)-1);
+    else document.getElementById('msgCount').textContent = Math.max(0,(+document.getElementById('msgCount').textContent)-1);
+  }catch(e){ alert('网络错误：'+e.message); btn.disabled=false; }
+}
+
+function logout(){ PW=''; document.getElementById('panel').classList.add('hidden'); document.getElementById('login').classList.remove('hidden'); document.getElementById('logout').classList.add('hidden'); document.getElementById('pw').value=''; }
+</script>
+</body>
+</html>
