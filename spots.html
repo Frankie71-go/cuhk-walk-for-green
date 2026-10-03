@@ -618,17 +618,12 @@ ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
 <div class="card hi" id="todayCard" data-page-node-id="B2PVmoxOSM47ZOdGIKOIkL">
   <h2 data-page-node-id="bwEUtqAYzKoIyJSgfh49dH"><span class="dot" data-page-node-id="ZSxo4vKyXRQWT8qAGWdry9"></span><span data-i18n="todayH" data-page-node-id="JFcPYzcrXJLBvNTOaDeVWo">今日顺路打卡推荐</span></h2>
   <div class="sched-edit">
-    <div class="sched-edit-head">🗓️ <b data-i18n="mySchedH">我的每周课表</b> <span class="muted" data-i18n="mySchedSub">点日期改两栋楼，自动保存（含周末）</span></div>
+    <div class="sched-edit-head">🗓️ <b data-i18n="mySchedH">我的每周课表（手写）</b> <span class="muted" data-i18n="mySchedSub">选日期，填你这天往返的两栋楼，自动存本地。第一周手填，之后每周自动重复。</span></div>
     <div class="dtabs" id="dayTabs" data-page-node-id="dayTabs"></div>
     <div class="sched-row">
       <select id="schA" data-page-node-id="schA"></select><span class="arr">→</span><select id="schB" data-page-node-id="schB"></select>
     </div>
-    <div class="tiny" style="margin-top:4px">楼名和打卡机代号可能不同（如「邵逸夫夫人楼」对应打卡机 LSK），系统会自动对应到最近的打卡机。下方今日推荐会标出你要拍的是哪台。</div>
-    <div class="upload"><label class="up-btn">📷 <span data-i18n="schUpload">（可选）上传课表截图，对照着填更快</span>
-      <input type="file" id="schedImg" accept="image/*" hidden data-page-node-id="schedImg"></label>
-      <button class="ocr-btn" id="ocrBtn" onclick="parseSchedImg()">🔍 <span data-i18n="ocrBtn">本地识别截图</span></button></div>
-    <div id="ocrBox"></div>
-    <div id="schedImgWrap" data-page-node-id="schedImgWrap"></div>
+    <div class="tiny" style="margin-top:4px">楼名和打卡机代号可能不同（如「联合书院」对应打卡机 LSK、「邵逸夫夫人楼」对应 LSK）。系统会自动对应到最近的打卡机，下方今日推荐会标出你要拍的是哪台。</div>
   </div>
   <div id="todayBody" data-page-node-id="7QX3tS44G68959lTUKSbMH"></div>
 </div>
@@ -741,7 +736,7 @@ const I18N = {
     planLi1:'<b>周末党</b>：挑 <span class="hl">7 个周末日</span>，每次走一个「来回」(单程 3 + 回程 3 = 6 分) → 满 40。',
     planLi2:'<b>通勤党（推荐）</b>：每次上下课/去图书馆，出发拍起点、到达拍终点，来回 4 分 → <span class="hl">10 次</span>就满。',
     planLi3:'<b>最低门槛</b>：每周顺路刷一次来回（6 分），7 周达标，几乎不费劲。',
-    foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"本卡为个人攻略，规则以 CUHK SRSDO 官网为准",
+    foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"本卡为校园打卡攻略，规则以 CUHK SRSDO 官网为准",
     rulesTitle:"📖 规则速查", rulesFab:"📖 规则",
     langH:"🌐 语言",
     mapFab:"🗺️ 打卡点",
@@ -761,7 +756,7 @@ const I18N = {
     contactOk:"已收到！我会在后台看到，优先回复～",
     contactFail:"发送失败，请稍后重试。",
     contactReq:"请先写点什么～",
-    contactNoBackend:"当前链接未连接后台，留言功能不可用。",
+    contactNoBackend:"留言功能暂不可用，请稍后再试。",
     pOneway:"单程", pTotal:"本趟共计", pIncl:"（含回程）", pTapDep:"出发时拍", pTapArr:"到达拍（与上一拍须在 1 小时内）",
     pTapRet:"回程再拍", pViewMap:"校园地图",
     pTrap:"⚠️ 崇基 ↔ 和声/伍宜孙 直接拍两头 = 0 分！必须<b>在途中经过一个中间读卡机</b>才计分（下面第 2 步）。",
@@ -828,16 +823,7 @@ const I18N = {
     estNote:"步行时间是校园估算值（±3 分钟），赶时间请以地图为准。",
     tipsHead:"学长姐走过的捷径 · 也欢迎你投稿",
     senAllToggle:"🧑‍🏫 投稿你的捷径（会显示在对应路线推荐里）",
-    schUpload:"（可选）上传课表截图，对照着填更快",
-    mySchedH:"我的每周课表", mySchedSub:"点日期改两栋楼，自动保存（含周末）",
-    ocrBtn:"本地识别截图",
-    ocrNoImg:"先上传一张课表截图，再点「本地识别截图」。",
-    ocrLoading:"🔍 正在本地识别…首次会下载识别库（含中文模型，约十几 MB），之后就快了。",
-    ocrFail:"识别失败或下载不到识别库（可能没联网）。可以照着截图手动选两栋楼。",
-    ocrModelFail:"识别模型下载失败。请检查网络后重试，或照着截图手动选两栋楼。",
-    ocrNone:"没从截图里认出时间和楼名。可以换张更清晰、更正的截图，或照着手动选两栋楼。",
-    ocrFound:"识别到 __N__ 天的课：",
-    ocrApply:"用这个结果填课表",
+    mySchedH:"我的每周课表（手写）", mySchedSub:"选日期，填你这天往返的两栋楼，自动存本地。第一周手填，之后每周自动重复。",
 
   },
   yue:{
@@ -860,7 +846,7 @@ const I18N = {
     planLi1:'<b>週末黨</b>：揀 <span class="hl">7 個週末日</span>，每次行一個「來回」(單程 3 + 返程 3 = 6 分) → 滿 40。',
     planLi2:'<b>返學黨（推薦）</b>：每次上落課/去圖書館，出發拍起點、到達拍終點，來回 4 分 → <span class="hl">10 次</span>就滿。',
     planLi3:'<b>最低門檻</b>：每週順路刷一次來回（6 分），7 週達標，幾乎唔費力。',
-    foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"本卡為個人攻略，規則以 CUHK SRSDO 官網為準",
+    foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"本卡為校園打卡攻略，規則以 CUHK SRSDO 官網為準",
     rulesTitle:"📖 規則速查", rulesFab:"📖 規則",
     langH:"🌐 語言",
     mapFab:"🗺️ 打卡點",
@@ -880,7 +866,7 @@ const I18N = {
     contactOk:"收到啦！我會喺後台睇到，優先回覆～",
     contactFail:"發送失敗，請遲啲再試。",
     contactReq:"請先寫少少嘢～",
-    contactNoBackend:"呢個連結未連接後台，留言功能用唔到。",
+    contactNoBackend:"留言功能暫時唔用到，請遲啲再試。",
     pOneway:"單程", pTotal:"呢趟總共", pIncl:"（含返程）", pTapDep:"出發嗰陣拍", pTapArr:"到達拍（同上一拍要喺 1 個鐘內）",
     pTapRet:"返程再拍", pViewMap:"校園地圖",
     pTrap:"⚠️ 崇基 ↔ 和聲/伍宜孫 直接拍兩頭 = 0 分！必須<b>途中經過一個中間讀卡機</b>先計分（下面第 2 步）。",
@@ -947,20 +933,11 @@ const I18N = {
     estNote:"步行時間係校園估算（±3 分鐘），趕時間請以地圖為準。",
     tipsHead:"師兄師姐行過嘅捷徑 · 亦歡迎你投稿",
     senAllToggle:"🧑‍🏫 投稿你嘅捷徑（會顯示喺對應路線推薦入面）",
-    schUpload:"（可揀）上傳課表截圖，對住填更快",
-    mySchedH:"我嘅每週課表", mySchedSub:"點日期改兩棟樓，自動儲存（含週末）",
-    ocrBtn:"本地識別截圖",
-    ocrNoImg:"先上傳一張課表截圖，再撳「本地識別截圖」。",
-    ocrLoading:"🔍 本地識別緊…第一次會下載識別庫（含中文模型，約十幾 MB），之後就快。",
-    ocrFail:"識別失敗或者下載唔到識別庫（可能冇聯網）。可以對住截圖手動揀兩棟樓。",
-    ocrModelFail:"識別模型下載失敗。請檢查網絡後重試，或者對住截圖手動揀兩棟樓。",
-    ocrNone:"認唔到截圖裡面嘅時間同樓名。可以換張清楚啲、正啲嘅截圖，或者對住手動揀兩棟樓。",
-    ocrFound:"識別到 __N__ 日嘅課：",
-    ocrApply:"用呢個結果填課表",
+    mySchedH:"我嘅每週課表（手寫）", mySchedSub:"點日期，填你呢日往返嘅兩棟樓，自動存本地。第一週手填，之後每週自動重複。",
 
   },
   en:{
-    title:"Walk for Green Guide ",
+    title:"Walk for Green Guide",
     heroGoal:"<b>Walk for Green: 40 pts = 5 PE participation points (P1).</b> Two consecutive taps must be within one hour, otherwise the record won't count.",
     heroGoal2:'Within <b>1 hour</b>, tap at start + end — the system scores it. Cap <b>6 pts/day</b>. Shortcuts (lift etc.) are fine — only the two tap points matter.',
     progH2:"My 40-point progress", progUnit:"/ 40 pts",
@@ -979,7 +956,7 @@ const I18N = {
     planLi1:'<b>Weekend warrior</b>: pick <span class="hl">7 weekend days</span>, one "round trip" each (3 out + 3 back = 6 pts) → 40.',
     planLi2:'<b>Commuter (recommended)</b>: each time you go to class / library, tap start on departure, end on arrival, 4 pts round trip → <span class="hl">10 times</span> done.',
     planLi3:'<b>Lowest bar</b>: one round-trip swipe per week (6 pts), hit 40 in 7 weeks, almost effortless.',
-    foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"Personal guide; rules per CUHK SRSDO official site",
+    foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"Campus check-in guide; rules per CUHK SRSDO official site",
     rulesTitle:"📖 Rules cheat-sheet", rulesFab:"📖 Rules",
     langH:"🌐 Language",
     mapFab:"🗺️ Spots",
@@ -999,7 +976,7 @@ const I18N = {
     contactOk:"Got it! I'll see it in the backend and reply with priority.",
     contactFail:"Failed to send. Please retry later.",
     contactReq:"Please write something first.",
-    contactNoBackend:"This link isn't connected to a backend, so messaging is unavailable.",
+    contactNoBackend:"Messaging is temporarily unavailable. Please try again later.",
     pOneway:"one-way", pTotal:"This trip total", pIncl:"(incl. return)", pTapDep:"Tap on departure", pTapArr:"Tap on arrival (within 1 hr of previous tap)",
     pTapRet:"Tap again on return", pViewMap:"Campus map",
     pTrap:"⚠️ Chung Chi ↔ Lee Woo Sing/Wu Yee Sun tapping only the two ends = 0 pts! You must <b>pass through an intermediate reader en route</b> to score (step 2 below).",
@@ -1066,16 +1043,7 @@ const I18N = {
     estNote:"Walking times are campus estimates (±3 min) — trust the map if you're in a hurry.",
     tipsHead:"💡 Shortcuts seniors took · share yours too",
     senAllToggle:"🧑‍🏫 Submit your shortcut (shows on the matching route)",
-    schUpload:"(optional) upload a timetable screenshot to copy from",
-    mySchedH:"My weekly timetable", mySchedSub:"Pick a day, change the two buildings — auto-saved (incl. weekends)",
-    ocrBtn:"Read screenshot locally",
-    ocrNoImg:"Upload a timetable screenshot first, then tap \"Read screenshot locally\".",
-    ocrLoading:"🔍 Reading on-device… the first run downloads the recognition model (incl. Chinese, ~15 MB); later runs are fast.",
-    ocrFail:"Recognition failed or the model couldn't be downloaded (maybe offline). You can still pick the two buildings manually.",
-    ocrModelFail:"The recognition model failed to download. Check your connection and retry, or pick the two buildings manually.",
-    ocrNone:"No times or buildings recognized. Try a clearer, straight-on screenshot, or pick the buildings manually.",
-    ocrFound:"Found classes on __N__ day(s):",
-    ocrApply:"Use this for my timetable",
+    mySchedH:"My weekly timetable (hand-written)", mySchedSub:"Pick a day, enter the two buildings you commute between — auto-saved locally. Fill in week 1 manually; it repeats every week.",
 
   }
 };
@@ -1410,7 +1378,6 @@ function reset(){p=0;render();}
 
 /* ---------- 课表：填上课地点 → 列出附近 / 回程路上的打卡点 ---------- */
 const SCHED_KEY="wfg_sched_v4";
-const IMG_KEY="wfg_sched_img";
 const DAYS=["mon","tue","wed","thu","fri","sat","sun"];
 const WD2KEY={0:"sun",1:"mon",2:"tue",3:"wed",4:"thu",5:"fri",6:"sat"};
 let SCHED=[];
@@ -1485,7 +1452,7 @@ async function renderToday(){
   const sc=pts(ra,rb).p;
   let html=`<div class="today-day">今天（${dn}）</div>`;
   html+=`<div class="today-route2"><span class="from">${tLbl(row.a)}</span><span class="arr">→</span><span class="dest">${tLbl(row.b)}</span></div>`;
-  html+=`<div style="font-size:13px;color:var(--sub);margin:2px 0 6px">📍 你的打卡机：<b>${tLbl(row.a)}</b> → <span class="pill">${ra}</span>　<b>${tLbl(row.b)}</b> → <span class="pill">${rb}</span></div>`;
+  html+=`<div style="font-size:13px;color:var(--sub);margin:2px 0 6px">📍 上课地点 → 打卡机：<b>${tLbl(row.a)}</b> → <span class="pill">${ra}</span>　<b>${tLbl(row.b)}</b> → <span class="pill">${rb}</span></div>`;
   html+=`<div class="tp"><div><b>${t("tpBefore")}</b>：${t("pTapDep")} <span class="pill">${ra}</span>（出门顺路就拍）</div></div>`;
   html+=`<div class="tp"><div><b>${t("tpAt")}</b>：${t("pTapArr")} <span class="pill">${rb}</span> → <b>${sc>0?('+'+sc+' '+t("scoreTh2")):'0 '+t("scoreTh2")+'（需换路线）'}</b></div></div>`;
   html+=`<div class="near-t">${t("nearFrom").replace("__R__",tLbl(row.a))}</div>`;
@@ -1511,350 +1478,6 @@ function tipCard(tp){
   const rTag = tp.route ? `<span class="hot-tag" style="color:var(--sub);margin-left:6px">🏷️ ${tRoute2(tp.route)}</span>` : '';
   return `<div class="tip${hot}"><div class="who">${tp.name||"匿名"}${hotTag}${rTag}</div><div class="txt">${tp.text}</div></div>`;
 }
-const imgInput=document.getElementById('schedImg'), imgWrap=document.getElementById('schedImgWrap');
-if(imgWrap){ try{ const s=localStorage.getItem(IMG_KEY); if(s) imgWrap.innerHTML=`<img src="${s}" class="schedimg" alt="我的课表">`; }catch(e){} }
-if(imgInput){ imgInput.addEventListener('change',e=>{
-  const f=e.target.files&&e.target.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=()=>{ try{ localStorage.setItem(IMG_KEY, r.result); if(imgWrap) imgWrap.innerHTML=`<img src="${r.result}" class="schedimg" alt="我的课表">`; }
-    catch(err){ alert('图片太大，存不进手机本地（localStorage 上限约 5MB）。可改存到相册，在本卡只留文字提醒。'); } };
-  r.readAsDataURL(f);
-}); }
-
-/* ---------- 本地识别课表截图（Tesseract.js，全程在本机，图片不上传） ----------
-   只取「上课时间 + 哪一栋楼」，课程名 / 教室号一律不读取、不存储。 */
-const OCR_ALIAS=[
-  ["YIA",["YIA","康本","康本國際","Yasumoto"]],
-  ["FYB",["FYB","王福元"]],
-  ["PSC",["PSC","龐萬倫","庞万伦"]],
-  ["HSHEB",["HSHEB","何善衡"]],
-  ["MMW",["MMW","蒙民偉","蒙民伟"]],
-  ["LKSP",["LKSP","文物館","文物馆","羅桂祥","罗桂祥"]],
-  ["LSB",["LSB","邵逸夫夫人"]],
-  ["UMSO",["UMSO","保健醫療","保健医疗"]],
-  ["LSK",["LSK","李兆基","Lee Shau Kee"]],
-  ["UCA",["UCA","曾肇添"]],
-  ["UCC",["UCC","鄭棟材","郑栋材"]],
-  ["WMY",["WMY","伍何曼"]],
-  ["ELB",["ELB","利黃瑤璧","利黄瑶璧"]],
-  ["SRRS",["SRRS","邵逸夫堂"]],
-  ["LWS",["LWS","和聲","和声"]],
-  ["WYS",["WYS","伍宜孫","伍宜孙"]],
-  ["TEN",["TEN","網球場","网球场"]],
-  ["STN",["STN","大學站","大学站"]],
-  ["MIL",["MIL","百萬大道","百万大道"]],
-  ["UC",["UC","聯合書院","联合书院","United College"]]
-];
-const OCR_FLAT=OCR_ALIAS.reduce((a,e)=>a.concat(e[1].map(x=>[x,e[0]])),[])
-  .sort((x,y)=>y[0].length-x[0].length);
-const DAY_TOKENS=[
-  ["mon",["周一","星期一","週一","MON","Monday","MONDAY"]],
-  ["tue",["周二","星期二","週二","TUE","Tuesday"]],
-  ["wed",["周三","星期三","週三","WED","Wednesday"]],
-  ["thu",["周四","星期四","週四","THU","Thursday"]],
-  ["fri",["周五","星期五","週五","FRI","Friday"]],
-  ["sat",["周六","星期六","週六","SAT","Saturday"]],
-  ["sun",["周日","星期日","星期天","週日","SUN","Sunday"]]
-];
-/* 常见英文单词不应被误判为星期（如 the→tue、thy→thu、son→sun、man→mon、web→wed）。
-   仅用于模糊兜底分支；精确匹配(MON..FRI/周一..周日)与真实误读(toe=T0E→TUE、ned=NED→WED)不受影响。 */
-const DAY_DENY=new Set(['the','thy','and','for','are','was','you','our','out','who','why','how','his','her','she','him','its','not','but','has','had','can','may','new','now','off','own','say','see','son','sin','set','sit','man','men','web','wad','fry']);
-function ocrMatchDay(line){
-  const L=ocrNorm(String(line).toLowerCase());
-  for(let i=0;i<DAY_TOKENS.length;i++){
-    const toks=DAY_TOKENS[i][1];
-    for(let j=0;j<toks.length;j++) if(L.indexOf(ocrNorm(toks[j].toLowerCase()))>=0) return DAY_TOKENS[i][0];
-  }
-  // 模糊兜底：星期代码被轻微误读（如 T0E→TUE、NED→WED、M0N→MON）时按词级编辑距离≤1 救回
-  const ws=L.split(/[^a-z0-9]/);
-  for(let i=0;i<DAY_TOKENS.length;i++){
-    const toks=DAY_TOKENS[i][1];
-    for(let j=0;j<toks.length;j++){
-      const tn=ocrNorm(toks[j].toLowerCase());
-      if(tn.length<3) continue;
-      for(const w of ws){ if(DAY_DENY.has(w)) continue; if(w.length===tn.length && ocrLev(w,tn)<=1) return DAY_TOKENS[i][0]; }
-    }
-  }
-  return null;
-}
-/* 编辑距离，用于英文楼名代码 OCR 误读时的容错匹配（如 L5K / UCA） */
-function ocrLev(a,b){ a=a.toUpperCase(); b=b.toUpperCase(); const m=a.length,n=b.length;
-  if(!m) return n; if(!n) return m;
-  const d=Array.from({length:n+1},(_,i)=>i);
-  for(let i=1;i<=m;i++){ let prev=d[0]; d[0]=i;
-    for(let j=1;j<=n;j++){ const tmp=d[j]; d[j]=Math.min(d[j]+1,d[j-1]+1,prev+(a[i-1]===b[j-1]?0:1)); prev=tmp; } }
-  return d[n]; }
-/* 常见 OCR 误读归一化：0→o、1→i、5→s（数字被读成字母 / 反过来）。末尾统一转小写，
-   否则 0→O 产生大写 O 会被分词正则 [^a-z0-9] 当成分隔符，把 tOe 切成 t/e 导致星期/楼名匹配整段失效 */
-function ocrNorm(s){ return String(s).replace(/[0]/g,'o').replace(/[1]/g,'i').replace(/[5]/g,'s').toLowerCase(); }
-function ocrMatchBuildings(line){
-  const L=ocrNorm(String(line).toLowerCase()); const res=[]; let i=0;
-  while(i<L.length){
-    let hit=null;
-    for(let k=0;k<OCR_FLAT.length;k++){
-      const al=OCR_FLAT[k][0];
-      if(L.substr(i,al.length)===ocrNorm(al.toLowerCase())){ hit=OCR_FLAT[k]; break; }
-    }
-    if(hit){ res.push(hit[1]); i+=hit[0].length; } else i++;
-  }
-  /* 容错：抽出英文楼名代码（2-6 字母），与楼代码做「同长度 + 编辑距离 ≤1」的模糊匹配
-     （3 字母代码 LSK/YIA 误读成 1SK/L5K/Y1A 也能救回来） */
-  const toks=(ocrNorm(String(line)).toUpperCase().match(/[A-Z]{2,6}/g)||[]);
-  toks.forEach(tok=>{ for(let k=0;k<OCR_FLAT.length;k++){
-    const code=OCR_FLAT[k][1]; if(code.length<2) continue;
-    if(tok.length===code.length && ocrLev(tok,code)<=1 && res.indexOf(code)<0){ res.push(code); break; }
-  } });
-  return res;
-}
-function ocrToMin(s){ const m=/(\d{1,2})[:.：](\d{2})/.exec(s||''); return m?(+m[1])*60+(+m[2]):null; }
-function parseSchedText(text){
-  const lines=String(text||'').split(/\r?\n/);
-  let cur=null;            // 当前星期
-  let pendingT=null;       // 暂存「上一行的时间」（上课地点在时间的下方）
-  const found={};
-  const push=(d,t,b)=>{ (found[d]=found[d]||[]).push({t:t,b:b}); };
-  lines.forEach(raw=>{
-    const line=raw.trim(); if(!line) return;
-    const d=ocrMatchDay(line); if(d){ cur=d; pendingT=null; return; }
-    if(!cur) return;
-    const ts=(line.match(/\d{1,2}[:.：]\d{2}/g)||[]).map(ocrToMin);
-    const bs=ocrMatchBuildings(line);
-    if(bs.length && ts.length){
-      // 时间 + 地点在同一行：直接配对
-      const n=Math.min(ts.length, bs.length);
-      for(let i=0;i<n;i++) push(cur, ts[i], bs[i]);
-      pendingT=null;
-    } else if(bs.length){
-      // 地点独占一行（在时间的下方）：与最近一行的时间配对
-      push(cur, pendingT!=null?pendingT:null, bs[0]);
-      pendingT=null;
-    } else if(ts.length){
-      // 时间独占一行：先记下来，等下一行的地点
-      pendingT=ts[0];
-    }
-  });
-  const out=[];
-  Object.keys(found).forEach(d=>{
-    const arr=found[d].slice().sort((x,y)=>(x.t==null?9999:x.t)-(y.t==null?9999:y.t));
-    if(!arr.length) return;
-    const distinct=[]; arr.forEach(o=>{ if(distinct.indexOf(o.b)<0) distinct.push(o.b); });  // 保留当天不同的楼
-    out.push({d:d, a:distinct[0], b:distinct.length>1?distinct[distinct.length-1]:distinct[0]});
-  });
-  return out;
-}
-let LAST_OCR=null, LAST_OCR_RAW='';
-/* 从 Tesseract 结果抽取带坐标的词（兼容 v5 的 words / lines.words 结构） */
-function extractWords(ret){
-  const out=[];
-  let src=[];
-  const d=ret&&ret.data;
-  if(d&&d.words&&d.words.length) src=d.words;
-  else if(d&&d.lines) d.lines.forEach(l=>{ if(l.words) src=src.concat(l.words); });
-  src.forEach(w=>{
-    const t=(w&&w.text||'').trim(); if(!t) return;
-    const b=(w&&w.bbox)||{}; if(b.x0==null||b.y0==null) return;
-    out.push({t:t, cx:(b.x0+b.x1)/2, cy:(b.y0+b.y1)/2});
-  });
-  return out;
-}
-/* 版面感知解析：星期作列标题的网格课表（CUHK/CUSIS 周视图）。
-   关键修复：
-   1) 列中心用 x 坐标聚类；认出的星期表头锚到最近列。
-   2) ≥2 个表头时，按「表头 x 等距插值」生成完整天列（抗 OCR 漏读中间表头 + 抗左侧时间轴），
-      认出周一+周五即可自动补出周二三四；<2 个表头才退回列序号外推。
-   3) 表头全挤在同一列(单列列表视图) → 返回 null 交 parseSchedText 处理。
-   4) 每天内保留「不同的楼」（原来 first/last 相同会丢中间的 YIA 等）。 */
-function parseSchedWords(words){
-  if(!words||words.length<3) return null;
-  const dayIdx={mon:0,tue:1,wed:2,thu:3,fri:4,sat:5,sun:6};
-  const idxDay=['mon','tue','wed','thu','fri','sat','sun'];
-  const cols=[]; words.forEach(w=>{ const d=ocrMatchDay(w.t); if(d) cols.push({day:d,cx:w.cx}); });
-  const items=words.filter(w=>!ocrMatchDay(w.t));
-  if(!items.length) return null;
-  // 列中心聚类（建筑/时间词）
-  const xs=items.map(w=>w.cx).sort((a,b)=>a-b);
-  const span=((xs[xs.length-1]-xs[0])||1);
-  const th=Math.max(span*0.06,20);
-  const clusters=[]; let cur=[xs[0]];
-  for(let i=1;i<xs.length;i++){ if(xs[i]-xs[i-1]<=th) cur.push(xs[i]); else { clusters.push(cur.reduce((s,x)=>s+x,0)/cur.length); cur=[xs[i]]; } }
-  clusters.push(cur.reduce((s,x)=>s+x,0)/cur.length);
-  if(clusters.length<2) return null;                 // 单列列表视图 → 文本解析
-  // 表头锚到最近 cluster
-  const labelOf=new Array(clusters.length).fill(null);
-  cols.forEach(c=>{ let bi=0,bd=1e9; clusters.forEach((cl,i)=>{ const d=Math.abs(cl-c.cx); if(d<bd){bd=d;bi=i;} }); if(labelOf[bi]===null) labelOf[bi]=c.day; });
-  const labeledCount=labelOf.filter(x=>x).length;
-  // 列表判定：认出的星期表头若挤在同一列 → 单列列表 → 文本解析
-  if(cols.length>=2){ const cxs=cols.map(c=>c.cx).sort((a,b)=>a-b); if(cxs[cxs.length-1]-cxs[0]<80) return null; }
-  // 表头不足(<2)且非多列网格(<3 列) → 多半是列表视图，交文本解析
-  if(labeledCount<2 && clusters.length<3) return null;
-  let dayCols;
-  if(labeledCount>=2){
-    // 用表头 x 等距插值生成完整天列（抗噪、抗时间轴）
-    const labeled=cols.slice().sort((a,b)=>a.cx-b.cx);
-    dayCols=[];
-    for(let i=0;i<labeled.length;i++){
-      dayCols.push({day:labeled[i].day, x:labeled[i].cx});
-      if(i<labeled.length-1){
-        const L=labeled[i], R=labeled[i+1];
-        const gap=dayIdx[R.day]-dayIdx[L.day];
-        for(let k=1;k<gap;k++) dayCols.push({day:idxDay[dayIdx[L.day]+k], x:L.cx+(R.cx-L.cx)*k/gap});
-      }
-    }
-  } else {
-    if(labeledCount===0){
-      for(let i=0;i<clusters.length;i++) labelOf[i]=idxDay[Math.min(6,i)];
-    } else {
-      const si=labelOf.findIndex(x=>x);
-      for(let i=si-1;i>=0;i--) labelOf[i]=idxDay[Math.max(0,dayIdx[labelOf[si]]-(si-i))];
-      for(let i=si+1;i<clusters.length;i++) labelOf[i]=idxDay[Math.min(6,dayIdx[labelOf[si]]+(i-si))];
-    }
-    dayCols=clusters.map((x,i)=>({day:labelOf[i], x}));
-  }
-  const found={};
-  const pushB=(day,t,b)=>{ if(!day||!b) return; (found[day]=found[day]||[]).push({t:t,b:b}); };
-  const colOf=(w)=>{ let bi=0,bd=1e9; dayCols.forEach((c,i)=>{ const d=Math.abs(c.x-w.cx); if(d<bd){bd=d;bi=i;} }); return bi; };
-  items.forEach(w=>{
-    const ci=colOf(w); const day=dayCols[ci].day;
-    const ts=(w.t.match(/\d{1,2}[:.：]\d{2}/g)||[]).map(ocrToMin);
-    const bs=ocrMatchBuildings(w.t);
-    if(bs.length && ts.length){
-      const n=Math.min(ts.length,bs.length);
-      for(let i=0;i<n;i++) pushB(day,ts[i],bs[i]);
-    } else if(bs.length){
-      let best=null,bc=1e9;                         // 楼名：找同列、上方最近的时间
-      items.forEach(o=>{ if(o===w) return;
-        const ots=(o.t.match(/\d{1,2}[:.：]\d{2}/g)||[]).map(ocrToMin); if(!ots.length) return;
-        if(colOf(o)===ci && o.cy<w.cy){ const cost=w.cy-o.cy; if(cost<bc){bc=cost;best=ots[0];} }
-      });
-      pushB(day, best!=null?best:null, bs[0]);
-    }
-  });
-  const out=[];
-  Object.keys(found).forEach(dd=>{
-    const arr=found[dd].slice().sort((x,y)=>(x.t==null?9999:x.t)-(y.t==null?9999:y.t));
-    if(!arr.length) return;
-    const distinct=[]; arr.forEach(o=>{ if(distinct.indexOf(o.b)<0) distinct.push(o.b); });  // 保留当天不同的楼
-    out.push({d:dd, a:distinct[0], b:distinct.length>1?distinct[distinct.length-1]:distinct[0]});
-  });
-  return out.length?out:null;
-}
-/* OCR 资源加载候选源：课表全英文 → 只用 eng 模型(10.9MB，远小于 chi_tra 27MB，香港下载稳)。
-   首选同源 GitHub Pages(./ocr/)：同源无 CORS、走 GitHub 全球 CDN(香港快)，最可靠；
-   其次 raw.githubusercontent 兜底；最后内地镜像(ghfast/ghproxy)；本地双击(file:)走 jsdelivr。
-   CloudBase 虽快但无 CORS 头，跨域拉会被浏览器拦，不列入跨域候选。 */
-function ocrCandidates(){
-  if(location.protocol==='file:'){
-    // 本地双击打开：只能用公网（和“原本好”时期一致）
-    return [{ js:'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/', core:'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.1.1/', lang:'https://tessdata.projectnaptha.com/4.0.0' }];
-  }
-  const ghPages=new URL('./ocr/', location.href).href;   // 同源 GitHub Pages（首选：香港快 + 无 CORS）
-  const ghRaw='https://raw.githubusercontent.com/Frankie71-go/cuhk-walk-for-green/main/ocr/';
-  const MIR=[
-    'https://ghfast.top/https://raw.githubusercontent.com/Frankie71-go/cuhk-walk-for-green/main/ocr/',
-    'https://ghproxy.net/https://raw.githubusercontent.com/Frankie71-go/cuhk-walk-for-green/main/ocr/'
-  ];
-  const JD={
-    js:'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/',
-    core:'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.1.1/',
-    lang:'https://cdn.jsdelivr.net/gh/Frankie71-go/cuhk-walk-for-green@main/ocr/'
-  };
-  const c=[JD];                                                  // jsDelivr 最前（香港快 + CORS，整套 OCR 资源一站托管）
-  c.push({ js:ghPages+'js/', core:ghPages+'js/', lang:ghPages }); // 同源 GitHub Pages 兜底
-  c.push({ js:ghRaw+'js/', core:ghRaw+'js/', lang:ghRaw });
-  MIR.forEach(m=> c.push({ js:m+'js/', core:m+'js/', lang:m }));
-  return c;
-}
-async function loadTesseract(){
-  if(window.Tesseract) return window.Tesseract;
-  const cands=ocrCandidates();
-  let lastErr;
-  for(const c of cands){
-    try{
-      await new Promise((res,rej)=>{
-        const sc=document.createElement('script');
-        sc.src=c.js+'tesseract.min.js';
-        sc.onload=res; sc.onerror=()=>rej(new Error('load-fail'));
-        document.head.appendChild(sc);
-      });
-      return window.Tesseract;
-    }catch(e){ lastErr=e; }
-  }
-  throw lastErr||new Error('tesseract-load-fail');
-}
-function loadImage(src){ return new Promise((res,rej)=>{ const im=new Image(); im.onload=()=>res(im); im.onerror=()=>rej(new Error('img-load')); im.src=src; }); }
-/* 转灰度：去掉绿色格子等底色噪点，提升英文楼名识别率（不反相，避免文字变黑） */
-function ocrGrayscale(img){
-  let w=img.naturalWidth||img.width, h=img.naturalHeight||img.height;
-  const maxW=1600; if(w>maxW){ h=Math.round(h*maxW/w); w=maxW; }
-  const c=document.createElement('canvas'); c.width=w; c.height=h;
-  const ctx=c.getContext('2d'); ctx.drawImage(img,0,0,w,h);
-  const d=ctx.getImageData(0,0,w,h), p=d.data;
-  for(let i=0;i<p.length;i+=4){ const g=(p[i]*0.299+p[i+1]*0.587+p[i+2]*0.114)|0; p[i]=p[i+1]=p[i+2]=g; }
-  ctx.putImageData(d,0,0); return c;
-}
-async function parseSchedImg(){
-  const box=document.getElementById('ocrBox'); if(!box) return;
-  let src=null; try{ src=localStorage.getItem(IMG_KEY); }catch(e){}
-  if(!src){ box.innerHTML=`<div class="ocr-msg">${t('ocrNoImg')}</div>`; return; }
-  box.innerHTML=`<div class="ocr-msg">${t('ocrLoading')}</div>`;
-  try{
-    const T=await loadTesseract();
-    const cands=ocrCandidates();
-    let worker=null, lastErr=null;
-    for(const c of cands){
-      try{
-        // 课表全英文 → 只用 eng 模型(10.9MB)，不再强拉 27MB 繁中模型，根治香港下载超时
-        worker=await T.createWorker('eng',1,{
-          langPath:c.lang,
-          workerPath:c.js+'worker.min.js',
-          corePath:c.core                                          // 目录；worker 自动拼 tesseract-core(-simd).wasm.js
-        });
-        break;                                                    // 任一候选源成功即跳出
-      }catch(e){ lastErr=e; }                                      // 该源失败 → 试下一个
-    }
-    if(!worker){
-      // 全部候选源都失败（语言模型/内核加载失败）：明确提示，不再静默退化成纯英文（否则中文课表识别成乱码 → 误报「没认出」）
-      box.innerHTML=`<div class="ocr-msg">${t('ocrModelFail')}</div>`;
-      return;
-    }
-    const img=await loadImage(src);
-    const proc=ocrGrayscale(img);
-    const ret=await worker.recognize(proc);
-    await worker.terminate();
-    LAST_OCR_RAW=(ret&&ret.data&&ret.data.text)||'';
-    const words=extractWords(ret);
-    let parsed=parseSchedWords(words);                 // 优先：带坐标的版面感知解析
-    if(!parsed) parsed=parseSchedText(LAST_OCR_RAW);   // 退化：纯文本逐行解析
-    LAST_OCR=parsed;
-    box.innerHTML=renderOcrResult(parsed);
-  }catch(e){
-    box.innerHTML=`<div class="ocr-msg">${t('ocrFail')}</div>`;
-  }
-}
-function renderOcrResult(parsed){
-  let s='';
-  if(!parsed||!parsed.length){
-    s+=`<div class="ocr-msg">${t('ocrNone')}</div>`;
-  } else {
-    const dn=t('day');
-    s+=`<div class="ocr-msg"><b>${t('ocrFound').replace('__N__',parsed.length)}</b></div>`;
-    parsed.forEach(r=>{
-      const ra=PLACES[r.a]?PLACES[r.a].r:r.a, rb=PLACES[r.b]?PLACES[r.b].r:r.b;
-      s+=`<div class="ocr-row">${dn[r.d][curLang]}：<b>${tLbl(r.a)}</b> → 打卡机 ${ra}${r.b!==r.a?`，<b>${tLbl(r.b)}</b> → 打卡机 ${rb}`:''}</div>`;
-    });
-    s+=`<button class="ocr-apply" onclick="applyOcr()">${t('ocrApply')}</button>`;
-  }
-  return s;
-}
-function applyOcr(){
-  if(!LAST_OCR||!LAST_OCR.length) return;
-  LAST_OCR.forEach(r=>{
-    const i=SCHED.findIndex(x=>x.d===r.d);
-    if(i>=0){ SCHED[i].a=r.a; SCHED[i].b=r.b; } else SCHED.push({d:r.d,a:r.a,b:r.b});
-  });
-  saveSched(); renderSchedTabs(); syncSchSelects(); renderToday();
-  const box=document.getElementById('ocrBox'); if(box) box.innerHTML='';
-}
 try{ const saved=JSON.parse(localStorage.getItem(SCHED_KEY));
   if(Array.isArray(saved)&&saved.length && saved.every(r=>r&&r.d&&PLACES[r.a]&&PLACES[r.b])) SCHED=saved;
 }catch(e){}
@@ -1872,7 +1495,7 @@ function tipScore(tp){ return (tp.up||0)-(tp.down||0); }
 /* 云端配置 */
 let CLOUD=false, CLOUD_API="";
 const CLOUD_KEY="wfg_tips_cloud", API_KEY="wfg_tips_api";
-const DEFAULT_CLOUD_API="";
+const DEFAULT_CLOUD_API="https://ai-navigator-k-d8g7vx3dn6bcbc310.service.tcloudbase.com";
 function apiFromUrl(){
   try{
     const u=new URL(location.href);
@@ -1895,7 +1518,6 @@ function loadCloudCfg(){
 async function apiGet(){ const r=await fetch(CLOUD_API+'/tips'); if(!r.ok) throw new Error('get'); return r.json(); }
 async function apiPostTip(name,text,route){ const r=await fetch(CLOUD_API+'/tips',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,text,route})}); if(!r.ok) throw new Error('post'); return r.json(); }
 async function apiVote(id,dir){ const r=await fetch(CLOUD_API+'/tips/'+encodeURIComponent(id)+'/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({dir})}); if(!r.ok) throw new Error('vote'); return r.json(); }
-async function apiDel(id){ const r=await fetch(CLOUD_API+'/tips/'+encodeURIComponent(id),{method:'DELETE'}); if(!r.ok) throw new Error('del'); }
 async function getTips(){
   if(CLOUD && CLOUD_API){ try{ const d=await apiGet(); if(Array.isArray(d)) return d.map(normTip); }catch(e){} }
   return TIPS;
@@ -1918,7 +1540,7 @@ async function renderTips(){
     const hot = tipScore(tp)>0 ? ' hot' : '';
     const hotTag = tipScore(tp)>0 ? `<span class="hot-tag">🔥 热门</span>` : '';
     const rTag = tp.route ? `<span class="hot-tag" style="color:var(--sub);margin-left:6px">🏷️ ${tRoute2(tp.route)}</span>` : '';
-    return `<div class="tip${hot}"><button class="del" data-id="${tp.id}" onclick="delTip('${tp.id}')">✕</button><div class="who">${tp.name||"匿名"}${hotTag}${rTag}</div><div class="txt">${tp.text}</div><div class="votes"><button class="vbtn" onclick="voteTip('${tp.id}','up')">👍 <b>${tp.up||0}</b></button><button class="vbtn" onclick="voteTip('${tp.id}','down')">👎 <b>${tp.down||0}</b></button></div></div>`;
+    return `<div class="tip${hot}"><div class="who">${tp.name||"匿名"}${hotTag}${rTag}</div><div class="txt">${tp.text}</div><div class="votes"><button class="vbtn" onclick="voteTip('${tp.id}','up')">👍 <b>${tp.up||0}</b></button><button class="vbtn" onclick="voteTip('${tp.id}','down')">👎 <b>${tp.down||0}</b></button></div></div>`;
   }).join('');
 }
 async function addTip(){
@@ -1931,10 +1553,6 @@ async function addTip(){
   document.getElementById('senName').value=""; document.getElementById('senText').value="";
   if(senRouteSel) senRouteSel.value="";
   renderTips();
-}
-async function delTip(id){
-  if(CLOUD && CLOUD_API){ try{ await apiDel(id); renderTips(); return; }catch(e){} }
-  const i=TIPS.findIndex(t=>t.id===id); if(i>=0){ TIPS.splice(i,1); saveTips(); } renderTips();
 }
 async function voteTip(id,dir){
   if(CLOUD && CLOUD_API){ try{ await apiVote(id,dir); renderTips(); return; }catch(e){} }
@@ -1953,7 +1571,11 @@ function openRules(){ const m=document.getElementById('rulesModal'); if(m) m.cla
 function closeRules(){ const m=document.getElementById('rulesModal'); if(m) m.classList.remove('show'); }
 function openMap(){ const m=document.getElementById('mapModal'); if(m) m.classList.add('show'); }
 function closeMap(){ const m=document.getElementById('mapModal'); if(m) m.classList.remove('show'); }
-function openContact(){ const m=document.getElementById('contactModal'); if(m) m.classList.add('show'); }
+function openContact(){
+  const m=document.getElementById('contactModal'); if(m) m.classList.add('show');
+  const nb=document.getElementById('cfNoBackend');
+  if(nb) nb.style.display = CLOUD_API ? 'none' : 'block';
+}
 function closeContact(){ const m=document.getElementById('contactModal'); if(m) m.classList.remove('show'); }
 /* 留言提交：POST /msgs（独立私有集合 wfg_msgs，前端永不读取） */
 async function submitContact(ev){
