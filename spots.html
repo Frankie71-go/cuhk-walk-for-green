@@ -823,7 +823,7 @@ const I18N = {
     estNote:"步行时间是校园估算值（±3 分钟），赶时间请以地图为准。",
     tipsHead:"学长姐走过的捷径 · 也欢迎你投稿",
     senAllToggle:"🧑‍🏫 投稿你的捷径（会显示在对应路线推荐里）",
-    mySchedH:"我的每周课表（手写）", mySchedSub:"选日期，填你这天往返的两栋楼，自动存本地。第一周手填，之后每周自动重复。",
+    mySchedH:"我的每周课表（手写）", mySchedSub:"选日期，填你这天往返的两栋楼，自动存本地。第一周手填，之后每周自动重复。", schedEmpty:"🗓️ 还没填今天的课表：在上方选「今天」，填你上课的两栋楼，下面会自动列出附近的打卡机。",
 
   },
   yue:{
@@ -933,7 +933,7 @@ const I18N = {
     estNote:"步行時間係校園估算（±3 分鐘），趕時間請以地圖為準。",
     tipsHead:"師兄師姐行過嘅捷徑 · 亦歡迎你投稿",
     senAllToggle:"🧑‍🏫 投稿你嘅捷徑（會顯示喺對應路線推薦入面）",
-    mySchedH:"我嘅每週課表（手寫）", mySchedSub:"點日期，填你呢日往返嘅兩棟樓，自動存本地。第一週手填，之後每週自動重複。",
+    mySchedH:"我嘅每週課表（手寫）", mySchedSub:"點日期，填你呢日往返嘅兩棟樓，自動存本地。第一週手填，之後每週自動重複。", schedEmpty:"🗓️ 仲未填今日課表：喺上面揀「今日」，填你上課嘅兩棟樓，下面會自動列出附近嘅打卡機。",
 
   },
   en:{
@@ -1043,7 +1043,7 @@ const I18N = {
     estNote:"Walking times are campus estimates (±3 min) — trust the map if you're in a hurry.",
     tipsHead:"💡 Shortcuts seniors took · share yours too",
     senAllToggle:"🧑‍🏫 Submit your shortcut (shows on the matching route)",
-    mySchedH:"My weekly timetable (hand-written)", mySchedSub:"Pick a day, enter the two buildings you commute between — auto-saved locally. Fill in week 1 manually; it repeats every week.",
+    mySchedH:"My weekly timetable (hand-written)", mySchedSub:"Pick a day, enter the two buildings you commute between — auto-saved locally. Fill in week 1 manually; it repeats every week.", schedEmpty:"🗓️ No timetable for today yet: pick “today” above and enter the two buildings you have class in — nearby readers will be listed below automatically.",
 
   }
 };
@@ -1283,7 +1283,7 @@ const GRPNAME={
 function grpName(g){ const o=GRPNAME[g]; return o ? o[curLang] : g; }
 function fillSelect(sel){
   sel.innerHTML="";
-  Object.keys(grps).filter(g=>g==="读卡机").forEach(g=>{
+  Object.keys(grps).filter(g=>g==="读卡机"||g==="教学楼·书院").forEach(g=>{
     const og=document.createElement('optgroup'); og.label=grpName(g);
     grps[g].forEach(k=>{ og.appendChild(new Option(tLbl(k),k)); });
     sel.appendChild(og);
@@ -1387,8 +1387,8 @@ function schedRow(){ return SCHED.find(r=>r.d===selDay); }
 function setDay(d){ selDay=d; renderSchedTabs(); syncSchSelects(); }
 function syncSchSelects(){
   const row=schedRow(); if(!row) return;
-  if(schA) schA.value=PLACES[row.a]?PLACES[row.a].r:row.a;
-  if(schB) schB.value=PLACES[row.b]?PLACES[row.b].r:row.b;
+  if(schA && PLACES[row.a]) schA.value=row.a;
+  if(schB && PLACES[row.b]) schB.value=row.b;
 }
 function onSchChange(){
   let row=schedRow();
@@ -1446,31 +1446,31 @@ async function renderToday(){
     box.innerHTML=`<div class="today-empty">${t("todayWeekend")}</div>`; return;
   }
   const row=SCHED.find(r=>r.d===today);
-  if(!row){ box.innerHTML=""; return; }
+  if(!row){
+    box.innerHTML=`<div class="today-empty">${t("schedEmpty")}</div>`; return;
+  }
   const dn=t("day")[today][curLang];
   const ra=PLACES[row.a].r, rb=PLACES[row.b].r;
-  const sc=pts(ra,rb).p;
-  let html=`<div class="today-day">今天（${dn}）</div>`;
-  html+=`<div class="today-route2"><span class="from">${tLbl(row.a)}</span><span class="arr">→</span><span class="dest">${tLbl(row.b)}</span></div>`;
-  html+=`<div style="font-size:13px;color:var(--sub);margin:2px 0 6px">📍 上课地点 → 打卡机：<b>${tLbl(row.a)}</b> → <span class="pill">${ra}</span>　<b>${tLbl(row.b)}</b> → <span class="pill">${rb}</span></div>`;
-  html+=`<div class="tp"><div><b>${t("tpBefore")}</b>：${t("pTapDep")} <span class="pill">${ra}</span>（出门顺路就拍）</div></div>`;
-  html+=`<div class="tp"><div><b>${t("tpAt")}</b>：${t("pTapArr")} <span class="pill">${rb}</span> → <b>${sc>0?('+'+sc+' '+t("scoreTh2")):'0 '+t("scoreTh2")+'（需换路线）'}</b></div></div>`;
+  let html=`<div class="today-day">今天（${dn}）你在这些楼上课</div>`;
+  html+=`<div class="today-route2"><span class="from">${tLbl(row.a)}</span><span class="arr">·</span><span class="dest">${tLbl(row.b)}</span></div>`;
+  html+=`<div class="tiny" style="margin:0 0 6px">上课楼对应打卡机：<b>${tLbl(row.a)}</b> → <span class="pill">${ra}</span>　<b>${tLbl(row.b)}</b> → <span class="pill">${rb}</span></div>`;
   html+=`<div class="near-t">${t("nearFrom").replace("__R__",tLbl(row.a))}</div>`;
   html+=chipsNear(ra);
-  html+=`<div class="near-t">${t("nearA").replace("__R__",rb)}</div>`;
+  html+=`<div class="near-t">${t("nearA").replace("__R__",tLbl(row.b))}</div>`;
   html+=chipsNear(rb);
   html+=`<div style="margin-top:9px"><button class="b-go-sm" onclick="planToday('${row.a}','${row.b}')">${t("schedFill")}</button> <button class="b-go-sm" onclick="location.href='spots.html'">${t("viewAllSpots")}</button></div>`;
   html+=`<div class="tiny" style="margin-top:7px">${t("estNote")}</div>`;
   box.innerHTML=html;
-  // 学长姐捷径：融入今日路线，只显示一次（按路线匹配）
-  const list=await getTips();
-  const cat=todayRouteCat(ra,rb);
-  const rel=list.filter(tp=>(tp.route||"other")===cat||(tp.route||"other")==="other")
-    .sort((x,y)=>tipScore(y)-tipScore(x)||(y.ts||0)-(x.ts||0)).slice(0,2);
-  if(rel.length){
-    let sh=`<div class="sen-inline-head">学长姐捷径 · ${tRoute2(cat)}</div>`+rel.map(tipCard).join('');
-    box.insertAdjacentHTML('beforeend', sh);
-  }
+  try{
+    const list=await getTips();
+    const cat=todayRouteCat(ra,rb);
+    const rel=list.filter(tp=>(tp.route||"other")===cat||(tp.route||"other")==="other")
+      .sort((x,y)=>tipScore(y)-tipScore(x)||(y.ts||0)-(x.ts||0)).slice(0,2);
+    if(rel.length){
+      let sh=`<div class="sen-inline-head">学长姐捷径 · ${tRoute2(cat)}</div>`+rel.map(tipCard).join('');
+      box.insertAdjacentHTML('beforeend', sh);
+    }
+  }catch(e){}
 }
 function tipCard(tp){
   const hot=tipScore(tp)>0?' hot':'';
