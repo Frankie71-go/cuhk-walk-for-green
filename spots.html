@@ -551,7 +551,6 @@ ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
 .card,.hero{animation:fadeUp .5s cubic-bezier(.22,.61,.36,1) both}
 .hero{animation-delay:.02s}
 #plannerCard{animation-delay:.10s}
-#todayCard{animation-delay:.18s}
 #mapCard{animation-delay:.26s}
 
 @media (prefers-reduced-motion: reduce){
@@ -612,20 +611,6 @@ ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
   <label class="ck" data-page-node-id="P5qCSpDxWIIgdZ4dOv9ED9"><input type="checkbox" id="back" checked data-page-node-id="6MndbgcPt8GgBAq3r8Cl4G"> <span data-i18n="navBack" data-page-node-id="kEXMmAxQMoGbQonud9MCgy">含回程（终点→起点再算一次）</span></label>
   <button class="b-go" onclick="plan()" data-i18n="navBtn" data-page-node-id="ymKVVZsEBO85u49xfjYtLx">查顺路打卡点 + 算分</button>
   <div class="out" id="out" data-page-node-id="a7oBHHZlqRqAHbOrYPrw2x"></div>
-</div>
-
-<!-- 板块2：今日顺路打卡推荐（第 2 位，学长姐投稿揉进路线） -->
-<div class="card hi" id="todayCard" data-page-node-id="B2PVmoxOSM47ZOdGIKOIkL">
-  <h2 data-page-node-id="bwEUtqAYzKoIyJSgfh49dH"><span class="dot" data-page-node-id="ZSxo4vKyXRQWT8qAGWdry9"></span><span data-i18n="todayH" data-page-node-id="JFcPYzcrXJLBvNTOaDeVWo">今日顺路打卡推荐</span></h2>
-  <div class="sched-edit">
-    <div class="sched-edit-head">🗓️ <b data-i18n="mySchedH">我的每周课表（手写）</b> <span class="muted" data-i18n="mySchedSub">选日期，填你这天往返的两栋楼，自动存本地。第一周手填，之后每周自动重复。</span></div>
-    <div class="dtabs" id="dayTabs" data-page-node-id="dayTabs"></div>
-    <div class="sched-row">
-      <select id="schA" data-page-node-id="schA"></select><span class="arr">→</span><select id="schB" data-page-node-id="schB"></select>
-    </div>
-    <div class="tiny" style="margin-top:4px">楼名和打卡机代号可能不同（如「联合书院」对应打卡机 LSK、「邵逸夫夫人楼」对应 LSK）。系统会自动对应到最近的打卡机，下方今日推荐会标出你要拍的是哪台。</div>
-  </div>
-  <div id="todayBody" data-page-node-id="7QX3tS44G68959lTUKSbMH"></div>
 </div>
 
 
@@ -722,8 +707,6 @@ const I18N = {
     heroGoal2:'同一趟行程 <b>1 小时内</b>，起点 + 终点各拍一次中大通即计分。每天封顶 <b>6 分</b>。可通过搭电梯等走捷径（系统只看你拍了哪两个点）。',
     progH2:"我的 40 分进度", progUnit:"/ 40 分",
     navHere:"导航",
-    todayH:"🗓️ 今日顺路打卡推荐",
-    tpBefore:"课前", tpAt:"到课 / 到目的地",
     btn2:"+2（一趟单程）", btn4:"+4（通勤来回）", btn6:"+6（周末满额）", btnSub:"−2", btnReset:"重置",
     navH2:"🚶 顺路打卡规划器", navBadge:"随时查",
     navBack:"含回程（终点→起点再算一次）", navBtn:"查顺路打卡点 + 算分",
@@ -804,26 +787,18 @@ const I18N = {
     senCloudHint:"开启「云端共享」并填入后端地址后，同学打开同一链接即可共享投稿与点赞。后端需部署一个公开读写接口——代码在项目的 <b>tips-backend</b> 文件夹，部署说明见同文件夹 README。",
     leftDone:"🎉 已达标！去换 5 个 PE 分",
     leftRemain:"还差 __N__ 分",
-    todayWeekend:"周末休息，没课～下周一再战（或周末去刷 6 分满额）",
-    todayBtn:"一键填入规划器",
     senRouteLabel:"路线分类",
     senRouteAll:"全部路线",
     senFilterLabel:"🔍 按路线筛选",
     senRoutePh:"🏷️ 路线分类（选填）",
     pgPlace:"这两个地方有什么", pgWalkH:"抄近路走法", pgSeniorH:"学长姐投稿路线",
     pgWalkGen:"按校园步道走约 __M__ 分钟；系统只看你拍了哪两个点，中间怎么走都行。",
-    nearA:"目的地 __R__ 附近（步行 ≤15 分钟可顺手拍）",
-    nearFrom:"出发上课的 __R__ 附近（步行 ≤15 分钟可顺手拍）",
     nearB:"↩️ 回程路上还能补的点",
     nearNone:"附近 15 分钟内没有其他读卡机——这趟就拍这一个吧",
     minUnit:"分钟", walkZero:"就在楼下", detour:"绕 __D__ 分钟",
     schedTap:"这趟本身：__A__ → __B__ = <b>__P__ 分</b>",
-    schedFill:"一键填进规划器",
-    viewAllSpots:"🗺️ 全部打卡点（含楼层）",
-    estNote:"步行时间是校园估算值（±3 分钟），赶时间请以地图为准。",
     tipsHead:"学长姐走过的捷径 · 也欢迎你投稿",
     senAllToggle:"🧑‍🏫 投稿你的捷径（会显示在对应路线推荐里）",
-    mySchedH:"我的每周课表（手写）", mySchedSub:"选日期，填你这天往返的两栋楼，自动存本地。第一周手填，之后每周自动重复。", schedEmpty:"🗓️ 还没填今天的课表：在上方选「今天」，填你上课的两栋楼，下面会自动列出附近的打卡机。",
 
   },
   yue:{
@@ -832,8 +807,6 @@ const I18N = {
     heroGoal2:'同一趟行程 <b>1 個鐘內</b>，起點+終點各拍一次中大通即計分。每日上限 <b>6 分</b>。可透過搭電梯等走捷徑（系統只看你拍咗邊兩個點）。',
     progH2:"我嘅 40 分進度", progUnit:"/ 40 分",
     navHere:"導航",
-    todayH:"🗓️ 今日順路打卡推薦",
-    tpBefore:"課前", tpAt:"到課 / 到目的地",
     btn2:"+2（單程一趟）", btn4:"+4（返學來回）", btn6:"+6（週末滿額）", btnSub:"−2", btnReset:"重置",
     navH2:"🚶 順路打卡規劃器", navBadge:"隨時查",
     navBack:"含返程（終點→起點再計一次）", navBtn:"查順路打卡點 + 計分",
@@ -914,26 +887,18 @@ const I18N = {
     senCloudHint:"開啟「雲端共享」並填好後端地址後，同學打開同一連結即可共享投稿同點讚。後端要部署一個公開讀寫介面——代碼喺項目嘅 <b>tips-backend</b> 資料夾，部署說明見同資料夾 README。",
     leftDone:"🎉 達標啦！去換 5 個 PE 分",
     leftRemain:"還差 __N__ 分",
-    todayWeekend:"週末休息，冇課～下週一再戰（或者週末去刷 6 分滿額）",
-    todayBtn:"一掣填入規劃器",
     senRouteLabel:"路線分類",
     senRouteAll:"全部路線",
     senFilterLabel:"🔍 按路線篩選",
     senRoutePh:"🏷️ 路線分類（可揀）",
     pgPlace:"呢兩個地方有咩", pgWalkH:"抄捷徑走法", pgSeniorH:"師兄師姐投稿路線",
     pgWalkGen:"沿校園步道行約 __M__ 分鐘；系統只睇你拍咗邊兩個點，中間點行都得。",
-    nearA:"目的地 __R__ 附近（行 ≤15 分鐘順手拍到）",
-    nearFrom:"出發上課嘅 __R__ 附近（行 ≤15 分鐘順手拍到）",
     nearB:"↩️ 返程路上仲可以補嘅點",
     nearNone:"附近 15 分鐘內冇其他讀卡機——呢趟拍呢個就夠",
     minUnit:"分鐘", walkZero:"就喺樓下", detour:"繞 __D__ 分鐘",
     schedTap:"呢趟本身：__A__ → __B__ = <b>__P__ 分</b>",
-    schedFill:"一掣填入規劃器",
-    viewAllSpots:"🗺️ 全部打卡點（含樓層）",
-    estNote:"步行時間係校園估算（±3 分鐘），趕時間請以地圖為準。",
     tipsHead:"師兄師姐行過嘅捷徑 · 亦歡迎你投稿",
     senAllToggle:"🧑‍🏫 投稿你嘅捷徑（會顯示喺對應路線推薦入面）",
-    mySchedH:"我嘅每週課表（手寫）", mySchedSub:"點日期，填你呢日往返嘅兩棟樓，自動存本地。第一週手填，之後每週自動重複。", schedEmpty:"🗓️ 仲未填今日課表：喺上面揀「今日」，填你上課嘅兩棟樓，下面會自動列出附近嘅打卡機。",
 
   },
   en:{
@@ -942,8 +907,6 @@ const I18N = {
     heroGoal2:'Within <b>1 hour</b>, tap at start + end — the system scores it. Cap <b>6 pts/day</b>. Shortcuts (lift etc.) are fine — only the two tap points matter.',
     progH2:"My 40-point progress", progUnit:"/ 40 pts",
     navHere:"Navigate",
-    todayH:"🗓️ Today's en-route taps",
-    tpBefore:"Before class", tpAt:"At class / destination",
     btn2:"+2 (one-way)", btn4:"+4 (round commute)", btn6:"+6 (weekend cap)", btnSub:"−2", btnReset:"Reset",
     navH2:"🚶 Route planner", navBadge:"anytime",
     navBack:"Include return trip (end→start counted again)", navBtn:"Find route + score",
@@ -1024,26 +987,18 @@ const I18N = {
     senCloudHint:"Turn on \"Cloud share\" and enter the backend URL — then anyone opening the same link can see and like each other's tips. The backend is a public read/write API; code is in the project's <b>tips-backend</b> folder, deploy guide in its README.",
     leftDone:"🎉 Done! Go claim your 5 PE credits",
     leftRemain:"__N__ pts to go",
-    todayWeekend:"Weekend — no classes. Battle again Monday (or grind 6 pts on a weekend day)",
-    todayBtn:"Load into planner",
     senRouteLabel:"Route category",
     senRouteAll:"All routes",
     senFilterLabel:"🔍 Filter by route",
     senRoutePh:"🏷️ Route category (optional)",
     pgPlace:"What's at these two spots", pgWalkH:"Shortcut route", pgSeniorH:"Senior-submitted route",
     pgWalkGen:"Walk along campus paths ~__M__ min; the system only cares which two points you tap — any route in between counts.",
-    nearA:"Near destination __R__ (within a 15-min walk)",
-    nearFrom:"Near __R__ (your class building) — other readers within 15 min",
     nearB:"↩️ Bonus stops on the way back",
     nearNone:"No other reader within 15 min — just tap this one",
     minUnit:"min", walkZero:"same building", detour:"+__D__ min detour",
     schedTap:"This trip itself: __A__ → __B__ = <b>__P__ pts</b>",
-    schedFill:"Load into planner",
-    viewAllSpots:"🗺️ All spots (with floors)",
-    estNote:"Walking times are campus estimates (±3 min) — trust the map if you're in a hurry.",
     tipsHead:"💡 Shortcuts seniors took · share yours too",
     senAllToggle:"🧑‍🏫 Submit your shortcut (shows on the matching route)",
-    mySchedH:"My weekly timetable (hand-written)", mySchedSub:"Pick a day, enter the two buildings you commute between — auto-saved locally. Fill in week 1 manually; it repeats every week.", schedEmpty:"🗓️ No timetable for today yet: pick “today” above and enter the two buildings you have class in — nearby readers will be listed below automatically.",
 
   }
 };
@@ -1215,8 +1170,8 @@ function applyLang(){
   if(cfBtn){ cfBtn.setAttribute('aria-label', t('contactH')); cfBtn.setAttribute('title', t('contactH')); }
   updateLangUI();
   buildPlaceOptions();
-  renderReaders(); renderScore(); renderToday(); renderTips(); renderLeft();
-  buildRouteOptions(); renderSchedTabs();
+  renderReaders(); renderScore(); renderTips(); renderLeft();
+  buildRouteOptions();
   const outEl=document.getElementById('out');
   if(outEl && outEl.classList.contains('show') && lastPlan) plan();
 }
@@ -1272,7 +1227,6 @@ function renderScore(){
 
 /* ---------- 顺路规划器（板块1） ---------- */
 const fromSel=document.getElementById('from'), toSel=document.getElementById('to');
-const schA=document.getElementById('schA'), schB=document.getElementById('schB');
 const grps={};
 Object.keys(PLACES).forEach(k=>{ (grps[PLACES[k].grp]=grps[PLACES[k].grp]||[]).push(k); });
 const GRPNAME={
@@ -1290,10 +1244,9 @@ function fillSelect(sel){
   });
 }
 function buildPlaceOptions(){
-  [fromSel,toSel,schA,schB].forEach(sel=>{ if(sel) fillSelect(sel); });
+  [fromSel,toSel].forEach(sel=>{ if(sel) fillSelect(sel); });
   if(fromSel) fromSel.value="YIA";
   if(toSel) toSel.value="WYS";
-  syncSchSelects();
 }
 let lastPlan=null;
 function plan(){
@@ -1377,47 +1330,6 @@ function sub(n){p-=n;render();}
 function reset(){p=0;render();}
 
 /* ---------- 课表：填上课地点 → 列出附近 / 回程路上的打卡点 ---------- */
-const SCHED_KEY="wfg_sched_v4";
-const DAYS=["mon","tue","wed","thu","fri","sat","sun"];
-const WD2KEY={0:"sun",1:"mon",2:"tue",3:"wed",4:"thu",5:"fri",6:"sat"};
-let SCHED=[];
-let selDay = WD2KEY[new Date().getDay()] || "mon";
-function saveSched(){ try{ localStorage.setItem(SCHED_KEY, JSON.stringify(SCHED)); }catch(e){} }
-function schedRow(){ return SCHED.find(r=>r.d===selDay); }
-function setDay(d){ selDay=d; renderSchedTabs(); syncSchSelects(); }
-function syncSchSelects(){
-  const row=schedRow(); if(!row) return;
-  if(schA && PLACES[row.a]) schA.value=row.a;
-  if(schB && PLACES[row.b]) schB.value=row.b;
-}
-function onSchChange(){
-  let row=schedRow();
-  if(!row){ row={d:selDay,a:schA.value,b:schB.value}; SCHED.push(row); }
-  else { row.a=schA.value; row.b=schB.value; }
-  saveSched();
-  renderToday();
-}
-function renderSchedTabs(){
-  const tabs=document.getElementById('dayTabs'); if(!tabs) return;
-  const today=WD2KEY[new Date().getDay()];
-  tabs.innerHTML = DAYS.map(d=>
-    `<button class="dtab${d===selDay?' on':''}${d===today?' today':''}" onclick="setDay('${d}')">${t("day")[d][curLang]}</button>`
-  ).join('');
-}
-/* 附近（步行 ≤15 分钟）还能顺手拍的读卡机 */
-function chipsNear(base){
-  const list=ALLR.filter(c=>c!==base)
-    .map(c=>({c,m:walkMin(base,c)}))
-    .filter(x=>x.m<=15)
-    .sort((a,b)=>a.m-b.m);
-  if(!list.length) return `<div class="tiny">${t("nearNone")}</div>`;
-  return `<div class="chips">`+list.map(x=>{
-    const s=pts(base,x.c).p;
-    const cls = s>0 ? ' hot' : ' zero';
-    const mn = x.m===0 ? t("walkZero") : x.m+t("minUnit");
-    return `<span class="chip${cls}"><b>${x.c}</b> ${RINFO[x.c].floor}<span class="mn">${mn}</span><span class="mn">+${s}</span></span>`;
-  }).join('')+`</div>`;
-}
 /* 回程路上绕一点点就能补拍的点 */
 function chipsOnWay(from,to){
   const direct=walkMin(from,to);
@@ -1431,58 +1343,6 @@ function chipsOnWay(from,to){
     `<span class="chip hot"><b>${x.c}</b> ${RINFO[x.c].floor}<span class="mn">+${x.s}</span><span class="mn">${t("detour").replace("__D__",x.det)}</span></span>`
   ).join('')+`</div>`;
 }
-/* 今日推荐（只推今天，含相对时间点 + 学长姐捷径揉进来） */
-function todayRouteCat(a,b){
-  const set=new Set([a,b]);
-  if(set.has("YIA")||set.has("FYB")||set.has("PSC")||set.has("LSK")||set.has("MMW")) return "united_chi";
-  if(set.has("LWS")||set.has("WYS")) return "north";
-  if(set.has("HSHEB")||set.has("LKSP")) return "cc_central";
-  return "other";
-}
-async function renderToday(){
-  const box=document.getElementById('todayBody'); if(!box) return;
-  const today=WD2KEY[new Date().getDay()];
-  if(!today){
-    box.innerHTML=`<div class="today-empty">${t("todayWeekend")}</div>`; return;
-  }
-  const row=SCHED.find(r=>r.d===today);
-  if(!row){
-    box.innerHTML=`<div class="today-empty">${t("schedEmpty")}</div>`; return;
-  }
-  const dn=t("day")[today][curLang];
-  const ra=PLACES[row.a].r, rb=PLACES[row.b].r;
-  let html=`<div class="today-day">今天（${dn}）你在这些楼上课</div>`;
-  html+=`<div class="today-route2"><span class="from">${tLbl(row.a)}</span><span class="arr">·</span><span class="dest">${tLbl(row.b)}</span></div>`;
-  html+=`<div class="tiny" style="margin:0 0 6px">上课楼对应打卡机：<b>${tLbl(row.a)}</b> → <span class="pill">${ra}</span>　<b>${tLbl(row.b)}</b> → <span class="pill">${rb}</span></div>`;
-  html+=`<div class="near-t">${t("nearFrom").replace("__R__",tLbl(row.a))}</div>`;
-  html+=chipsNear(ra);
-  html+=`<div class="near-t">${t("nearA").replace("__R__",tLbl(row.b))}</div>`;
-  html+=chipsNear(rb);
-  html+=`<div style="margin-top:9px"><button class="b-go-sm" onclick="planToday('${row.a}','${row.b}')">${t("schedFill")}</button> <button class="b-go-sm" onclick="location.href='spots.html'">${t("viewAllSpots")}</button></div>`;
-  html+=`<div class="tiny" style="margin-top:7px">${t("estNote")}</div>`;
-  box.innerHTML=html;
-  try{
-    const list=await getTips();
-    const cat=todayRouteCat(ra,rb);
-    const rel=list.filter(tp=>(tp.route||"other")===cat||(tp.route||"other")==="other")
-      .sort((x,y)=>tipScore(y)-tipScore(x)||(y.ts||0)-(x.ts||0)).slice(0,2);
-    if(rel.length){
-      let sh=`<div class="sen-inline-head">学长姐捷径 · ${tRoute2(cat)}</div>`+rel.map(tipCard).join('');
-      box.insertAdjacentHTML('beforeend', sh);
-    }
-  }catch(e){}
-}
-function tipCard(tp){
-  const hot=tipScore(tp)>0?' hot':'';
-  const hotTag='';
-  const rTag = tp.route ? `<span class="hot-tag" style="color:var(--sub);margin-left:6px">🏷️ ${tRoute2(tp.route)}</span>` : '';
-  return `<div class="tip${hot}"><div class="who">${tp.name||"匿名"}${hotTag}${rTag}</div><div class="txt">${tp.text}</div></div>`;
-}
-try{ const saved=JSON.parse(localStorage.getItem(SCHED_KEY));
-  if(Array.isArray(saved)&&saved.length && saved.every(r=>r&&r.d&&PLACES[r.a]&&PLACES[r.b])) SCHED=saved;
-}catch(e){}
-if(schA) schA.addEventListener('change', onSchChange);
-if(schB) schB.addEventListener('change', onSchChange);
 
 /* ---------- 学长姐捷径投稿（含赞/踩排序） ---------- */
 const TIPS_KEY="wfg_tips_v1";
@@ -1559,12 +1419,6 @@ async function voteTip(id,dir){
   const tp=TIPS.find(t=>t.id===id); if(!tp) return; if(dir==='up') tp.up=(tp.up||0)+1; else tp.down=(tp.down||0)+1; saveTips(); renderTips();
 }
 
-function planToday(a,b){
-  if(fromSel) fromSel.value=a;
-  if(toSel) toSel.value=b;
-  plan();
-  const nav=document.getElementById('plannerCard'); if(nav) nav.scrollIntoView({behavior:'smooth',block:'start'});
-}
 
 /* ---------- 规则弹窗 ---------- */
 function openRules(){ const m=document.getElementById('rulesModal'); if(m) m.classList.add('show'); }
@@ -1625,7 +1479,7 @@ safe(loadCloudCfg,"loadCloudCfg");
 safe(applyLang,"applyLang");
 safe(render,"render");
 const backBox=document.getElementById('back');
-if(backBox) backBox.addEventListener('change', ()=>{ renderToday(); const outEl=document.getElementById('out'); if(outEl && outEl.classList.contains('show') && lastPlan) plan(); });
+if(backBox) backBox.addEventListener('change', ()=>{ const outEl=document.getElementById('out'); if(outEl && outEl.classList.contains('show') && lastPlan) plan(); });
 if(senFilterSel) senFilterSel.addEventListener('change', renderTips);
 </script>
 </body>
