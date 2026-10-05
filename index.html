@@ -563,6 +563,11 @@ ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
   .reader{flex-direction:column;align-items:flex-start;gap:8px}
   .reader .go{align-self:flex-start}
 }
+.noticebar{display:none;align-items:flex-start;gap:10px;background:#eef7f0;border:1px solid var(--line);border-left:4px solid var(--green);border-radius:12px;padding:12px 14px;margin:0 14px 16px;box-shadow:0 1px 3px rgba(31,42,68,.04)}
+.noticebar .nb-icon{font-size:18px;line-height:1.4}
+.noticebar .nb-text{font-size:14px;line-height:1.5;color:var(--ink);flex:1;white-space:pre-wrap;word-break:break-word}
+.noticebar .nb-close{background:none;border:none;font-size:20px;color:var(--sub);cursor:pointer;line-height:1;padding:0 2px}
+.noticebar .nb-close:hover{color:var(--green)}
 
 </style>
 </head>
@@ -586,6 +591,13 @@ ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
       <button class="hb res" onclick="reset()" data-i18n="btnReset" data-page-node-id="BN1ORq0Wrj7KeEzzVCvqz2">重置</button>
     </div>
   </div>
+</div>
+
+<!-- 公告条：Frankie 在审核台发布，所有人可见 -->
+<div class="noticebar" id="noticeBar">
+  <span class="nb-icon">📢</span>
+  <div class="nb-text" id="noticeText"></div>
+  <button class="nb-close" onclick="dismissNotice()" aria-label="关闭">×</button>
 </div>
 
 <!-- 板块1：顺路打卡规划器（A→B 算分）—— 原样保留 -->
@@ -1368,6 +1380,34 @@ async function getTips(){
   if(CLOUD && CLOUD_API){ try{ const d=await apiGet(); if(Array.isArray(d)) return d.map(normTip); }catch(e){} }
   return TIPS;
 }
+// 公告条：加载并展示 Frankie 发布的公告（所有人可见），可关闭并按时间戳记忆
+async function loadNotice(){
+  const bar=document.getElementById('noticeBar');
+  const txt=document.getElementById('noticeText');
+  if(!bar||!txt) return;
+  const api=CLOUD_API||DEFAULT_CLOUD_API;
+  try{
+    const r=await fetch(api+'/notice');
+    if(!r.ok){ bar.style.display='none'; return; }
+    const d=await r.json();
+    const text=(d.text||'').trim();
+    const ts=String(d.ts||'0');
+    if(!text){ bar.style.display='none'; return; }
+    let dismissed='';
+    try{ dismissed=localStorage.getItem('wfg_notice_dismissed')||''; }catch(e){}
+    if(dismissed===ts){ bar.style.display='none'; return; }
+    txt.textContent=text;
+    bar.setAttribute('data-ts', ts);
+    bar.style.display='flex';
+  }catch(e){ bar.style.display='none'; }
+}
+function dismissNotice(){
+  const bar=document.getElementById('noticeBar');
+  if(!bar) return;
+  const ts=bar.getAttribute('data-ts')||'0';
+  try{ localStorage.setItem('wfg_notice_dismissed', ts); }catch(e){}
+  bar.style.display='none';
+}
 const senRouteSel=document.getElementById('senRoute');
 const senFilterSel=document.getElementById('senFilter');
 function buildRouteOptions(){
@@ -1469,6 +1509,7 @@ safe(render,"render");
 const backBox=document.getElementById('back');
 if(backBox) backBox.addEventListener('change', ()=>{ const outEl=document.getElementById('out'); if(outEl && outEl.classList.contains('show') && lastPlan) plan(); });
 if(senFilterSel) senFilterSel.addEventListener('change', renderTips);
+safe(loadNotice,"loadNotice");
 </script>
 </body>
 </html>

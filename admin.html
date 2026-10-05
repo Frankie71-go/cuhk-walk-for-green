@@ -58,6 +58,15 @@
   <!-- 内容 -->
   <div id="panel" class="hidden">
     <div class="card">
+      <div class="sec-h"><h2>📢 公告（所有人可见）</h2></div>
+      <textarea id="noticeEdit" rows="3" placeholder="输入要发布的公告，所有人打开页面都会看到…" style="width:100%;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-family:inherit;resize:vertical"></textarea>
+      <div style="margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <button class="btn" onclick="saveNotice(this)">保存公告</button>
+        <button class="btn ghost" onclick="clearNotice(this)">清空</button>
+        <span class="err" id="noticeMsg" style="font-size:13px"></span>
+      </div>
+    </div>
+    <div class="card">
       <div class="sec-h"><h2>📝 学长姐投稿（公开显示）</h2><span class="badge" id="tipCount">0</span></div>
       <div id="tips"></div>
     </div>
@@ -95,6 +104,7 @@ async function login(){
     document.getElementById('panel').classList.remove('hidden');
     document.getElementById('logout').classList.remove('hidden');
     render(j.tips||[], j.msgs||[]);
+    loadNoticeEditor();
   }catch(e){ err.textContent='网络错误：'+e.message; }
   finally{ document.getElementById('loginBtn').disabled = false; }
 }
@@ -142,6 +152,28 @@ async function del(type, id, btn){
 }
 
 function logout(){ PW=''; document.getElementById('panel').classList.add('hidden'); document.getElementById('login').classList.remove('hidden'); document.getElementById('logout').classList.add('hidden'); document.getElementById('pw').value=''; }
+async function loadNoticeEditor(){
+  try{ const r=await fetch(API+'/notice'); const j=await r.json(); const ta=document.getElementById('noticeEdit'); if(ta) ta.value=(j.text||''); }catch(e){}
+}
+async function saveNotice(btn){
+  const ta=document.getElementById('noticeEdit');
+  const msg=document.getElementById('noticeMsg');
+  const text=(ta.value||'').trim();
+  msg.textContent=''; msg.style.color='var(--green)';
+  btn.disabled=true;
+  try{
+    const r=await fetch(API+'/admin/notice',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:PW,text})});
+    const j=await r.json();
+    if(j.ok){ msg.textContent = text ? '已保存 ✓ 所有人打开页面即可看到' : '已清空 ✓'; }
+    else { msg.style.color='var(--red)'; msg.textContent=j.error==='forbidden'?'密码错误或权限不足':'保存失败'; }
+  }catch(e){ msg.style.color='var(--red)'; msg.textContent='网络错误：'+e.message; }
+  finally{ btn.disabled=false; }
+}
+async function clearNotice(btn){
+  const ta=document.getElementById('noticeEdit');
+  if(ta) ta.value='';
+  await saveNotice(btn);
+}
 function toggleReply(id){ const b=document.getElementById('reply-'+id); if(b) b.classList.toggle('hidden'); }
 async function sendReply(id, btn){
   const ta=document.getElementById('replytext-'+id);
