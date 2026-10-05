@@ -664,6 +664,7 @@ ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
           <option value="other" data-i18n="contactCatOther">其他想法</option>
         </select>
         <textarea id="cfMsg" class="cf-input cf-ta" rows="4" data-i18n-ph="contactMsg"></textarea>
+        <input id="cfContact" class="cf-input" type="text" data-i18n-ph="contactContact">
         <div id="cfStatus" class="cf-status"></div>
         <button id="cfSubmit" type="submit" class="cf-submit" data-i18n="contactSubmit">发送留言</button>
         <div id="cfNoBackend" class="cf-nobackend" style="display:none" data-i18n="contactNoBackend"></div>
@@ -716,6 +717,7 @@ const I18N = {
     contactCatPhoto:"上传打卡机照片",
     contactCatOther:"其他想法",
     contactMsg:"想说的话（必填）",
+    contactContact:"怎么联系你（选填，留邮箱或微信方便我回你）",
     contactSubmit:"发送留言",
     contactSending:"发送中…",
     contactOk:"已收到！我会在后台看到，优先回复～",
@@ -816,6 +818,7 @@ const I18N = {
     contactCatPhoto:"上傳打卡機照片",
     contactCatOther:"其他諗法",
     contactMsg:"想講嘅嘢（必填）",
+    contactContact:"點聯絡你（選填，留郵箱或微信方便我回你）",
     contactSubmit:"發送留言",
     contactSending:"發送中…",
     contactOk:"收到啦！我會喺後台睇到，優先回覆～",
@@ -916,6 +919,7 @@ const I18N = {
     contactCatPhoto:"Upload reader photo",
     contactCatOther:"Other idea",
     contactMsg:"Your message (required)",
+    contactContact:"How to reach you (optional, leave email/WeChat so I can reply)",
     contactSubmit:"Send message",
     contactSending:"Sending…",
     contactOk:"Got it! I'll see it in the backend and reply with priority.",
@@ -1419,6 +1423,7 @@ async function submitContact(ev){
   const name=(document.getElementById('cfName').value||'').trim();
   const cat=document.getElementById('cfCat').value;
   const msg=(document.getElementById('cfMsg').value||'').trim();
+  const contact=(document.getElementById('cfContact').value||'').trim();
   const status=document.getElementById('cfStatus');
   const btn=document.getElementById('cfSubmit');
   if(!msg){ status.textContent=t('contactReq'); status.className='cf-status err'; return false; }
@@ -1431,11 +1436,12 @@ async function submitContact(ev){
   try{
     const r=await fetch(CLOUD_API+'/msgs',{
       method:'POST', headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:name,cat:cat,msg:msg,lang:curLang,ua:navigator.userAgent,ts:Date.now()})
+      body:JSON.stringify({name:name,cat:cat,msg:msg,contact:contact,lang:curLang,ua:navigator.userAgent,ts:Date.now()})
     });
     if(!r.ok) throw new Error('http '+r.status);
     status.textContent=t('contactOk'); status.className='cf-status ok';
     document.getElementById('cfMsg').value='';
+    document.getElementById('cfContact').value='';
   }catch(e){
     status.textContent=t('contactFail'); status.className='cf-status err';
   }finally{

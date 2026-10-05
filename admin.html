@@ -30,6 +30,10 @@
   .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
   .hidden{display:none}
   a{color:var(--green)}
+  .contact-line{font-size:12px;color:var(--sub);margin-top:6px}
+  .reply-box{margin-top:10px}
+  .reply-box textarea{width:100%;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;font-family:inherit;resize:vertical}
+  .reply-box .err{min-height:16px;font-size:13px}
 </style>
 </head>
 <body>
@@ -106,13 +110,20 @@ function render(tips, msgs){
       <div class="body">${esc(t.text)}</div>
       <div class="acts"><button class="btn danger" onclick="del('tip','${t.id}',this)">删除</button></div>
     </div>`).join('');
+  window.__msgs = msgs;
   const mBox = document.getElementById('msgs');
   if(!msgs.length){ mBox.innerHTML = '<div class="empty">暂无留言</div>'; }
   else mBox.innerHTML = msgs.map(m=>`
-    <div class="row">
+    <div class="row" data-mid="${m.id}">
       <div class="meta"><span>${esc(m.name||'匿名')}</span><span class="pill">${esc(m.cat||'other')}</span><span>${fmt(m.ts)}</span></div>
       <div class="body">${esc(m.msg)}</div>
-      <div class="acts"><button class="btn danger" onclick="del('msg','${m.id}',this)">删除</button></div>
+      ${m.contact?'<div class="contact-line">联系方式：'+esc(m.contact)+'</div>':''}
+      <div class="acts"><button class="btn ghost" onclick="toggleReply('${m.id}')">回复</button><button class="btn danger" onclick="del('msg','${m.id}',this)">删除</button></div>
+      <div class="reply-box hidden" id="reply-${m.id}">
+        <textarea id="replytext-${m.id}" rows="3" placeholder="输入回复内容…"></textarea>
+        <button class="btn" onclick="sendReply('${m.id}',this)">发送回复</button>
+        <div class="err" id="replyerr-${m.id}"></div>
+      </div>
     </div>`).join('');
 }
 
@@ -131,6 +142,23 @@ async function del(type, id, btn){
 }
 
 function logout(){ PW=''; document.getElementById('panel').classList.add('hidden'); document.getElementById('login').classList.remove('hidden'); document.getElementById('logout').classList.add('hidden'); document.getElementById('pw').value=''; }
+function toggleReply(id){ const b=document.getElementById('reply-'+id); if(b) b.classList.toggle('hidden'); }
+async function sendReply(id, btn){
+  const ta=document.getElementById('replytext-'+id);
+  const err=document.getElementById('replyerr-'+id);
+  const reply=(ta.value||'').trim();
+  err.style.color='var(--red)'; err.textContent='';
+  if(!reply){ err.textContent='请输入回复内容'; return; }
+  const m=(window.__msgs||[]).find(x=>x.id===id);
+  btn.disabled=true;
+  try{
+    const r=await fetch(API+'/admin/reply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:PW,id,reply,contact:m?m.contact:'',original:m?m.msg:''})});
+    const j=await r.json();
+    if(j.ok){ err.style.color='var(--green)'; err.textContent='已发送回复邮件 ✓'; ta.value=''; const box=document.getElementById('reply-'+id); if(box) box.classList.add('hidden'); }
+    else { err.textContent=j.hint||(j.error==='forbidden'?'密码错误或权限不足':'发送失败，请手动处理'); }
+  }catch(e){ err.textContent='网络错误：'+e.message; }
+  finally{ btn.disabled=false; }
+}
 </script>
 </body>
 </html>
