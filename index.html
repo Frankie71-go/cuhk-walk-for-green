@@ -569,6 +569,28 @@ ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
 .noticebar .nb-close{background:none;border:none;font-size:20px;color:var(--sub);cursor:pointer;line-height:1;padding:0 2px}
 .noticebar .nb-close:hover{color:var(--green)}
 
+/* ---------- 公告悬浮指示器：有公告时右下角出现，点开即看 ---------- */
+.noticefab{
+  position:fixed;right:16px;bottom:16px;z-index:910;display:none;
+  align-items:center;gap:7px;cursor:pointer;
+  background:linear-gradient(135deg,var(--accent),#7b52ad);color:#fff;
+  border:none;border-radius:999px;padding:9px 15px;font-size:13px;font-weight:700;
+  box-shadow:0 6px 18px rgba(91,58,139,.34);transition:.18s;
+}
+.noticefab:hover{transform:translateY(-2px)}
+.noticefab.show{display:inline-flex}
+.noticefab .nf-dot{width:8px;height:8px;border-radius:50%;background:#ffd84d;box-shadow:0 0 0 3px rgba(255,216,77,.35)}
+.noticepop{
+  position:fixed;right:16px;bottom:62px;z-index:911;display:none;
+  width:min(300px,calc(100vw - 32px));
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:0 12px 36px rgba(42,35,51,.22);overflow:hidden;
+}
+.noticepop.show{display:block;animation:fadeUp .22s ease both}
+.np-head{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:linear-gradient(135deg,var(--accent),#7b52ad);color:#fff;font-weight:700;font-size:14px}
+.np-x{background:none;border:none;color:#fff;font-size:20px;line-height:1;cursor:pointer;padding:0 2px}
+.np-body{padding:14px;font-size:13.5px;line-height:1.55;color:var(--ink);white-space:pre-wrap;word-break:break-word;max-height:46vh;overflow:auto}
+
 </style>
 </head>
 <body data-page-node-id="If4Fz3Phr3kADRnbbDnowy">
@@ -598,6 +620,15 @@ ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
   <span class="nb-icon">📢</span>
   <div class="nb-text" id="noticeText"></div>
   <button class="nb-close" onclick="dismissNotice()" aria-label="关闭">×</button>
+</div>
+
+<!-- 公告悬浮指示器：有公告时右下角出现，点开即看 -->
+<div id="noticeFab" class="noticefab" onclick="toggleNoticePop()" aria-label="查看公告">
+  <span class="nf-dot"></span><span>📢 新公告</span>
+</div>
+<div id="noticePop" class="noticepop">
+  <div class="np-head"><span>📢 公告</span><button class="np-x" onclick="toggleNoticePop()" aria-label="关闭">×</button></div>
+  <div class="np-body" id="noticePopText"></div>
 </div>
 
 <!-- 板块1：顺路打卡规划器（A→B 算分）—— 原样保留 -->
@@ -1399,7 +1430,22 @@ async function loadNotice(){
     txt.textContent=text;
     bar.setAttribute('data-ts', ts);
     bar.style.display='flex';
+    showNoticeFab(text);
   }catch(e){ bar.style.display='none'; }
+}
+function showNoticeFab(text){
+  const fab=document.getElementById('noticeFab');
+  const pop=document.getElementById('noticePop');
+  const pt=document.getElementById('noticePopText');
+  if(!fab) return;
+  if(pt) pt.textContent=text;
+  fab.classList.add('show');
+  if(pop) pop.classList.remove('show');
+}
+function toggleNoticePop(){
+  const pop=document.getElementById('noticePop');
+  if(!pop) return;
+  pop.classList.toggle('show');
 }
 function dismissNotice(){
   const bar=document.getElementById('noticeBar');
@@ -1407,6 +1453,10 @@ function dismissNotice(){
   const ts=bar.getAttribute('data-ts')||'0';
   try{ localStorage.setItem('wfg_notice_dismissed', ts); }catch(e){}
   bar.style.display='none';
+  const fab=document.getElementById('noticeFab');
+  if(fab) fab.classList.remove('show');
+  const pop=document.getElementById('noticePop');
+  if(pop) pop.classList.remove('show');
 }
 const senRouteSel=document.getElementById('senRoute');
 const senFilterSel=document.getElementById('senFilter');
