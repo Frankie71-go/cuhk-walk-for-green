@@ -34,6 +34,17 @@
   .reply-box{margin-top:10px}
   .reply-box textarea{width:100%;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;font-family:inherit;resize:vertical}
   .reply-box .err{min-height:16px;font-size:13px}
+  /* 使用概览仪表盘 */
+  .ov-grid{display:flex;gap:8px;flex-wrap:wrap}
+  .ov{flex:1;min-width:76px;background:#f6faf7;border:1px solid var(--line);border-radius:10px;padding:10px 8px;text-align:center}
+  .ov-n{font-size:21px;font-weight:800;color:var(--green);line-height:1.1}
+  .ov-l{font-size:11px;color:var(--sub);margin-top:3px}
+  .bars{display:flex;align-items:flex-end;gap:6px;height:58px;margin-top:16px}
+  .bars .bar{flex:1;background:linear-gradient(180deg,#5fbf8a,#1f9d55);border-radius:5px 5px 0 0;min-height:3px;position:relative}
+  .bars .bar i{position:absolute;top:-15px;left:0;right:0;text-align:center;font-size:9px;color:var(--ink);font-style:normal}
+  .bars .bar span{position:absolute;bottom:-16px;left:0;right:0;text-align:center;font-size:9px;color:var(--sub)}
+  .ta-lab{font-size:12px;color:var(--sub);margin:10px 0 4px;display:block}
+  .ta{width:100%;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-family:inherit;resize:vertical}
 </style>
 </head>
 <body>
@@ -58,8 +69,24 @@
   <!-- 内容 -->
   <div id="panel" class="hidden">
     <div class="card">
+      <div class="sec-h"><h2>📊 使用概览</h2><span class="badge">匿名统计 · 不记录个人信息</span></div>
+      <div class="ov-grid">
+        <div class="ov"><div class="ov-n" id="ovTotal">0</div><div class="ov-l">累计打开</div></div>
+        <div class="ov"><div class="ov-n" id="ovToday">0</div><div class="ov-l">今日打开</div></div>
+        <div class="ov"><div class="ov-n" id="ov7">0</div><div class="ov-l">近7天</div></div>
+        <div class="ov"><div class="ov-n" id="ovTips">0</div><div class="ov-l">投稿数</div></div>
+        <div class="ov"><div class="ov-n" id="ovMsgs">0</div><div class="ov-l">留言数</div></div>
+      </div>
+      <div class="bars" id="ovBars"></div>
+    </div>
+    <div class="card">
       <div class="sec-h"><h2>📢 公告（所有人可见）</h2></div>
-      <textarea id="noticeEdit" rows="3" placeholder="输入要发布的公告，所有人打开页面都会看到…" style="width:100%;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-family:inherit;resize:vertical"></textarea>
+      <label class="ta-lab">简体中文（必填）</label>
+      <textarea id="noticeEdit" class="ta" rows="3" placeholder="输入要发布的公告，所有人打开页面都会看到…"></textarea>
+      <label class="ta-lab">粵語（選填，隨語言切換顯示）</label>
+      <textarea id="noticeEditYue" class="ta" rows="2" placeholder="粵語版本，留空則顯示中文"></textarea>
+      <label class="ta-lab">English（optional）</label>
+      <textarea id="noticeEditEn" class="ta" rows="2" placeholder="English version, shown when language = EN"></textarea>
       <div style="margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
         <button class="btn" onclick="saveNotice(this)">保存公告</button>
         <button class="btn ghost" onclick="clearNotice(this)">清空</button>
@@ -104,6 +131,7 @@ async function login(){
     document.getElementById('panel').classList.remove('hidden');
     document.getElementById('logout').classList.remove('hidden');
     render(j.tips||[], j.msgs||[]);
+    renderStats(j.stats, (j.tips||[]).length, (j.msgs||[]).length);
     loadNoticeEditor();
   }catch(e){ err.textContent='网络错误：'+e.message; }
   finally{ document.getElementById('loginBtn').disabled = false; }
@@ -152,26 +180,48 @@ async function del(type, id, btn){
 }
 
 function logout(){ PW=''; document.getElementById('panel').classList.add('hidden'); document.getElementById('login').classList.remove('hidden'); document.getElementById('logout').classList.add('hidden'); document.getElementById('pw').value=''; }
+function renderStats(s, tipCount, msgCount){
+  if(!s) s={total:0,today:0,last7:0,days:[]};
+  const set=(id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
+  set('ovTotal', s.total||0); set('ovToday', s.today||0); set('ov7', s.last7||0);
+  set('ovTips', tipCount||0); set('ovMsgs', msgCount||0);
+  const days=s.days||[];
+  const max=Math.max(1,...days.map(d=>d.views));
+  const bars=days.map(d=>{
+    const h=Math.round((d.views/max)*46)+3;
+    return `<div class="bar" style="height:${h}px"><i>${d.views}</i><span>${d.date}</span></div>`;
+  }).join('');
+  const box=document.getElementById('ovBars'); if(box) box.innerHTML=bars;
+}
 async function loadNoticeEditor(){
-  try{ const r=await fetch(API+'/notice'); const j=await r.json(); const ta=document.getElementById('noticeEdit'); if(ta) ta.value=(j.text||''); }catch(e){}
+  try{ const r=await fetch(API+'/notice'); const j=await r.json();
+    const ta=document.getElementById('noticeEdit'); if(ta) ta.value=(j.text||'');
+    const ty=document.getElementById('noticeEditYue'); if(ty) ty.value=(j.textYue||'');
+    const te=document.getElementById('noticeEditEn'); if(te) te.value=(j.textEn||'');
+  }catch(e){}
 }
 async function saveNotice(btn){
   const ta=document.getElementById('noticeEdit');
+  const ty=document.getElementById('noticeEditYue');
+  const te=document.getElementById('noticeEditEn');
   const msg=document.getElementById('noticeMsg');
   const text=(ta.value||'').trim();
+  const textYue=(ty?ty.value:'')||'';
+  const textEn=(te?te.value:'')||'';
   msg.textContent=''; msg.style.color='var(--green)';
   btn.disabled=true;
   try{
-    const r=await fetch(API+'/admin/notice',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:PW,text})});
+    const r=await fetch(API+'/admin/notice',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:PW,text,textYue,textEn})});
     const j=await r.json();
-    if(j.ok){ msg.textContent = text ? '已保存 ✓ 所有人打开页面即可看到' : '已清空 ✓'; }
+    if(j.ok){ msg.textContent = text ? '已保存 ✓ 所有人打开页面即可看到（粤/英随语言切换）' : '已清空 ✓'; }
     else { msg.style.color='var(--red)'; msg.textContent=j.error==='forbidden'?'密码错误或权限不足':'保存失败'; }
   }catch(e){ msg.style.color='var(--red)'; msg.textContent='网络错误：'+e.message; }
   finally{ btn.disabled=false; }
 }
 async function clearNotice(btn){
-  const ta=document.getElementById('noticeEdit');
-  if(ta) ta.value='';
+  const ta=document.getElementById('noticeEdit'); if(ta) ta.value='';
+  const ty=document.getElementById('noticeEditYue'); if(ty) ty.value='';
+  const te=document.getElementById('noticeEditEn'); if(te) te.value='';
   await saveNotice(btn);
 }
 function toggleReply(id){ const b=document.getElementById('reply-'+id); if(b) b.classList.toggle('hidden'); }

@@ -1224,6 +1224,7 @@ function applyLang(){
   buildPlaceOptions();
   renderReaders(); renderScore(); renderTips(); renderLeft();
   buildRouteOptions();
+  renderNotice();
   const outEl=document.getElementById('out');
   if(outEl && outEl.classList.contains('show') && lastPlan) plan();
 }
@@ -1435,35 +1436,48 @@ async function getTips(){
   return TIPS;
 }
 // 公告条：加载并展示 Frankie 发布的公告（所有人可见），可关闭并按时间戳记忆
+// 公告：三语对象，按右上角语言设置显示（粤/英缺则回退简中）
+let __notice = { text:'', textYue:'', textEn:'', ts:0 };
 async function loadNotice(){
   const bar=document.getElementById('noticeBar');
-  const txt=document.getElementById('noticeText');
-  if(!bar||!txt) return;
+  if(!bar) return;
   const api=CLOUD_API||DEFAULT_CLOUD_API;
   try{
     const r=await fetch(api+'/notice');
     if(!r.ok){ bar.style.display='none'; return; }
     const d=await r.json();
-    const text=(d.text||'').trim();
-    const ts=String(d.ts||'0');
-    if(!text){ bar.style.display='none'; return; }
+    __notice = { text:d.text||'', textYue:d.textYue||'', textEn:d.textEn||'', ts:String(d.ts||'0') };
     let dismissed='';
     try{ dismissed=localStorage.getItem('wfg_notice_dismissed')||''; }catch(e){}
-    if(dismissed===ts){ bar.style.display='none'; return; }
-    txt.textContent=text;
-    bar.setAttribute('data-ts', ts);
-    bar.style.display='flex';
-    showNoticeFab(text);
+    if(dismissed===__notice.ts){ bar.style.display='none'; return; }
+    renderNotice();
   }catch(e){ bar.style.display='none'; }
 }
-function showNoticeFab(text){
+function noticeTextForLang(){
+  const n=__notice;
+  if(curLang==='yue' && n.textYue && n.textYue.trim()) return n.textYue;
+  if(curLang==='en' && n.textEn && n.textEn.trim()) return n.textEn;
+  return n.text||'';
+}
+function renderNotice(){
+  const bar=document.getElementById('noticeBar');
+  const txt=document.getElementById('noticeText');
+  if(!bar||!txt) return;
+  const text=noticeTextForLang().trim();
+  if(!text){ bar.style.display='none'; return; }
+  txt.textContent=text;
+  bar.setAttribute('data-ts', __notice.ts);
+  bar.style.display='flex';
   const fab=document.getElementById('noticeFab');
   const pop=document.getElementById('noticePop');
   const pt=document.getElementById('noticePopText');
-  if(!fab) return;
-  if(pt) pt.textContent=text;
-  fab.classList.add('show');
-  if(pop) pop.classList.remove('show');
+  if(fab) fab.classList.add('show');
+  if(pt) pt.textContent=text; // 不强制关闭已打开的 pop
+}
+// 匿名访问打点：仅当启用云端时记录当日打开次数，不传任何个人信息
+function trackView(){
+  if(!(CLOUD && CLOUD_API)) return;
+  try{ fetch(CLOUD_API+'/stats',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'}).catch(()=>{}); }catch(e){}
 }
 function toggleNoticePop(){
   const pop=document.getElementById('noticePop');
@@ -1578,6 +1592,7 @@ function safe(fn,label){ try{ fn(); }catch(err){ console.error("[WFG] "+label+" 
 safe(buildPlaceOptions,"buildPlaceOptions");
 safe(loadCloudCfg,"loadCloudCfg");
 safe(applyLang,"applyLang");
+safe(trackView,"trackView");
 safe(render,"render");
 const backBox=document.getElementById('back');
 if(backBox) backBox.addEventListener('change', ()=>{ const outEl=document.getElementById('out'); if(outEl && outEl.classList.contains('show') && lastPlan) plan(); });
