@@ -73,7 +73,7 @@
       <div class="ov-grid">
         <div class="ov"><div class="ov-n" id="ovTotal">0</div><div class="ov-l">累计打开</div></div>
         <div class="ov"><div class="ov-n" id="ovToday">0</div><div class="ov-l">今日打开</div></div>
-        <div class="ov"><div class="ov-n" id="ov7">0</div><div class="ov-l">近7天</div></div>
+        <div class="ov"><div class="ov-n" id="ovDevices">0</div><div class="ov-l">设备数（去重）</div></div>
         <div class="ov"><div class="ov-n" id="ovTips">0</div><div class="ov-l">投稿数</div></div>
         <div class="ov"><div class="ov-n" id="ovMsgs">0</div><div class="ov-l">留言数</div></div>
       </div>
@@ -181,9 +181,9 @@ async function del(type, id, btn){
 
 function logout(){ PW=''; document.getElementById('panel').classList.add('hidden'); document.getElementById('login').classList.remove('hidden'); document.getElementById('logout').classList.add('hidden'); document.getElementById('pw').value=''; }
 function renderStats(s, tipCount, msgCount){
-  if(!s) s={total:0,today:0,last7:0,days:[]};
+  if(!s) s={total:0,today:0,last7:0,days:[],devices:0};
   const set=(id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
-  set('ovTotal', s.total||0); set('ovToday', s.today||0); set('ov7', s.last7||0);
+  set('ovTotal', s.total||0); set('ovToday', s.today||0); set('ovDevices', s.devices||0);
   set('ovTips', tipCount||0); set('ovMsgs', msgCount||0);
   const days=s.days||[];
   const max=Math.max(1,...days.map(d=>d.views));

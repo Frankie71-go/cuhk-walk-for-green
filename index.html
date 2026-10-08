@@ -1452,9 +1452,20 @@ function renderNotice(){
   if(pt) pt.textContent=text; // 不强制关闭已打开的 pop
 }
 // 匿名访问打点：仅当启用云端时记录当日打开次数，不传任何个人信息
+// 匿名设备ID：随机生成、存浏览器本地，仅用于统计「多少台不同设备打开过」，不含姓名/IP/邮箱
+function getDeviceId(){
+  try{
+    let id=localStorage.getItem('wfg_device_id');
+    if(!id){
+      id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('d'+Date.now()+Math.random().toString(36).slice(2));
+      localStorage.setItem('wfg_device_id', id);
+    }
+    return id;
+  }catch(e){ return ''; }
+}
 function trackView(){
   if(!(CLOUD && CLOUD_API)) return;
-  try{ fetch(CLOUD_API+'/stats',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'}).catch(()=>{}); }catch(e){}
+  try{ fetch(CLOUD_API+'/stats',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({deviceId:getDeviceId()})}).catch(()=>{}); }catch(e){}
 }
 function toggleNoticePop(){
   const pop=document.getElementById('noticePop');
