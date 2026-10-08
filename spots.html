@@ -155,7 +155,7 @@
   .mapfab{position:fixed;right:16px;bottom:16px;z-index:999;background:rgba(31,42,68,.92);color:#fff;border:1px solid rgba(255,255,255,.25);
     border-radius:22px;padding:9px 14px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);font-size:13px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
   .mapfab:hover{filter:brightness(1.1)}
-  .contactfab{position:fixed;right:16px;bottom:90px;z-index:999;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:rgba(31,42,68,.92);color:#fff;border:1px solid rgba(255,255,255,.25);box-shadow:0 6px 18px rgba(31,42,68,.28);transition:transform .2s,box-shadow .2s;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);animation:cfin .4s ease both}
+  .contactfab{position:fixed;right:16px;bottom:120px;z-index:999;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:rgba(31,42,68,.92);color:#fff;border:1px solid rgba(255,255,255,.25);box-shadow:0 6px 18px rgba(31,42,68,.28);transition:transform .2s,box-shadow .2s;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);animation:cfin .4s ease both}
   .contactfab:hover{transform:scale(1.05);box-shadow:0 6px 16px rgba(26,169,123,.4)}
   .contactfab svg{width:24px;height:24px;display:block}
   .contactfab .cf-dot{position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:#eafff6;border:2px solid #2f7d5d}
@@ -186,7 +186,7 @@
   ul.tight li{margin:4px 0;font-size:13px}
   .hl{color:var(--accent);font-weight:700}
   /* 语言切换悬浮窗：固定右下角，脱离文档流，不挤标题 */
-  .langfab{position:fixed;right:14px;bottom:16px;z-index:999;display:flex;flex-direction:column;align-items:flex-end;gap:8px;font-size:13px}
+  .langfab{position:fixed;right:16px;bottom:172px;z-index:999;display:flex;flex-direction:column;align-items:flex-end;gap:8px;font-size:13px}
   .langfab-main{background:rgba(31,42,68,.92);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:22px;
     padding:9px 14px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
   .langfab-main:hover{filter:brightness(1.1)}
@@ -571,7 +571,7 @@ ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
 
 /* ---------- 公告悬浮指示器：有公告时右下角出现，点开即看 ---------- */
 .noticefab{
-  position:fixed;right:16px;bottom:16px;z-index:910;display:none;
+  position:fixed;right:16px;bottom:68px;z-index:910;display:none;
   align-items:center;gap:7px;cursor:pointer;
   background:linear-gradient(135deg,var(--accent),#7b52ad);color:#fff;
   border:none;border-radius:999px;padding:9px 15px;font-size:13px;font-weight:700;
@@ -581,7 +581,7 @@ ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
 .noticefab.show{display:inline-flex}
 .noticefab .nf-dot{width:8px;height:8px;border-radius:50%;background:#ffd84d;box-shadow:0 0 0 3px rgba(255,216,77,.35)}
 .noticepop{
-  position:fixed;right:16px;bottom:62px;z-index:911;display:none;
+  position:fixed;right:16px;bottom:114px;z-index:1200;display:none;
   width:min(300px,calc(100vw - 32px));
   background:var(--card);border:1px solid var(--line);border-radius:14px;
   box-shadow:0 12px 36px rgba(42,35,51,.22);overflow:hidden;
@@ -590,6 +590,8 @@ ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
 .np-head{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:linear-gradient(135deg,var(--accent),#7b52ad);color:#fff;font-weight:700;font-size:14px}
 .np-x{background:none;border:none;color:#fff;font-size:20px;line-height:1;cursor:pointer;padding:0 2px}
 .np-body{padding:14px;font-size:13.5px;line-height:1.55;color:var(--ink);white-space:pre-wrap;word-break:break-word;max-height:46vh;overflow:auto}
+  .score-query{display:inline-block;margin-top:10px;padding:7px 14px;border-radius:999px;background:var(--accent-soft);color:var(--accent);border:1px solid #e2d6f2;font-size:12.5px;font-weight:700;text-decoration:none;transition:.15s}
+  .score-query:hover{filter:brightness(.97);text-decoration:none}
 
 
   /* 打卡点独立页：隐藏主页专属板块与入口 */
@@ -614,6 +616,7 @@ ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
 <div class="hero" data-page-node-id="vBrNGPF0YN3EJEBzW4cBrY">
   <h1 data-page-node-id="RTGjonTL0c3jxcJEH0WSyf">大·部·行 Walk for Green</h1>
   <div class="goal" data-i18n-html="heroGoal" data-page-node-id="ooIygAXfyJgThqmHHBz7LE"><b>Walk for Green 40 分 = 5 个 PE 参与分(P1)。</b>相邻两次拍卡须间隔一个小时以内，否则不计算分数。</div>
+  <a class="score-query" href="https://mp.weixin.qq.com/s/OkBCsH0b_9-FOBXDPd7f4A" target="_blank" rel="noopener" data-i18n="scoreQuery">📊 官方查分界面（微信）</a>
   <div class="hero-prog" data-page-node-id="lWLdK4r1Ze9K4U1Zlyv2jv">
     <div class="tram-road" id="h-road" data-page-node-id="hV1CTeq1TFmcC16RQO6Qmc">
       <span class="tram" id="h-tram" data-page-node-id="tramBusNode">🚌</span>
@@ -699,6 +702,7 @@ ul.tight li{font-size:13px;color:var(--ink);line-height:1.6}
       <h3 data-i18n="scoreH2" data-page-node-id="XWmWruklAuWRLUVESdtoSA">📊 分数速查表（每段）</h3>
       <div id="scoreBox" data-page-node-id="lucIqwo76jkmPzSPW1RuiF"></div>
       <div class="note" data-i18n-html="scoreNote" data-page-node-id="YEwepF5qZ5vvSypNIBdu1m"></div>
+      <div class="note" data-i18n="bigWalkTip"></div>
       <h3 data-i18n="planH2" data-page-node-id="bNj3yP5ZigTJIVgK3YzDyG">⏱️ 凑满 40 分的最省事节奏</h3>
       <ul class="tight" data-page-node-id="3U1ECzHZx3vPXcVVyQFIyg">
         <li data-i18n-html="planLi1" data-page-node-id="mab3OgBJTv4BBfVO2q8G8w"></li>
@@ -770,6 +774,7 @@ const I18N = {
     planLi3:'<b>最低门槛</b>：每周顺路刷一次来回（6 分），7 周达标，几乎不费劲。',
     foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"本卡为个人攻略，规则以 CUHK SRSDO 官网为准", foot3:"仅做个人学习用途", srcNote:"本工具仅做个人学习用途。",
     rulesTitle:"📖 规则速查", rulesFab:"📖 规则",
+    scoreQuery:"📊 官方查分界面（微信）", bigWalkTip:"🚶 大步行加分方法：截屏官方查分界面分数，邮件发送给对应 PE 老师了解各班操作方法。",
     langH:"🌐 语言",
     mapFab:"🗺️ 打卡点",
     contactFab:"联系", contactH:"联系开发者",
@@ -871,6 +876,7 @@ const I18N = {
     planLi3:'<b>最低門檻</b>：每週順路刷一次來回（6 分），7 週達標，幾乎唔費力。',
     foot1:"© 2026 Walk for Green · All Rights Reserved", foot2:"本卡為個人攻略，規則以 CUHK SRSDO 官網為準", foot3:"僅做個人學習用途", srcNote:"本工具僅做個人學習用途。",
     rulesTitle:"📖 規則速查", rulesFab:"📖 規則",
+    scoreQuery:"📊 官方查分介面（微信）", bigWalkTip:"🚶 大步行加分方法：截圖官方查分介面分數，電郵畀對應 PE 老師了解各班操作方法。",
     langH:"🌐 語言",
     mapFab:"🗺️ 打卡點",
     contactFab:"聯絡", contactH:"聯絡開發者",
@@ -1041,6 +1047,7 @@ const I18N = {
     leftRemain:"__N__ pts to go",
     senRouteLabel:"Route category",
     senRouteAll:"All routes",
+    scoreQuery:"📊 Official score page (WeChat)", bigWalkTip:"🚶 Big Walk bonus: screenshot your official score page and email it to your PE teacher for each class's method.",
     senFilterLabel:"🔍 Filter by route",
     senRoutePh:"🏷️ Route category (optional)",
     pgPlace:"What's at these two spots", pgWalkH:"Shortcut route", pgSeniorH:"Senior-submitted route",
