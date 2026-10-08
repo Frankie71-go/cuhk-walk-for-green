@@ -1477,14 +1477,17 @@ function renderNotice(){
 // 匿名访问打点：仅当启用云端时记录当日打开次数，不传任何个人信息
 // 匿名设备ID：随机生成、存浏览器本地，仅用于统计「多少台不同设备打开过」，不含姓名/IP/邮箱
 function getDeviceId(){
-  try{
-    let id=localStorage.getItem('wfg_device_id');
-    if(!id){
+  if(window.__wfgDevId) return window.__wfgDevId; // 内存兜底：同一会话稳定，避免任何异常返回空串导致设备漏记
+  let id='';
+  try{ id = localStorage.getItem('wfg_device_id') || ''; }catch(e){}
+  if(!id){
+    try{
       id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('d'+Date.now()+Math.random().toString(36).slice(2));
-      localStorage.setItem('wfg_device_id', id);
-    }
-    return id;
-  }catch(e){ return ''; }
+    }catch(e){ id = 'm'+Date.now()+Math.random().toString(36).slice(2); }
+    try{ localStorage.setItem('wfg_device_id', id); }catch(e){}
+  }
+  window.__wfgDevId = id;
+  return id;
 }
 function trackView(){
   if(!(CLOUD && CLOUD_API)) return;
